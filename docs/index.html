@@ -944,16 +944,7 @@ function clearEnquiries(){
   toast('All enquiries cleared.');
 }
 
-function updateEnqBadge(){
-  const list=loadEnquiries();
-  const badge=document.getElementById('enq-badge');
-  if(list.length>0){
-    badge.textContent=list.length;
-    badge.style.display='inline';
-  } else {
-    badge.style.display='none';
-  }
-}
+function updateEnqBadge(){}
 
 function renderEnquiries(){
   const list=loadEnquiries();

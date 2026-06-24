@@ -78,18 +78,17 @@ body{font-family:var(--sans);background:var(--bg);color:var(--ink);min-height:10
 
 /* ━━ GRID ━━ */
 .grid-wrap{max-width:1240px;margin:0 auto;padding:24px 40px 60px;}
-.grid{display:flex;flex-direction:column;gap:10px;}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+@media(max-width:960px){.grid{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:560px){.grid{grid-template-columns:1fr;}}
 
 /* ━━ CARD ━━ */
-.card{background:var(--white);border:1px solid var(--line);border-radius:10px;display:flex;overflow:hidden;transition:box-shadow .18s,border-color .18s;cursor:pointer;}
-.card:hover{box-shadow:0 4px 20px rgba(13,36,38,.08);border-color:var(--line-d);}
-.card.picked{border-color:var(--teal);box-shadow:0 0 0 2px var(--teal-mid);}
-.card-left{width:72px;flex-shrink:0;background:var(--teal-soft);display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:16px 0 12px;gap:8px;border-right:1px solid var(--line);}
-.sl-tog{width:24px;height:24px;border-radius:50%;border:1.5px solid var(--line-d);background:var(--white);font-size:11px;font-weight:700;color:var(--ink-4);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .12s;}
-.sl-tog:hover,.sl-tog.on{background:var(--teal);border-color:var(--teal);color:var(--white);}
+.card{background:var(--white);border:1px solid var(--line);border-radius:12px;padding:20px;display:flex;flex-direction:column;gap:12px;cursor:pointer;transition:box-shadow .18s,border-color .18s;}
+.card:hover{box-shadow:0 4px 24px rgba(13,36,38,.1);border-color:var(--teal-mid);}
+.card-top{display:flex;align-items:center;gap:12px;}
 .avi{width:40px;height:40px;border-radius:50%;background:var(--teal);color:var(--white);font-family:var(--serif);font-size:15px;font-weight:700;display:flex;align-items:center;justify-content:center;}
 .c-fn{font-size:9px;font-weight:600;color:var(--ink-3);text-transform:uppercase;letter-spacing:0.8px;text-align:center;}
-.card-right{flex:1;padding:14px 18px;display:flex;flex-direction:column;gap:7px;}
+.card-right{flex:1;display:flex;flex-direction:column;gap:6px;overflow:hidden;}
 .cr-name{font-family:var(--serif);font-size:16px;font-weight:700;color:var(--ink);cursor:pointer;}
 .cr-name:hover{color:var(--teal);}
 .cr-role{font-size:12px;color:var(--ink-3);}
@@ -301,11 +300,9 @@ footer a:hover{color:white;}
     </nav>
     <div class="hdr-mid">
       <div class="hs"><span class="hs-n" id="h-tot">43</span><span class="hs-l">candidates</span></div>
-      <div class="hs"><span class="hs-n" id="h-sl">0</span><span class="hs-l">shortlisted</span></div>
     </div>
     <div class="hdr-actions">
       <button class="btn-add" onclick="openAdd()">+ Add profile</button>
-      <button class="btn-send" onclick="openExport()">Send to HR</button>
     </div>
   </div>
 </header>
@@ -321,7 +318,6 @@ footer a:hover{color:white;}
       <div class="hero-stats">
         <div class="h-stat"><div class="n" id="s-tot">43</div><div class="l">Candidates</div></div>
         
-        <div class="h-stat"><div class="n" id="s-sl2">0</div><div class="l">Shortlisted</div></div>
       </div>
     </div>
   </section>
@@ -409,14 +405,6 @@ footer a:hover{color:white;}
   </div>
 </div>
 
-<!-- SHORTLIST BAR -->
-<div class="sl-bar" id="sl-bar">
-  <div class="sl-info"><strong id="sl-n">0</strong> candidates shortlisted</div>
-  <div class="sl-btns">
-    <button class="btn-slc" onclick="clearSL()">Clear</button>
-    <button class="btn-sls" onclick="openExport()">Send to HR ✦</button>
-  </div>
-</div>
 
 <!-- RESUME MODAL -->
 <div class="ov" id="r-ov">
@@ -431,7 +419,6 @@ footer a:hover{color:white;}
     <div class="m-bdy">
       <div id="rm-body"></div>
       <div class="m-act">
-        <button class="btn-pm-sl" id="rm-sl" onclick="slR()">+ Shortlist</button>
         <button class="btn-pm-cl" onclick="toPf()">View Profile</button>
         <button class="btn-pm-cl" onclick="closeR()">Close</button>
       </div>
@@ -468,7 +455,6 @@ footer a:hover{color:white;}
       <button class="btn-interested" style="width:100%;height:40px;margin-top:18px;border-radius:8px;font-size:13px;letter-spacing:.3px;" onclick="openHI()">I'm Interested in this Candidate</button>
 
       <div class="m-act">
-        <button class="btn-pm-sl" id="pm-sl" onclick="slP()">+ Shortlist</button>
         <button class="btn-pm-cl" onclick="toRes()">View Resume</button>
         <button class="btn-pm-cl" onclick="closeP()">Close</button>
       </div>
@@ -476,24 +462,6 @@ footer a:hover{color:white;}
   </div>
 </div>
 
-<!-- EXPORT MODAL -->
-<div class="ov" id="e-ov">
-  <div class="modal" style="max-width:460px">
-    <div class="m-hdr">
-      <div class="m-name" style="padding-top:6px">Send shortlist to HR</div>
-      <button class="m-cl" onclick="closeE()">✕</button>
-    </div>
-    <div class="m-bdy">
-      <div style="font-size:12px;color:var(--ink-4);margin-bottom:4px;font-family:var(--sans)">Pre-screened candidates to share with your team.</div>
-      <div class="em-list" id="e-li"></div>
-      <div class="em-btns">
-        <button class="btn-dl" onclick="dlTxt()">↓ Download list</button>
-        <button class="btn-cp" onclick="cpEmail()">Copy email draft</button>
-      </div>
-      <button class="btn-pm-cl" style="width:100%;margin-top:8px;height:36px;border-radius:7px;font-family:var(--sans);font-size:12px;font-weight:600;cursor:pointer;background:white;border:1.5px solid var(--line-d);color:var(--ink-2);" onclick="closeE()">Cancel</button>
-    </div>
-  </div>
-</div>
 
 <!-- HR INTEREST MODAL -->
 <div class="ov" id="hi-ov">
@@ -750,41 +718,25 @@ function render(){
   const g=document.getElementById('grid');
   if(!f.length){g.innerHTML=`<div class="empty"><div style="font-size:28px;color:var(--teal-mid)">✦</div><div class="empty-h">No candidates found.</div></div>`;return;}
   g.innerHTML=f.map(d=>`
-  <div class="card${sl.has(d.id)?' picked':''}" id="c${d.id}">
-    <div class="card-left">
-      <button class="sl-tog${sl.has(d.id)?' on':''}" onclick="event.stopPropagation();toggleSL(${d.id})">${sl.has(d.id)?'✓':'+'}</button>
+  <div class="card" id="c${d.id}" onclick="openP(${d.id})">
+    <div class="card-top">
       <div class="avi">${ini(d.name)}</div>
-      <div class="c-fn">${d.name.split(' ')[0]}</div>
+      <div class="card-right">
+        <div class="cr-name">${d.name}</div>
+        <div class="cr-role">${d.about.slice(0,55)}…</div>
+      </div>
     </div>
-    <div class="card-right">
-      <div><div class="cr-name" onclick="openP(${d.id})">${d.name}</div><div class="cr-role">${d.about.slice(0,60)}…</div></div>
-      <div class="tags">
-        <span class="tag t-edu">${d.edu}</span>
-        <span class="tag t-sec">${d.sector}</span>
-        <span class="tag t-loc">📍 ${d.location}</span>
-        ${d.resume?'<span class="tag t-res">📄 Resume ready</span>':''}
-      </div>
-      <div class="c-skills">${d.skills.slice(0,4).map(s=>`<span class="sk">${s}</span>`).join('')}</div>
-      <div class="c-foot">
-        <span class="c-loc">📍 ${d.location}, Mumbai</span>
-        <div class="c-btns">
-          ${d.resume?`<button class="btn-cv" onclick="event.stopPropagation();openR(${d.id})">Resume</button>`:''}
-          <button class="btn-prf" onclick="openP(${d.id})">Profile</button>
-        </div>
-      </div>
+    <div class="tags">
+      <span class="tag t-edu">${d.edu}</span>
+      <span class="tag t-sec">${d.sector}</span>
+      ${d.resume?'<span class="tag t-res">Resume</span>':''}
+    </div>
+    <div class="c-foot">
+      <span class="c-loc">📍 ${d.location}, Mumbai</span>
     </div>
   </div>`).join('');
 }
 
-function toggleSL(id){sl.has(id)?sl.delete(id):sl.add(id);updSL();render();}
-function updSL(){
-  const n=sl.size;
-  document.getElementById('h-sl').textContent=n;
-  document.getElementById('sl-n').textContent=n;
-  document.getElementById('s-sl2').textContent=n;
-  document.getElementById('sl-bar').className=n?'sl-bar show':'sl-bar';
-}
-function clearSL(){sl.clear();updSL();render();}
 
 function openR(id){
   const d=DATA.find(x=>x.id===id);if(!d)return;curId=id;
@@ -809,7 +761,6 @@ function openR(id){
   document.getElementById('r-ov').classList.add('open');
 }
 function closeR(){document.getElementById('r-ov').classList.remove('open');}
-function slR(){if(!curId)return;toggleSL(curId);const isSL=sl.has(curId),b=document.getElementById('rm-sl');b.textContent=isSL?'✓ Shortlisted':'+ Shortlist';b.className=isSL?'btn-pm-cl':'btn-pm-sl';}
 function toPf(){closeR();openP(curId);}
 
 function openP(id){
@@ -834,7 +785,6 @@ function openP(id){
   document.getElementById('p-ov').classList.add('open');
 }
 function closeP(){document.getElementById('p-ov').classList.remove('open');}
-function slP(){if(!curId)return;toggleSL(curId);const isSL=sl.has(curId),b=document.getElementById('pm-sl');b.textContent=isSL?'− Remove':'+ Shortlist';b.className=isSL?'btn-pm-cl':'btn-pm-sl';}
 function toRes(){closeP();openR(curId);}
 
 // ── HR INTEREST FLOW ──────────────────────────────
@@ -963,30 +913,6 @@ function saveProfile(){
 function closeA(){document.getElementById('a-ov').classList.remove('open');}
 
 // ── EXPORT ──────────────────────────────────────
-function openExport(){
-  if(!sl.size){toast('Shortlist at least one candidate first.');return;}
-  const items=[...sl].map(id=>DATA.find(x=>x.id===id)).filter(Boolean);
-  document.getElementById('e-li').innerHTML=items.map(d=>`<div class="em-item"><div class="em-av">${ini(d.name)}</div><div><strong>${d.name}</strong> · ${d.sector}</div></div>`).join('');
-  document.getElementById('e-ov').classList.add('open');
-}
-function closeE(){document.getElementById('e-ov').classList.remove('open');}
-
-function dlTxt(){
-  const items=[...sl].map(id=>DATA.find(x=>x.id===id)).filter(Boolean);
-  let t=`TINY YOUTH PLACEMENT CELL · TINY MIRACLES\nMumbai\n${'-'.repeat(48)}\n\n`;
-  items.forEach((d,i)=>{t+=`${i+1}. ${d.name}\n   Sector: ${d.sector} | Location: ${d.location}, Mumbai\n   Skills: ${d.skills.join(', ')}\n   Contact: ${d.contact}\n\n`;});
-  const a=document.createElement('a');
-  a.href=URL.createObjectURL(new Blob([t],{type:'text/plain'}));
-  a.download='tiny_youth_shortlist.txt';a.click();toast('Downloaded!');closeE();
-}
-
-function cpEmail(){
-  const items=[...sl].map(id=>DATA.find(x=>x.id===id)).filter(Boolean);
-  let e=`Subject: Tiny Youth Placement Cell — Shortlisted Candidates\n\nDear HR Team,\n\nShortlisted candidates from Tiny Miracles, pre-screened and ready for interview.\n\n`;
-  items.forEach((d,i)=>{e+=`${i+1}. ${d.name} | ${d.edu} | ${d.sector}\n   Location: ${d.location}, Mumbai\n   Skills: ${d.skills.slice(0,4).join(', ')}\n\n`;});
-  e+=`Contact: meghna@tinymiracles.com · +91 9326691744\n\nWarm regards,\nTiny Miracles`;
-  navigator.clipboard.writeText(e).then(()=>{toast('Copied!');closeE();});
-}
 
 // ── CONTACT FORM ─────────────────────────────────
 function submitContact(){

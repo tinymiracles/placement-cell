@@ -769,19 +769,11 @@ function openP(id){
   document.getElementById('pm-nm').textContent=d.name;
   document.getElementById('pm-rl').textContent=d.sector;
   document.getElementById('pm-ab').textContent=d.about;
-  const isSL=sl.has(id),btn=document.getElementById('pm-sl');
-  btn.textContent=isSL?'− Remove':'+ Shortlist';
-  btn.className=isSL?'btn-pm-cl':'btn-pm-sl';
-  document.getElementById('pm-tgs').innerHTML=`<span class="tag t-edu">${d.edu}</span><span class="tag t-sec">${d.sector}</span><span class="tag t-loc">📍 ${d.location}</span>${d.resume?'<span class="tag t-res">📄 Resume ready</span>':''}`;
+  document.getElementById('pm-tgs').innerHTML=`<span class="tag t-edu">${d.edu}</span><span class="tag t-sec">${d.sector}</span><span class="tag t-loc">📍 ${d.location}</span>${d.resume?'<span class="tag t-res">Resume</span>':''}`;
   document.getElementById('pm-exs').style.display='none';
   document.getElementById('pm-sk').innerHTML=d.skills.map(s=>`<span class="sk">${s}</span>`).join('');
   document.getElementById('pm-lg').innerHTML=d.langs.map(l=>`<span class="sk">${l}</span>`).join('');
   document.getElementById('pm-ct').textContent='📍 '+d.location+', Mumbai';
-  // Reset interest box
-  document.getElementById('hi-default').style.display='block';
-  document.getElementById('hi-thanks').classList.remove('show');
-  document.getElementById('hcf').classList.remove('show');
-  ['hcf-name','hcf-phone','hcf-email','hcf-company'].forEach(i=>document.getElementById(i).value='');
   document.getElementById('p-ov').classList.add('open');
 }
 function closeP(){document.getElementById('p-ov').classList.remove('open');}

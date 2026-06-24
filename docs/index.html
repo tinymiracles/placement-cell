@@ -280,6 +280,42 @@ footer a:hover{color:white;}
 .enq-clear-btn{height:30px;padding:0 14px;background:var(--white);border:1.5px solid var(--line-d);border-radius:6px;font-family:var(--sans);font-size:12px;font-weight:500;color:var(--ink-3);cursor:pointer;margin-top:-4px;}
 .enq-clear-btn:hover{border-color:var(--ink);color:var(--ink);}
 @media(max-width:700px){.enq-wrap{padding:32px 20px;}}
+
+/* ━━ ASSESSMENT ━━ */
+.at-progress{display:flex;gap:6px;padding:16px 22px 0;}
+.at-pip{flex:1;height:3px;border-radius:2px;background:var(--line-d);transition:background .3s;}
+.at-pip.done{background:var(--teal);}
+.at-pip.act{background:var(--teal-mid);}
+.at-screen{display:none;padding:16px 22px 24px;}
+.at-screen.active{display:block;}
+.at-q-text{font-size:13.5px;color:var(--ink-3);line-height:1.6;margin-bottom:16px;user-select:none;-webkit-user-select:none;}
+.at-options{display:flex;flex-direction:column;gap:8px;}
+.at-opt{display:flex;align-items:flex-start;gap:10px;padding:10px 12px;border:1.5px solid var(--line-d);border-radius:8px;cursor:pointer;transition:all .14s;}
+.at-opt:hover{border-color:var(--teal-mid);background:var(--teal-soft);}
+.at-opt.sel{border-color:var(--teal);background:var(--teal-soft);}
+.at-opt input[type=radio]{accent-color:var(--teal);margin-top:2px;flex-shrink:0;}
+.at-opt-text{font-size:13px;color:var(--ink-2);line-height:1.4;}
+.at-nav{display:flex;gap:8px;margin-top:20px;}
+.btn-at-b{flex:1;height:38px;background:var(--white);border:1.5px solid var(--line-d);border-radius:7px;font-family:var(--sans);font-size:13px;font-weight:500;color:var(--ink-3);cursor:pointer;}
+.btn-at-b:hover{border-color:var(--ink-3);}
+.btn-at-n{flex:2;height:38px;background:var(--teal);border:none;border-radius:7px;font-family:var(--sans);font-size:13px;font-weight:600;color:white;cursor:pointer;transition:opacity .14s;}
+.btn-at-n:hover{opacity:.88;}
+.at-step-info{font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--ink-4);margin-bottom:16px;}
+.at-trk-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:16px 0;}
+.at-trk{border:2px solid var(--line-d);border-radius:10px;padding:18px 16px;cursor:pointer;transition:all .2s;text-align:center;}
+.at-trk:hover{border-color:var(--teal-mid);}
+.at-trk.sel{border-color:var(--teal);background:var(--teal-soft);}
+.at-trk-name{font-family:var(--serif);font-size:15px;font-weight:700;color:var(--ink);margin-bottom:6px;}
+.at-trk-desc{font-size:11px;color:var(--ink-4);line-height:1.5;}
+.at-res-score{text-align:center;padding:20px 0 8px;}
+.at-res-n{font-family:var(--serif);font-size:52px;font-style:italic;color:var(--teal);line-height:1;}
+.at-res-l{font-size:12px;color:var(--ink-4);letter-spacing:1px;text-transform:uppercase;margin-top:4px;}
+.at-res-msg{font-size:13.5px;color:var(--ink-3);text-align:center;margin:12px 0 16px;line-height:1.65;}
+.at-tips-box{background:var(--teal-soft);border:1px solid var(--teal-mid);border-radius:10px;padding:14px 16px;margin-bottom:16px;}
+.at-tips-ttl{font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--teal-dark);margin-bottom:8px;}
+.at-tips-box li{font-size:12px;color:var(--ink-3);line-height:1.7;margin-left:16px;}
+.t-corp{background:#e8f0fe;color:#1a56db;}
+.t-ngo{background:var(--mauve-soft);color:var(--mauve);}
 </style>
 </head>
 <body>
@@ -302,7 +338,7 @@ footer a:hover{color:white;}
       <div class="hs"><span class="hs-n" id="h-tot">43</span><span class="hs-l">candidates</span></div>
     </div>
     <div class="hdr-actions">
-      <button class="btn-add" onclick="openAdd()">+ Add profile</button>
+      <button class="btn-add" onclick="openAssessment()">+ Add profile</button>
     </div>
   </div>
 </header>
@@ -544,6 +580,96 @@ footer a:hover{color:white;}
   </div>
 </div>
 
+<!-- ASSESSMENT MODAL -->
+<div class="ov" id="at-ov">
+  <div class="modal" style="max-width:520px">
+    <div class="m-hdr" style="padding-bottom:4px">
+      <div class="m-name" id="at-ttl" style="padding-top:6px">Register your profile</div>
+      <button class="m-cl" onclick="closeAT()">✕</button>
+    </div>
+    <div class="at-progress">
+      <div class="at-pip" id="ap0"></div><div class="at-pip" id="ap1"></div>
+      <div class="at-pip" id="ap2"></div><div class="at-pip" id="ap3"></div>
+    </div>
+
+    <!-- s0: Welcome -->
+    <div class="at-screen active" id="at-s0" style="padding-top:20px">
+      <div style="font-family:var(--serif);font-size:20px;font-weight:700;color:var(--ink);margin-bottom:8px">Before you add your profile</div>
+      <div style="font-size:13px;color:var(--ink-3);line-height:1.7;margin-bottom:20px">We want every profile to be genuine and ready to work. This takes about 5 minutes and helps employers trust our candidates.</div>
+      <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:24px">
+        <div style="display:flex;align-items:flex-start;gap:10px;font-size:13px;color:var(--ink-3)"><div style="min-width:22px;height:22px;border-radius:50%;background:var(--teal-soft);border:1.5px solid var(--teal-mid);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--teal)">1</div>Background — a few questions about you (no right/wrong answers)</div>
+        <div style="display:flex;align-items:flex-start;gap:10px;font-size:13px;color:var(--ink-3)"><div style="min-width:22px;height:22px;border-radius:50%;background:var(--teal-soft);border:1.5px solid var(--teal-mid);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--teal)">2</div>English check — simple reading and workplace questions</div>
+        <div style="display:flex;align-items:flex-start;gap:10px;font-size:13px;color:var(--ink-3)"><div style="min-width:22px;height:22px;border-radius:50%;background:var(--teal-soft);border:1.5px solid var(--teal-mid);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--teal)">3</div>Work readiness — basic workplace scenarios</div>
+        <div style="display:flex;align-items:flex-start;gap:10px;font-size:13px;color:var(--ink-3)"><div style="min-width:22px;height:22px;border-radius:50%;background:var(--teal-soft);border:1.5px solid var(--teal-mid);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--teal)">4</div>Choose your track — Corporate or NGO / Social Sector</div>
+      </div>
+      <button class="btn-at-n" style="width:100%" onclick="atStep(1)">Start</button>
+    </div>
+
+    <!-- s1: Background -->
+    <div class="at-screen" id="at-s1">
+      <div class="at-step-info">Step 1 of 4 — Your Background</div>
+      <div id="at-bg-qs"></div>
+      <div class="at-nav">
+        <button class="btn-at-b" onclick="atStep(0)">Back</button>
+        <button class="btn-at-n" onclick="atNextBG()">Continue</button>
+      </div>
+    </div>
+
+    <!-- s2: English Test -->
+    <div class="at-screen" id="at-s2">
+      <div class="at-step-info">Step 2 of 4 — English Check &nbsp;·&nbsp; Question <span id="at-eq">1</span> of 5</div>
+      <div id="at-eq-body"></div>
+      <div class="at-nav">
+        <button class="btn-at-b" id="at-eb" onclick="atEngBack()">Back</button>
+        <button class="btn-at-n" id="at-en" onclick="atEngNext()">Next</button>
+      </div>
+    </div>
+
+    <!-- s3: Work Readiness -->
+    <div class="at-screen" id="at-s3">
+      <div class="at-step-info">Step 3 of 4 — Work Readiness &nbsp;·&nbsp; Question <span id="at-wq">1</span> of 4</div>
+      <div id="at-wq-body"></div>
+      <div class="at-nav">
+        <button class="btn-at-b" id="at-wb" onclick="atWorkBack()">Back</button>
+        <button class="btn-at-n" id="at-wn" onclick="atWorkNext()">Next</button>
+      </div>
+    </div>
+
+    <!-- s4: Track Selection -->
+    <div class="at-screen" id="at-s4">
+      <div class="at-step-info">Step 4 of 4 — Choose Your Track</div>
+      <div style="font-family:var(--serif);font-size:17px;font-weight:700;color:var(--ink);margin-bottom:6px">Which type of work interests you?</div>
+      <div style="font-size:12px;color:var(--ink-3);margin-bottom:4px">This helps us match you with the right employers.</div>
+      <div class="at-trk-grid">
+        <div class="at-trk" id="attrk-corp" onclick="selTrack('corporate')">
+          <div class="at-trk-name">Corporate</div>
+          <div class="at-trk-desc">Sales, Admin, Finance, Retail, BPO, IT, Customer Service, Logistics</div>
+        </div>
+        <div class="at-trk" id="attrk-ngo" onclick="selTrack('ngo')">
+          <div class="at-trk-name">NGO / Social Sector</div>
+          <div class="at-trk-desc">Community Outreach, Teaching, Field Work, Social Work, Health, Environment</div>
+        </div>
+      </div>
+      <div class="at-nav">
+        <button class="btn-at-b" onclick="atStep(3)">Back</button>
+        <button class="btn-at-n" onclick="atFinish()">See my result</button>
+      </div>
+    </div>
+
+    <!-- s5: Result -->
+    <div class="at-screen" id="at-s5">
+      <div class="at-res-score">
+        <div class="at-res-n" id="at-rs-n">9</div>
+        <div class="at-res-l" id="at-rs-l">out of 9</div>
+      </div>
+      <div class="at-res-msg" id="at-rs-msg"></div>
+      <div id="at-rs-tips"></div>
+      <button class="btn-at-n" style="width:100%" onclick="atProceed()">Add my profile</button>
+    </div>
+
+  </div>
+</div>
+
 <footer>
   <div>© 2026 <a href="https://tinymiracles.com" target="_blank">Tiny Miracles</a> · Tiny Youth Placement Cell · Mumbai</div>
   <div>meghna@tinymiracles.com &nbsp;·&nbsp; +91 9326691744</div>
@@ -729,6 +855,7 @@ function render(){
       <span class="tag t-edu">${d.edu}</span>
       <span class="tag t-sec">${d.sector}</span>
       ${d.resume?'<span class="tag t-res">Resume</span>':''}
+      ${d.track?`<span class="tag ${d.track==='ngo'?'t-ngo':'t-corp'}">${d.track==='ngo'?'NGO':'Corporate'}</span>`:''}
     </div>
     <div class="c-foot">
       <span class="c-loc">📍 ${d.location}, Mumbai</span>
@@ -889,6 +1016,7 @@ function saveProfile(){
     exps:[],
     contact:'📍 '+loc+', Mumbai',
     resume:true,resumeKey:key,
+    track:atTrack||'corporate',
   };
   DATA.push(np);
   document.getElementById('h-tot').textContent=DATA.length;
@@ -979,7 +1107,152 @@ function renderEnquiries(){
 // ── TOAST ────────────────────────────────────────
 function toast(m){const t=document.getElementById('toast');document.getElementById('t-m').textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3000);}
 
-document.querySelectorAll('.ov').forEach(o=>o.addEventListener('click',e=>{if(e.target===o)o.classList.remove('open');}));
+// ── ASSESSMENT ─────────────────────────────────────
+const AT_BG=[
+  {id:'bg-area',q:'Which area of Mumbai do you live in?',opts:['Aarey Colony / Goregaon','Dharavi / Sion / Matunga / Parel','Andheri / Jogeshwari / Malad','Grant Road / Mumbai Central / Girgaon','Virar / Vasai / Nalasopara','Other area in Mumbai']},
+  {id:'bg-inc',q:"What is your family's monthly household income (approx.)?",opts:['Below ₹10,000','₹10,000 – ₹20,000','₹20,000 – ₹40,000','Above ₹40,000']},
+  {id:'bg-edu',q:'What is your highest education level?',opts:['10th Pass (SSC)','12th Pass (HSC)','Graduate / Pursuing Degree','Diploma / Vocational Course']},
+  {id:'bg-emp',q:'Are you currently employed?',opts:['No, I am looking for my first job','Yes, but I want to change or improve my job','Occasional / part-time work only','Unemployed for more than 6 months']}
+];
+const AT_ENG=[
+  {q:"Your manager says: \"Can you submit the report by 3pm?\" It is 2:45pm and you need 30 more minutes. What do you reply?",opts:["Yes, I'll submit it on time","I need 30 more minutes — can I send by 3:30pm?","Say nothing and submit at 4pm","Ask a colleague to submit it for you"],ans:1},
+  {q:'Which sentence is correct?',opts:['I am go to office tomorrow.','I going office tomorrow.','I will go to the office tomorrow.','I go office tomorrow will.'],ans:2},
+  {q:'What does the word "punctual" mean?',opts:['Being rude to colleagues','Working too slowly','Making mistakes often','Arriving or doing things at the correct time'],ans:3},
+  {q:'Your HR sends this message: "Your interview has been rescheduled to Thursday at 11am." What does this mean?',opts:['The interview is cancelled','You need to go today','The interview time has been changed to Thursday 11am','You missed your interview'],ans:2},
+  {q:'You notice your coworker made an error in an Excel sheet. What do you do?',opts:['Ignore it — it is not your problem','Delete the whole sheet','Tell your manager to fire them','Fix it and politely let your colleague know'],ans:3}
+];
+const AT_WORK=[
+  {q:'Your shift starts at 9am. You arrive at 9:10am. What do you do?',opts:['Say nothing — 10 minutes is nothing','Blame the traffic, it is not your fault','Apologise to your manager and explain','Arrive late again tomorrow'],ans:2},
+  {q:'Your manager gives you a task you do not understand. What do you do?',opts:['Try to do it even if you do it wrong','Do nothing and wait','Ask a friend outside the office','Politely ask your manager to explain again'],ans:3},
+  {q:'A difficult customer is rude to you at work. What do you do?',opts:['Be rude back','Walk away and ignore them','Stay calm and try to help professionally','Complain loudly to everyone'],ans:2},
+  {q:'It is your last week at a job before you move to a new one. What do you do?',opts:['Stop working hard — you are leaving anyway','Leave without informing anyone','Ask for extra pay before you leave','Complete your tasks and support the handover'],ans:3}
+];
+
+let atEI=0,atWI=0,atES=0,atWS=0,atEA=[],atWA=[],atTrack='',atBgA={};
+
+function openAssessment(){
+  atEI=0;atWI=0;atES=0;atWS=0;atEA=[];atWA=[];atTrack='';atBgA={};
+  renderAtBG();
+  atStep(0);
+  document.getElementById('at-ov').classList.add('open');
+}
+function closeAT(){document.getElementById('at-ov').classList.remove('open');}
+
+const AT_TITLES=['Register your profile','Step 1 — Background','Step 2 — English Check','Step 3 — Work Readiness','Step 4 — Your Track','Your result'];
+function atStep(n){
+  document.querySelectorAll('.at-screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById('at-s'+n).classList.add('active');
+  [0,1,2,3].forEach(i=>{const p=document.getElementById('ap'+i);p.classList.remove('done','act');if(i<n-1)p.classList.add('done');else if(i===n-1)p.classList.add('act');});
+  document.getElementById('at-ttl').textContent=AT_TITLES[n]||'Register your profile';
+  if(n===2)renderAtEng();
+  if(n===3){atWI=0;renderAtWork();}
+}
+
+function renderAtBG(){
+  document.getElementById('at-bg-qs').innerHTML=AT_BG.map((q,qi)=>`
+    <div style="margin-bottom:18px">
+      <div class="at-q-text" style="font-weight:600;color:var(--ink)">${qi+1}. ${q.q}</div>
+      <div class="at-options">${q.opts.map((o,oi)=>`<label class="at-opt${atBgA[q.id]===oi?' sel':''}">
+        <input type="radio" name="${q.id}" value="${oi}" ${atBgA[q.id]===oi?'checked':''} onchange="atBgSel('${q.id}',${oi},this)">
+        <span class="at-opt-text">${o}</span></label>`).join('')}
+      </div>
+    </div>`).join('');
+}
+function atBgSel(qid,val,inp){
+  inp.closest('.at-options').querySelectorAll('.at-opt').forEach(l=>l.classList.remove('sel'));
+  inp.closest('.at-opt').classList.add('sel');
+  atBgA[qid]=val;
+}
+function atNextBG(){
+  if(AT_BG.some(q=>atBgA[q.id]===undefined)){toast('Please answer all questions to continue.');return;}
+  atStep(2);
+}
+
+function renderAtEng(){
+  const q=AT_ENG[atEI];const sv=atEA[atEI];
+  document.getElementById('at-eq').textContent=atEI+1;
+  document.getElementById('at-eq-body').innerHTML=`<div class="at-q-text">${q.q}</div>
+    <div class="at-options">${q.opts.map((o,i)=>`<label class="at-opt${sv===i?' sel':''}">
+      <input type="radio" name="at-eq" value="${i}" ${sv===i?'checked':''} onchange="atEngSel(${i},this)">
+      <span class="at-opt-text">${o}</span></label>`).join('')}</div>`;
+  document.getElementById('at-eb').textContent=atEI===0?'Back':'Previous';
+  document.getElementById('at-en').textContent=atEI===AT_ENG.length-1?'Continue':'Next';
+}
+function atEngSel(v,inp){
+  inp.closest('.at-options').querySelectorAll('.at-opt').forEach(l=>l.classList.remove('sel'));
+  inp.closest('.at-opt').classList.add('sel');
+  atEA[atEI]=v;
+}
+function atEngBack(){if(atEI===0)atStep(1);else{atEI--;renderAtEng();}}
+function atEngNext(){
+  if(atEA[atEI]===undefined){toast('Please choose an answer.');return;}
+  if(atEI<AT_ENG.length-1){atEI++;renderAtEng();}
+  else{atES=atEA.filter((a,i)=>a===AT_ENG[i].ans).length;atStep(3);}
+}
+
+function renderAtWork(){
+  const q=AT_WORK[atWI];const sv=atWA[atWI];
+  document.getElementById('at-wq').textContent=atWI+1;
+  document.getElementById('at-wq-body').innerHTML=`<div class="at-q-text">${q.q}</div>
+    <div class="at-options">${q.opts.map((o,i)=>`<label class="at-opt${sv===i?' sel':''}">
+      <input type="radio" name="at-wq" value="${i}" ${sv===i?'checked':''} onchange="atWorkSel(${i},this)">
+      <span class="at-opt-text">${o}</span></label>`).join('')}</div>`;
+  document.getElementById('at-wb').textContent=atWI===0?'Back':'Previous';
+  document.getElementById('at-wn').textContent=atWI===AT_WORK.length-1?'Continue':'Next';
+}
+function atWorkSel(v,inp){
+  inp.closest('.at-options').querySelectorAll('.at-opt').forEach(l=>l.classList.remove('sel'));
+  inp.closest('.at-opt').classList.add('sel');
+  atWA[atWI]=v;
+}
+function atWorkBack(){if(atWI===0)atStep(2);else{atWI--;renderAtWork();}}
+function atWorkNext(){
+  if(atWA[atWI]===undefined){toast('Please choose an answer.');return;}
+  if(atWI<AT_WORK.length-1){atWI++;renderAtWork();}
+  else{atWS=atWA.filter((a,i)=>a===AT_WORK[i].ans).length;atStep(4);}
+}
+
+function selTrack(t){
+  atTrack=t;
+  document.getElementById('attrk-corp').classList.toggle('sel',t==='corporate');
+  document.getElementById('attrk-ngo').classList.toggle('sel',t==='ngo');
+}
+
+function atFinish(){
+  if(!atTrack){toast('Please choose your track to continue.');return;}
+  const tot=atES+atWS,mx=AT_ENG.length+AT_WORK.length;
+  document.getElementById('at-rs-n').textContent=tot;
+  document.getElementById('at-rs-l').textContent='out of '+mx;
+  let msg='',tips='';
+  if(tot>=7){
+    msg='<strong>Excellent!</strong> You show strong communication skills and a great work attitude. You are ready to add your profile.';
+  }else if(tot>=4){
+    msg='<strong>Good effort!</strong> You are on the right track. Here are a few tips to help you grow further.';
+    tips='<div class="at-tips-box"><div class="at-tips-ttl">Tips to improve</div><ul><li>Always confirm deadlines — it shows professionalism</li><li>When in doubt, ask your manager — it shows initiative, not weakness</li><li>Stay calm in difficult situations — employers value this highly</li></ul></div>';
+  }else{
+    msg='Keep learning! Every expert was once a beginner. Here are free resources to help you grow, then come back and try again.';
+    tips='<div class="at-tips-box"><div class="at-tips-ttl">Free resources to help you</div><ul><li>YouTube: search "BBC Learning English for work"</li><li>Read one English article a day — Times of India app is free</li><li>Khan Academy has free English courses you can do on your phone</li></ul></div>';
+  }
+  document.getElementById('at-rs-msg').innerHTML=msg;
+  document.getElementById('at-rs-tips').innerHTML=tips;
+  atStep(5);
+}
+
+function atProceed(){
+  closeAT();
+  const sc=document.getElementById('a-sc');
+  while(sc.options.length)sc.remove(0);
+  sc.add(new Option('Select...',''));
+  const corpOpts=['Admin & Data Entry','Sales & Marketing','Catering & Hospitality','Editing & Animation','Graphics & Design','Accounting & Finance','Office Work','BPO','Retail','Logistics','Customer Service','IT & Technology','Other'];
+  const ngoOpts=['Community Outreach','Teaching / Education Support','Social Work','Field Work','Health & Wellness','Environmental Work','Admin & Data Entry','Office Work','Other'];
+  (atTrack==='ngo'?ngoOpts:corpOpts).forEach(o=>sc.add(new Option(o,o)));
+  openAdd();
+}
+
+document.querySelectorAll('.ov').forEach(o=>{
+  if(o.id==='at-ov')return;
+  o.addEventListener('click',e=>{if(e.target===o)o.classList.remove('open');});
+});
 buildChips();render();updateEnqBadge();
 </script>
 </body>

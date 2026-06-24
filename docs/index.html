@@ -886,9 +886,8 @@ function submitInterest(){
     message_type: '⭐ HR INTERESTED — '+name+' ('+phone+')'
   };
 
-  // Send to Meghna
+  // Send to Meghna and Rishikesh
   emailjs.send(EJ_SID,EJ_TID,{...emailData,to_email:N_EMAIL}).catch(()=>{});
-  // Send to Rishikesh
   emailjs.send(EJ_SID,EJ_TID,{...emailData,to_email:N_EMAIL2}).catch(()=>{});
 
   showThanks(d.name);

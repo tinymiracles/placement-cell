@@ -670,9 +670,8 @@ function showPage(p){
   document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));
   document.getElementById('page-'+p).classList.add('active');
   document.querySelectorAll('.nav-link').forEach(x=>x.classList.remove('active'));
-  document.getElementById('nl-'+p).classList.add('active');
+  const nl=document.getElementById('nl-'+p);if(nl)nl.classList.add('active');
   window.scrollTo(0,0);
-  if(p==='enquiries') renderEnquiries();
 }
 
 // Build sector chips + location dropdown
@@ -755,9 +754,6 @@ function openR(id){
   }else{
     body.innerHTML=`<div class="rv-none"><div style="font-size:28px;opacity:0.2">📄</div><p>Resume coming soon.</p></div>`;
   }
-  const isSL=sl.has(id),btn=document.getElementById('rm-sl');
-  btn.textContent=isSL?'✓ Shortlisted':'+ Shortlist';
-  btn.className=isSL?'btn-pm-cl':'btn-pm-sl';
   document.getElementById('r-ov').classList.add('open');
 }
 function closeR(){document.getElementById('r-ov').classList.remove('open');}
@@ -789,12 +785,12 @@ function openHI(){
   document.getElementById('hcf-phone').value='';
   document.getElementById('hcf-email').value='';
   document.getElementById('hcf-company').value='';
-  document.getElementById('hi-ov').classList.add('show');
+  document.getElementById('hi-ov').classList.add('open');
   setTimeout(()=>document.getElementById('hcf-name').focus(),100);
 }
 
 function closeHI(){
-  document.getElementById('hi-ov').classList.remove('show');
+  document.getElementById('hi-ov').classList.remove('open');
 }
 
 function showContactForm(){ openHI(); }

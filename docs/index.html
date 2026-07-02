@@ -55,15 +55,18 @@ body{font-family:var(--sans);background:var(--bg);color:var(--ink);min-height:10
 .btn-send:hover{opacity:0.88;}
 
 /* ━━ HERO ━━ */
-.hero{background:var(--white);border-bottom:1px solid var(--line);padding:52px 40px 40px;}
-.hero-in{max-width:1240px;margin:0 auto;}
-.hero-h1{font-family:var(--serif);font-size:clamp(38px,4.5vw,60px);font-weight:700;line-height:1.02;color:var(--ink);letter-spacing:-0.5px;margin-bottom:10px;animation:heroIn .55s ease both;}
+.hero{background:linear-gradient(135deg,var(--white) 55%,rgba(0,131,138,.06) 100%);border-bottom:1px solid var(--line);padding:64px 40px 52px;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;right:-60px;top:-80px;width:380px;height:380px;border-radius:50%;background:radial-gradient(circle,rgba(0,131,138,.07) 0%,transparent 70%);pointer-events:none;}
+.hero::after{content:'';position:absolute;right:160px;bottom:-60px;width:180px;height:180px;border-radius:50%;background:radial-gradient(circle,rgba(227,237,85,.18) 0%,transparent 70%);pointer-events:none;}
+.hero-in{max-width:1240px;margin:0 auto;position:relative;z-index:1;}
+.hero-h1{font-family:var(--serif);font-size:clamp(42px,5vw,68px);font-weight:700;line-height:1.0;color:var(--ink);letter-spacing:-1px;margin-bottom:12px;animation:heroIn .6s ease both;}
 .hero-h1 em{font-style:italic;color:var(--teal);}
-.hero-bar{width:44px;height:4px;background:var(--lime);border-radius:2px;margin-bottom:14px;animation:heroIn .55s .1s ease both;opacity:0;animation-fill-mode:both;}
-.hero-p{font-size:13.5px;color:var(--ink-3);max-width:520px;line-height:1.75;animation:heroIn .55s .2s ease both;opacity:0;animation-fill-mode:both;}
-.hero-stats{display:flex;gap:32px;margin-top:28px;animation:heroIn .55s .3s ease both;opacity:0;animation-fill-mode:both;}
-.h-stat .n{font-family:var(--serif);font-size:28px;font-style:italic;color:var(--teal);line-height:1;}
-.h-stat .l{font-size:10px;color:var(--ink-4);letter-spacing:0.5px;text-transform:uppercase;margin-top:2px;}
+.hero-bar{width:52px;height:5px;background:linear-gradient(90deg,var(--lime),var(--teal-mid));border-radius:3px;margin-bottom:18px;animation:heroIn .6s .12s ease both;opacity:0;animation-fill-mode:both;}
+.hero-p{font-size:15px;color:var(--ink-3);max-width:540px;line-height:1.8;animation:heroIn .6s .22s ease both;opacity:0;animation-fill-mode:both;}
+.hero-stats{display:flex;gap:40px;margin-top:36px;animation:heroIn .6s .32s ease both;opacity:0;animation-fill-mode:both;}
+.h-stat{background:var(--white);border:1px solid var(--line-d);border-radius:10px;padding:14px 20px;box-shadow:0 2px 12px rgba(13,36,38,.05);}
+.h-stat .n{font-family:var(--serif);font-size:32px;font-style:italic;color:var(--teal);line-height:1;}
+.h-stat .l{font-size:10px;color:var(--ink-4);letter-spacing:0.8px;text-transform:uppercase;margin-top:4px;}
 
 /* ━━ SEARCH STRIP ━━ */
 .ss{background:rgba(255,255,255,.95);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding:0 40px;position:sticky;top:64px;z-index:200;}
@@ -92,8 +95,11 @@ body{font-family:var(--sans);background:var(--bg);color:var(--ink);min-height:10
 @media(max-width:560px){.grid{grid-template-columns:1fr;}}
 
 /* ━━ CARD ━━ */
-.card{background:var(--white);border:1px solid var(--line);border-radius:14px;padding:20px;display:flex;flex-direction:column;gap:12px;cursor:pointer;transition:box-shadow .22s,border-color .22s,transform .22s;opacity:0;animation:fadeUp .4s ease both;}
-.card:hover{box-shadow:0 8px 32px rgba(13,36,38,.11);border-color:var(--teal-mid);transform:translateY(-3px);}
+.card{background:var(--white);border:1px solid var(--line);border-radius:14px;padding:22px;display:flex;flex-direction:column;gap:12px;cursor:pointer;transition:box-shadow .28s,border-color .28s,transform .28s;opacity:0;transform:translateY(24px);}
+.card.visible{opacity:1;transform:translateY(0);}
+.card:hover{box-shadow:0 12px 40px rgba(13,36,38,.13);border-color:var(--teal);transform:translateY(-4px);}
+.card{border-bottom:3px solid transparent;}
+.card:hover{border-bottom-color:var(--teal);}
 .card-top{display:flex;align-items:center;gap:12px;}
 .avi{width:40px;height:40px;border-radius:50%;background:var(--teal);color:var(--white);font-family:var(--serif);font-size:15px;font-weight:700;display:flex;align-items:center;justify-content:center;}
 .c-fn{font-size:9px;font-weight:600;color:var(--ink-3);text-transform:uppercase;letter-spacing:0.8px;text-align:center;}
@@ -804,6 +810,8 @@ const DATA = allData.map(c=>{
 let sl=new Set(), curSec='all', curId=null, pendingResume=null;
 
 function ini(n){return n.split(' ').slice(0,2).map(w=>w[0]).join('').toUpperCase();}
+const AVI_COLORS=['#00838a','#2d6a4f','#6d4c8a','#c05c2a','#1a6ea8','#7a5c00','#8a3060','#1a7a4a'];
+function aviColor(n){let h=0;for(let i=0;i<n.length;i++)h=(h*31+n.charCodeAt(i))%AVI_COLORS.length;return AVI_COLORS[Math.abs(h)];}
 
 // Page nav
 function showPage(p){
@@ -862,9 +870,9 @@ function render(){
   const g=document.getElementById('grid');
   if(!f.length){g.innerHTML=`<div class="empty"><div style="font-size:28px;color:var(--teal-mid)">✦</div><div class="empty-h">No candidates found.</div></div>`;return;}
   g.innerHTML=f.map((d,i)=>`
-  <div class="card" id="c${d.id}" onclick="openP(${d.id})" style="animation-delay:${i*35}ms">
+  <div class="card" id="c${d.id}" onclick="openP(${d.id})" style="transition-delay:${i*55}ms">
     <div class="card-top">
-      <div class="avi">${ini(d.name)}</div>
+      <div class="avi" style="background:${aviColor(d.name)}">${ini(d.name)}</div>
       <div class="card-right">
         <div class="cr-name">${d.name}</div>
         <div class="cr-role">${d.about.slice(0,55)}…</div>
@@ -877,9 +885,14 @@ function render(){
       ${d.track&&d.track!=='corporate'?`<span class="tag t-trk-${d.track}">${{social:'Social',freelance:'Freelance',services:'Services'}[d.track]||d.track}</span>`:''}
     </div>
     <div class="c-foot">
-      <span class="c-loc">📍 ${d.location}, Mumbai</span>
+      <span class="c-loc">📍 ${d.location}${d.location.toLowerCase().includes('mumbai')?'':`, Mumbai`}</span>
     </div>
   </div>`).join('');
+  // Scroll-triggered reveal
+  const io=new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target);}});
+  },{threshold:0.08});
+  document.querySelectorAll('.card').forEach(c=>io.observe(c));
 }
 
 
@@ -907,7 +920,7 @@ function toPf(){closeR();openP(curId);}
 
 function openP(id){
   const d=DATA.find(x=>x.id===id);if(!d)return;curId=id;
-  document.getElementById('pm-av').textContent=ini(d.name);
+  const pmav=document.getElementById('pm-av');pmav.textContent=ini(d.name);pmav.style.background=aviColor(d.name);
   document.getElementById('pm-nm').textContent=d.name;
   document.getElementById('pm-rl').textContent=d.sector;
   document.getElementById('pm-ab').textContent=d.about;
@@ -915,7 +928,7 @@ function openP(id){
   document.getElementById('pm-exs').style.display='none';
   document.getElementById('pm-sk').innerHTML=d.skills.map(s=>`<span class="sk">${s}</span>`).join('');
   document.getElementById('pm-lg').innerHTML=d.langs.map(l=>`<span class="sk">${l}</span>`).join('');
-  document.getElementById('pm-ct').textContent='📍 '+d.location+', Mumbai';
+  document.getElementById('pm-ct').textContent='📍 '+d.location+(d.location.toLowerCase().includes('mumbai')?'':`, Mumbai`);
   document.getElementById('p-ov').classList.add('open');
 }
 function closeP(){document.getElementById('p-ov').classList.remove('open');}

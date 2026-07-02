@@ -49,8 +49,32 @@ body{font-family:var(--sans);background:var(--bg);color:var(--ink);min-height:10
 .hs-n{font-family:var(--serif);font-size:18px;font-style:italic;color:var(--teal);line-height:1;}
 .hs-l{font-size:10px;color:var(--ink-4);letter-spacing:0.5px;}
 .hdr-actions{margin-left:auto;display:flex;gap:8px;}
+.btn-hr-login{height:34px;padding:0 16px;background:transparent;border:1.5px solid var(--teal);color:var(--teal);border-radius:7px;font-family:var(--sans);font-size:12px;font-weight:600;cursor:pointer;transition:all .16s;}
+.btn-hr-login:hover{background:var(--teal);color:var(--white);}
 .btn-add{height:34px;padding:0 18px;background:var(--teal);border:none;color:var(--white);border-radius:7px;font-family:var(--sans);font-size:12px;font-weight:600;cursor:pointer;transition:opacity .14s,transform .14s;}
 .btn-add:hover{opacity:.88;transform:translateY(-1px);}
+.hr-logged{display:flex;align-items:center;gap:8px;height:34px;padding:0 14px;background:var(--teal-soft);border:1.5px solid var(--teal-mid);border-radius:7px;font-size:12px;font-weight:500;color:var(--teal-dark);cursor:pointer;}
+.hr-logged:hover{background:var(--teal-mid);}
+
+/* LOGIN MODAL */
+.login-tabs{display:flex;border-bottom:1px solid var(--line);margin:0 -22px 20px;}
+.login-tab{flex:1;padding:13px;text-align:center;font-size:13px;font-weight:500;color:var(--ink-3);cursor:pointer;border-bottom:2px solid transparent;transition:all .18s;}
+.login-tab.act{color:var(--teal);border-bottom-color:var(--teal);font-weight:600;}
+.login-panel{display:none;}.login-panel.act{display:block;}
+.lf{display:flex;flex-direction:column;gap:11px;}
+.lf label{font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--ink-4);display:block;margin-bottom:4px;}
+.lf input,.lf select{width:100%;height:38px;border:1.5px solid var(--line-d);border-radius:7px;padding:0 12px;font-family:var(--sans);font-size:13px;color:var(--ink);outline:none;background:var(--bg);transition:border .14s;}
+.lf input:focus,.lf select:focus{border-color:var(--teal);background:var(--white);}
+.lf-row-2{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.btn-lf-submit{width:100%;height:40px;background:var(--teal);border:none;border-radius:7px;color:white;font-family:var(--sans);font-size:13px;font-weight:600;cursor:pointer;margin-top:6px;transition:opacity .14s;}
+.btn-lf-submit:hover{opacity:.88;}
+.lf-note{font-size:11px;color:var(--ink-4);text-align:center;margin-top:8px;line-height:1.5;}
+.login-who{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:8px 0;}
+.login-who-card{border:2px solid var(--line-d);border-radius:12px;padding:22px 16px;text-align:center;cursor:pointer;transition:all .2s;}
+.login-who-card:hover{border-color:var(--teal-mid);}
+.login-who-card.sel{border-color:var(--teal);background:var(--teal-soft);}
+.lwc-title{font-family:var(--serif);font-size:16px;font-weight:700;color:var(--ink);margin-bottom:4px;}
+.lwc-desc{font-size:11px;color:var(--ink-4);line-height:1.5;}
 .btn-send{height:32px;padding:0 18px;background:var(--teal);border:none;color:var(--white);border-radius:6px;font-family:var(--sans);font-size:12px;font-weight:600;cursor:pointer;transition:opacity .14s;}
 .btn-send:hover{opacity:0.88;}
 
@@ -95,11 +119,9 @@ body{font-family:var(--sans);background:var(--bg);color:var(--ink);min-height:10
 @media(max-width:560px){.grid{grid-template-columns:1fr;}}
 
 /* ━━ CARD ━━ */
-.card{background:var(--white);border:1px solid var(--line);border-radius:14px;padding:22px;display:flex;flex-direction:column;gap:12px;cursor:pointer;transition:box-shadow .28s,border-color .28s,transform .28s;opacity:0;transform:translateY(24px);}
+.card{background:var(--white);border:1px solid var(--line);border-bottom:3px solid transparent;border-radius:14px;padding:22px;display:flex;flex-direction:column;gap:12px;cursor:pointer;opacity:0;transform:translateY(28px);transition:opacity .5s ease,transform .5s ease,box-shadow .25s,border-color .25s;}
 .card.visible{opacity:1;transform:translateY(0);}
-.card:hover{box-shadow:0 12px 40px rgba(13,36,38,.13);border-color:var(--teal);transform:translateY(-4px);}
-.card{border-bottom:3px solid transparent;}
-.card:hover{border-bottom-color:var(--teal);}
+.card:hover{box-shadow:0 12px 40px rgba(13,36,38,.13);border-color:var(--teal-mid);border-bottom-color:var(--teal);transform:translateY(-4px);}
 .card-top{display:flex;align-items:center;gap:12px;}
 .avi{width:40px;height:40px;border-radius:50%;background:var(--teal);color:var(--white);font-family:var(--serif);font-size:15px;font-weight:700;display:flex;align-items:center;justify-content:center;}
 .c-fn{font-size:9px;font-weight:600;color:var(--ink-3);text-transform:uppercase;letter-spacing:0.8px;text-align:center;}
@@ -354,8 +376,9 @@ footer a:hover{color:white;}
     <div class="hdr-mid">
       <div class="hs"><span class="hs-n" id="h-tot">43</span><span class="hs-l">candidates</span></div>
     </div>
-    <div class="hdr-actions">
-      <button class="btn-add" onclick="openAssessment()">+ Add profile</button>
+    <div class="hdr-actions" id="hdr-actions">
+      <button class="btn-hr-login" id="btn-hr-login" onclick="openSignIn()">HR Login</button>
+      <button class="btn-add" onclick="openAssessment()">Add my profile</button>
     </div>
   </div>
 </header>
@@ -597,6 +620,87 @@ footer a:hover{color:white;}
   </div>
 </div>
 
+<!-- SIGN IN MODAL — choose who you are -->
+<div class="ov" id="si-ov">
+  <div class="modal" style="max-width:440px">
+    <div class="m-hdr">
+      <div class="m-name" style="padding-top:6px">Sign in</div>
+      <button class="m-cl" onclick="closeSI()">✕</button>
+    </div>
+    <div class="m-bdy">
+      <div style="font-size:13px;color:var(--ink-3);margin-bottom:18px">Who are you signing in as?</div>
+      <div class="login-who">
+        <div class="login-who-card" id="lwc-hr" onclick="openHRLogin()">
+          <div style="font-size:28px;margin-bottom:8px">🏢</div>
+          <div class="lwc-title">HR / Employer</div>
+          <div class="lwc-desc">Browse candidates and post your company details</div>
+        </div>
+        <div class="login-who-card" id="lwc-youth" onclick="closeSI();openAssessment()">
+          <div style="font-size:28px;margin-bottom:8px">👤</div>
+          <div class="lwc-title">Youth</div>
+          <div class="lwc-desc">Add or manage your profile and resume</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- HR LOGIN MODAL -->
+<div class="ov" id="hl-ov">
+  <div class="modal" style="max-width:480px">
+    <div class="m-hdr">
+      <div class="m-name" style="padding-top:6px">HR / Employer</div>
+      <button class="m-cl" onclick="closeHRLogin()">✕</button>
+    </div>
+    <div class="m-bdy" style="padding-top:0">
+      <div class="login-tabs">
+        <div class="login-tab act" id="lt-in" onclick="switchLoginTab('in')">Sign In</div>
+        <div class="login-tab" id="lt-up" onclick="switchLoginTab('up')">Create Account</div>
+      </div>
+
+      <!-- Sign In panel -->
+      <div class="login-panel act" id="lp-in">
+        <div class="lf">
+          <div><label>Work email *</label><input type="email" id="hr-si-email" placeholder="hr@company.com"/></div>
+          <div><label>Password *</label><input type="password" id="hr-si-pw" placeholder="Your password"/></div>
+          <button class="btn-lf-submit" onclick="hrSignIn()">Sign in</button>
+          <div class="lf-note">Don't have an account? <span style="color:var(--teal);cursor:pointer;font-weight:600" onclick="switchLoginTab('up')">Create one →</span></div>
+          <div class="lf-note" style="margin-top:0">Login with Firebase will be enabled soon.</div>
+        </div>
+      </div>
+
+      <!-- Create Account panel -->
+      <div class="login-panel" id="lp-up">
+        <div class="lf">
+          <div class="lf-row-2">
+            <div><label>Your name *</label><input type="text" id="hr-nm" placeholder="e.g. Priya Shah"/></div>
+            <div><label>Phone *</label><input type="tel" id="hr-ph" placeholder="+91 98765 43210"/></div>
+          </div>
+          <div><label>Work email *</label><input type="email" id="hr-em" placeholder="hr@company.com"/></div>
+          <div><label>Company name *</label><input type="text" id="hr-co" placeholder="e.g. Reliance Retail"/></div>
+          <div class="lf-row-2">
+            <div><label>Industry *</label>
+              <select id="hr-ind">
+                <option value="">Select...</option>
+                <option>Retail & FMCG</option><option>Banking & Finance</option>
+                <option>IT & Technology</option><option>Healthcare</option>
+                <option>Hospitality & Food</option><option>Manufacturing</option>
+                <option>Education & NGO</option><option>Media & Marketing</option>
+                <option>Logistics & Supply Chain</option><option>Real Estate</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div><label>City *</label><input type="text" id="hr-city" placeholder="e.g. Mumbai"/></div>
+          </div>
+          <div><label>Password *</label><input type="password" id="hr-up-pw" placeholder="Create a password"/></div>
+          <button class="btn-lf-submit" onclick="hrSignUp()">Create account</button>
+          <div class="lf-note">All fields are mandatory. Your data will be saved to our secure database once Firebase is connected.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- ASSESSMENT MODAL -->
 <div class="ov" id="at-ov">
   <div class="modal" style="max-width:520px">
@@ -810,8 +914,6 @@ const DATA = allData.map(c=>{
 let sl=new Set(), curSec='all', curId=null, pendingResume=null;
 
 function ini(n){return n.split(' ').slice(0,2).map(w=>w[0]).join('').toUpperCase();}
-const AVI_COLORS=['#00838a','#2d6a4f','#6d4c8a','#c05c2a','#1a6ea8','#7a5c00','#8a3060','#1a7a4a'];
-function aviColor(n){let h=0;for(let i=0;i<n.length;i++)h=(h*31+n.charCodeAt(i))%AVI_COLORS.length;return AVI_COLORS[Math.abs(h)];}
 
 // Page nav
 function showPage(p){
@@ -872,7 +974,7 @@ function render(){
   g.innerHTML=f.map((d,i)=>`
   <div class="card" id="c${d.id}" onclick="openP(${d.id})" style="transition-delay:${i*55}ms">
     <div class="card-top">
-      <div class="avi" style="background:${aviColor(d.name)}">${ini(d.name)}</div>
+      <div class="avi">${ini(d.name)}</div>
       <div class="card-right">
         <div class="cr-name">${d.name}</div>
         <div class="cr-role">${d.about.slice(0,55)}…</div>
@@ -888,11 +990,10 @@ function render(){
       <span class="c-loc">📍 ${d.location}${d.location.toLowerCase().includes('mumbai')?'':`, Mumbai`}</span>
     </div>
   </div>`).join('');
-  // Scroll-triggered reveal
-  const io=new IntersectionObserver((entries)=>{
-    entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target);}});
-  },{threshold:0.08});
-  document.querySelectorAll('.card').forEach(c=>io.observe(c));
+  // Slide in one by one
+  document.querySelectorAll('.card').forEach((c,i)=>{
+    setTimeout(()=>c.classList.add('visible'), 60 + i*90);
+  });
 }
 
 
@@ -920,7 +1021,7 @@ function toPf(){closeR();openP(curId);}
 
 function openP(id){
   const d=DATA.find(x=>x.id===id);if(!d)return;curId=id;
-  const pmav=document.getElementById('pm-av');pmav.textContent=ini(d.name);pmav.style.background=aviColor(d.name);
+  document.getElementById('pm-av').textContent=ini(d.name);
   document.getElementById('pm-nm').textContent=d.name;
   document.getElementById('pm-rl').textContent=d.sector;
   document.getElementById('pm-ab').textContent=d.about;
@@ -1147,6 +1248,69 @@ function renderEnquiries(){
 
 // ── TOAST ────────────────────────────────────────
 function toast(m){const t=document.getElementById('toast');document.getElementById('t-m').textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3000);}
+
+// ── SIGN IN ──────────────────────────────────────
+let hrUser=JSON.parse(localStorage.getItem('typc_hr_user')||'null');
+
+function openSignIn(){document.getElementById('si-ov').classList.add('open');}
+function closeSI(){document.getElementById('si-ov').classList.remove('open');}
+function openHRLogin(){closeSI();document.getElementById('hl-ov').classList.add('open');switchLoginTab(hrUser?'in':'in');}
+function closeHRLogin(){document.getElementById('hl-ov').classList.remove('open');}
+
+function switchLoginTab(t){
+  ['in','up'].forEach(x=>{
+    document.getElementById('lt-'+x).classList.toggle('act',x===t);
+    document.getElementById('lp-'+x).classList.toggle('act',x===t);
+  });
+}
+
+function hrSignIn(){
+  const email=document.getElementById('hr-si-email').value.trim();
+  const pw=document.getElementById('hr-si-pw').value;
+  if(!email||!pw){toast('Please fill all fields.');return;}
+  const saved=JSON.parse(localStorage.getItem('typc_hr_user')||'null');
+  if(saved&&saved.email===email){
+    hrUser=saved;
+    localStorage.setItem('typc_hr_user',JSON.stringify(hrUser));
+    closeHRLogin();updateHRHeader();
+    toast('Welcome back, '+hrUser.name+'!');
+  } else {
+    toast('Account not found — please create one first.');
+    switchLoginTab('up');
+  }
+}
+
+function hrSignUp(){
+  const nm=document.getElementById('hr-nm').value.trim();
+  const ph=document.getElementById('hr-ph').value.trim();
+  const em=document.getElementById('hr-em').value.trim();
+  const co=document.getElementById('hr-co').value.trim();
+  const ind=document.getElementById('hr-ind').value;
+  const city=document.getElementById('hr-city').value.trim();
+  const pw=document.getElementById('hr-up-pw').value;
+  if(!nm||!ph||!em||!co||!ind||!city||!pw){toast('Please fill all required fields.');return;}
+  hrUser={name:nm,phone:ph,email:em,company:co,industry:ind,city:city};
+  localStorage.setItem('typc_hr_user',JSON.stringify(hrUser));
+  closeHRLogin();updateHRHeader();
+  toast('Account created! Welcome, '+nm+'.');
+}
+
+function updateHRHeader(){
+  const btn=document.getElementById('btn-hr-login');
+  if(!btn)return;
+  if(hrUser){
+    btn.className='hr-logged';
+    btn.textContent=hrUser.company+' ▾';
+    btn.onclick=()=>{if(confirm('Sign out of HR account?')){hrUser=null;localStorage.removeItem('typc_hr_user');location.reload();}};
+  } else {
+    btn.className='btn-hr-login';
+    btn.textContent='HR Login';
+    btn.onclick=openSignIn;
+  }
+}
+
+// Init HR header state on load
+updateHRHeader();
 
 // ── ASSESSMENT ─────────────────────────────────────
 const AT_BG=[

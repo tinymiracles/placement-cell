@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tiny Youth Placement Cell — Tiny Miracles</title>
+<title>Pheli Kamai — tiny miracles</title>
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -114,39 +114,26 @@ body{font-family:var(--sans);background:var(--bg);color:var(--ink);min-height:10
 
 /* ━━ TRACK ━━ */
 .track-section{padding:28px 0 60px;}
-.track-hdr{display:flex;align-items:center;justify-content:space-between;padding:0 40px 18px;}
-.track-hdr-l{display:flex;align-items:center;gap:12px;}
-.track-ttl{font-family:var(--serif);font-size:18px;font-weight:700;color:var(--ink);}
-.track-nav{display:flex;gap:8px;}
-.track-btn{width:36px;height:36px;border-radius:50%;background:var(--white);border:1.5px solid var(--line-d);cursor:pointer;font-size:18px;color:var(--ink-3);display:flex;align-items:center;justify-content:center;transition:all .16s;}
-.track-btn:hover{border-color:var(--teal);color:var(--teal);}
-.track-outer{position:relative;}
-.track-outer::before,.track-outer::after{content:'';position:absolute;top:0;bottom:24px;width:44px;z-index:2;pointer-events:none;}
-.track-outer::before{left:0;background:linear-gradient(90deg,var(--bg),transparent);}
-.track-outer::after{right:0;background:linear-gradient(-90deg,var(--bg),transparent);}
-.profiles-track{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;padding:8px 40px 24px;scrollbar-width:none;-webkit-overflow-scrolling:touch;}
-.profiles-track::-webkit-scrollbar{display:none;}
+.track-rows{display:flex;flex-direction:column;gap:14px;overflow:hidden;}
+.track-row{overflow:hidden;width:100%;}
+.track-inner{display:flex;gap:12px;width:max-content;will-change:transform;}
+.track-inner.left{animation:scroll-left var(--spd,38s) linear infinite;}
+.track-inner.right{animation:scroll-right var(--spd,38s) linear infinite;}
+.track-row:hover .track-inner{animation-play-state:paused;}
+@keyframes scroll-left{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
+@keyframes scroll-right{0%{transform:translateX(-50%);}100%{transform:translateX(0);}}
 
 /* ━━ PROFILE CARD ━━ */
-.pcard{scroll-snap-align:start;min-width:262px;max-width:262px;background:var(--white);border:1px solid var(--line);border-radius:18px;padding:20px 18px;display:flex;flex-direction:column;gap:12px;cursor:pointer;opacity:0;transform:translateX(28px);transition:opacity .45s ease,transform .45s ease,box-shadow .22s,border-color .22s;position:relative;overflow:hidden;}
-.pcard.visible{opacity:1;transform:translateX(0);}
-.pcard:hover{box-shadow:0 10px 36px rgba(13,36,38,.13);border-color:var(--teal-mid);}
-.pcard::after{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--teal),var(--lime));opacity:0;transition:opacity .22s;}
+.pcard{min-width:190px;max-width:190px;background:var(--white);border:1px solid var(--line);border-radius:12px;padding:16px 14px;display:flex;flex-direction:column;gap:7px;cursor:pointer;position:relative;overflow:hidden;transition:box-shadow .2s,border-color .2s;flex-shrink:0;}
+.pcard:hover{box-shadow:0 8px 24px rgba(13,36,38,.12);border-color:var(--teal-mid);}
+.pcard::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--teal),var(--lime));opacity:0;transition:opacity .2s;}
 .pcard:hover::after{opacity:1;}
-.pc-ngo{display:inline-flex;align-items:center;gap:5px;font-size:10px;font-weight:600;color:var(--teal-dark);background:var(--teal-soft);border-radius:20px;padding:3px 10px;letter-spacing:.3px;width:fit-content;}
-.pc-top{display:flex;align-items:center;gap:10px;}
-.pc-avi{width:44px;height:44px;border-radius:13px;background:var(--teal);color:var(--white);font-family:var(--serif);font-size:15px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-.pc-area{font-size:12px;color:var(--ink-3);}
-.pc-skills{display:flex;flex-wrap:wrap;gap:5px;}
-.pc-skill{font-size:10.5px;padding:3px 9px;background:var(--bg);border:1px solid var(--line-d);border-radius:20px;color:var(--ink-3);}
-.pc-skill-more{font-size:10.5px;padding:3px 9px;background:var(--teal-soft);border:1px solid var(--teal-mid);border-radius:20px;color:var(--teal);font-weight:600;}
-.pc-avail{display:flex;align-items:center;gap:7px;font-size:11.5px;color:#2e7d32;font-weight:600;}
+.pc-name{font-family:var(--serif);font-size:13.5px;font-weight:700;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.pc-sector{font-size:11px;color:var(--ink-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.pc-area{font-size:10.5px;color:var(--ink-4);}
+.pc-avail{display:flex;align-items:center;gap:6px;font-size:10.5px;color:#2e7d32;font-weight:600;margin-top:3px;}
 @keyframes pulse-dot{0%,100%{box-shadow:0 0 0 0 rgba(67,160,71,.4);}70%{box-shadow:0 0 0 6px rgba(67,160,71,0);}}
-.avail-dot{width:7px;height:7px;border-radius:50%;background:#43a047;flex-shrink:0;animation:pulse-dot 2s ease-in-out infinite;}
-.pc-locked{border-top:1px dashed var(--line-d);padding-top:12px;display:flex;align-items:center;justify-content:space-between;gap:8px;}
-.pc-locked-lbl{font-size:11px;color:var(--ink-4);}
-.pc-btn{height:30px;padding:0 14px;background:var(--teal);border:none;border-radius:7px;color:white;font-family:var(--sans);font-size:11px;font-weight:600;cursor:pointer;transition:opacity .14s,transform .14s;white-space:nowrap;flex-shrink:0;}
-.pc-btn:hover{opacity:.88;transform:translateY(-1px);}
+.avail-dot{width:6px;height:6px;border-radius:50%;background:#43a047;flex-shrink:0;animation:pulse-dot 2s ease-in-out infinite;}
 
 /* ━━ SHARED ━━ */
 .tags{display:flex;flex-wrap:wrap;gap:4px;}
@@ -294,7 +281,7 @@ footer a:hover{color:white;}
 @media(max-width:700px){
   .hdr-in{padding:0 20px;}
   .hero{padding:32px 20px 28px;}
-  .track-hdr{padding:0 20px 14px;}.profiles-track{padding:8px 20px 24px;}.track-outer::before,.track-outer::after{display:none;}
+  .track-section{padding:20px 0 40px;}.track-rows{gap:10px;}
   .about-wrap,.contact-wrap{padding:40px 20px;}
   .hdr-mid{display:none;}
   footer{padding:20px;flex-direction:column;align-items:flex-start;}
@@ -375,8 +362,8 @@ footer a:hover{color:white;}
   <div class="hdr-in">
     <a class="brand" onclick="showPage('home')">
       <div>
-        <div class="wm-name">tiny <span>miracles</span></div>
-        <span class="wm-sub">Youth Placement Cell</span>
+        <div class="wm-name">Pheli <span>Kamai</span></div>
+        <span class="wm-sub">tiny miracles</span>
       </div>
     </a>
     <nav class="nav-links">
@@ -428,18 +415,7 @@ footer a:hover{color:white;}
   </div>
 
   <div class="track-section">
-    <div class="track-hdr">
-      <div class="track-hdr-l">
-        <div class="track-ttl">Our Candidates</div>
-      </div>
-      <div class="track-nav">
-        <button class="track-btn" onclick="scrollTrack(-1)" title="Previous">&#8592;</button>
-        <button class="track-btn" onclick="scrollTrack(1)" title="Next">&#8594;</button>
-      </div>
-    </div>
-    <div class="track-outer">
-      <div class="profiles-track" id="grid"></div>
-    </div>
+    <div class="track-rows" id="grid"></div>
   </div>
 
 </div><!-- /home -->
@@ -447,14 +423,14 @@ footer a:hover{color:white;}
 <!-- ━━ ABOUT PAGE ━━ -->
 <div class="page" id="page-about">
   <div class="about-wrap">
-    <h2>About <em>Tiny Youth</em><br>Placement Cell</h2>
+    <h2>About <em>Pheli</em><br>Kamai</h2>
     <div class="ab-bar"></div>
     <div class="ab-stats">
       <div class="ab-stat"><div class="n">43</div><div class="l">Candidates</div></div>
       <div class="ab-stat"><div class="n">33</div><div class="l">Resumes Ready</div></div>
       <div class="ab-stat"><div class="n">10+</div><div class="l">Sectors</div></div>
     </div>
-    <p class="ab-body">The <strong>Tiny Youth Placement Cell</strong> is an initiative by <strong>Tiny Miracles</strong> — a B-Corp certified social enterprise based in Mumbai — to connect motivated young people from across the city with real employment opportunities.</p>
+    <p class="ab-body"><strong>Pheli Kamai</strong> is an initiative by <strong>tiny miracles</strong> — a B-Corp certified social enterprise based in Mumbai — to connect motivated young people from across the city with real employment opportunities.</p>
     <p class="ab-body">We work with youth from diverse backgrounds who are ready to work, eager to learn, and looking for their first — or next — step in their careers. Our candidates span a wide range of skills: from accounting and data entry to hospitality, sales, creative media, and more.</p>
     <p class="ab-body">For employers, we offer a simple promise: pre-screened, motivated candidates who are ready to show up and grow. You browse, you connect, we make the introduction.</p>
     <button class="btn-teal" onclick="showPage('contact')">Get in touch →</button>
@@ -813,7 +789,7 @@ footer a:hover{color:white;}
 </div>
 
 <footer>
-  <div>© 2026 <a href="https://tinymiracles.com" target="_blank">Tiny Miracles</a> · Tiny Youth Placement Cell · Mumbai</div>
+  <div>© 2026 <a href="https://tinymiracles.com" target="_blank">tiny miracles</a> · Pheli Kamai · Mumbai</div>
   <div>meghna@tinymiracles.com &nbsp;·&nbsp; +91 9326691744</div>
 </footer>
 
@@ -988,38 +964,27 @@ function render(){
   let f=DATA.filter(d=>{
     if(curSec!=='all'&&d.track!==curSec)return false;
     if(loc!=='all'&&d.location!==loc)return false;
-    if(q){const h=`${d.name} ${d.role} ${d.sector} ${d.skills.join(' ')} ${d.location} ${d.about}`.toLowerCase();if(!h.includes(q))return false;}
+    if(q){const h=`${d.name} ${d.sector} ${d.skills.join(' ')} ${d.location} ${d.about}`.toLowerCase();if(!h.includes(q))return false;}
     return true;
   });
   document.getElementById('rc').textContent=f.length;
   const g=document.getElementById('grid');
-  if(!f.length){g.innerHTML=`<div class="empty" style="min-width:260px;padding:60px 24px"><div style="font-size:28px;color:var(--teal-mid)">✦</div><div class="empty-h">No candidates found.</div></div>`;return;}
-  g.innerHTML=f.map((d,i)=>`
-  <div class="pcard" id="c${d.id}" onclick="openP(${d.id})">
-    <div class="pc-ngo">🌱 Tiny Miracles</div>
-    <div class="pc-top">
-      <div class="pc-avi">${ini(d.name)}</div>
-      <div class="pc-area">📍 ${d.location}${d.location.toLowerCase().includes('mumbai')?'':`, Mumbai`}</div>
-    </div>
-    <div class="pc-skills">
-      ${d.skills.slice(0,3).map(s=>`<span class="pc-skill">${s}</span>`).join('')}
-      ${d.skills.length>3?`<span class="pc-skill-more">+${d.skills.length-3}</span>`:''}
-    </div>
+  if(!f.length){g.innerHTML=`<div class="empty" style="padding:60px 40px"><div style="font-size:28px;color:var(--teal-mid)">✦</div><div class="empty-h">No candidates found.</div></div>`;return;}
+  const card=d=>`<div class="pcard" onclick="openP(${d.id})">
+    <div class="pc-name">${d.name}</div>
+    <div class="pc-sector">${d.sector}</div>
+    <div class="pc-area">📍 ${d.location}${d.location.toLowerCase().includes('mumbai')?'':`, Mumbai`}</div>
     <div class="pc-avail"><span class="avail-dot"></span>Available</div>
-    <div class="pc-locked">
-      <div class="pc-locked-lbl">🔒 Name hidden</div>
-      <button class="pc-btn" onclick="event.stopPropagation();openP(${d.id})">View →</button>
-    </div>
-  </div>`).join('');
-  // Slide in one by one from the right
-  document.querySelectorAll('.pcard').forEach((c,i)=>{
-    setTimeout(()=>c.classList.add('visible'), 50 + i*75);
-  });
-}
-
-function scrollTrack(dir){
-  const t=document.getElementById('grid');
-  t.scrollBy({left:dir*296,behavior:'smooth'});
+  </div>`;
+  const ROWS=4;
+  g.innerHTML=Array.from({length:ROWS},(_,i)=>{
+    const row=f.filter((_,j)=>j%ROWS===i);
+    if(!row.length)return'';
+    const dir=i%2===0?'left':'right';
+    const spd=30+i*7;
+    const cards=row.map(card).join('');
+    return`<div class="track-row"><div class="track-inner ${dir}" style="--spd:${spd}s">${cards}${cards}</div></div>`;
+  }).join('');
 }
 
 
@@ -1031,7 +996,7 @@ function openR(id){
   document.getElementById('rm-nm').textContent=hrUser?d.name:'Candidate';
   document.getElementById('rm-rl').textContent=d.sector;
   const body=document.getElementById('rm-body');
-  const redact=`<div style="background:var(--teal-soft);border-bottom:1.5px solid var(--teal-mid);padding:11px 16px;display:flex;align-items:flex-start;gap:9px;font-size:11.5px;color:var(--teal-dark)"><span style="font-size:15px;flex-shrink:0">🔒</span><div><strong>Contact details are not shown to HR.</strong> To connect with this candidate, contact Tiny Miracles — <strong>meghna@tinymiracles.com</strong> · +91 9326691744.</div></div>`;
+  const redact=`<div style="background:var(--teal-soft);border-bottom:1.5px solid var(--teal-mid);padding:11px 16px;display:flex;align-items:flex-start;gap:9px;font-size:11.5px;color:var(--teal-dark)"><span style="font-size:15px;flex-shrink:0">🔒</span><div><strong>Contact details are not shown to HR.</strong> To connect with this candidate, contact Pheli Kamai — <strong>meghna@tinymiracles.com</strong> · +91 9326691744.</div></div>`;
   if(d.resumeKey&&RESUMES[d.resumeKey]){
     const r=RESUMES[d.resumeKey];
     if(r.t==='pdf'){
@@ -1094,7 +1059,7 @@ function showContactForm(){ openHI(); }
 
 function notifyWA(){
   const d=DATA.find(x=>x.id===curId);if(!d)return;
-  const msg=encodeURIComponent(`Hi Meghna! I'm interested in *${d.name}* from Tiny Youth Placement Cell.\n\nSectors: ${d.skills.join(', ')}\nLocation: ${d.location}, Mumbai\n\nPlease share more details!`);
+  const msg=encodeURIComponent(`Hi Meghna! I'm interested in *${d.name}* from Pheli Kamai (tiny miracles).\n\nSectors: ${d.skills.join(', ')}\nLocation: ${d.location}, Mumbai\n\nPlease share more details!`);
   window.open(`https://wa.me/${N_WA}?text=${msg}`,'_blank');
 }
 
@@ -1279,7 +1244,7 @@ function renderEnquiries(){
         <div class="enq-sector">Sectors: ${e.candidateSectors} · ${e.candidateLocation}</div>
         <div class="enq-card-actions">
           <button class="btn-enq-wa" onclick="window.open('https://wa.me/91'+${JSON.stringify(e.hrPhone)}.replace(/\D/g,''),'_blank')">💬 WhatsApp HR</button>
-          <button class="btn-enq-mail" onclick="window.open('mailto:${e.hrEmail}?subject=Re: ${encodeURIComponent(e.candidateName)} — Tiny Youth Placement Cell','_blank')">✉️ Email HR</button>
+          <button class="btn-enq-mail" onclick="window.open('mailto:${e.hrEmail}?subject=Re: ${encodeURIComponent(e.candidateName)} — Pheli Kamai','_blank')">✉️ Email HR</button>
         </div>
       </div>
     </div>`).join('')}</div>`;

@@ -376,7 +376,7 @@ footer a:hover{color:white;}
       <div class="hs"><span class="hs-n" id="h-tot">43</span><span class="hs-l">candidates</span></div>
     </div>
     <div class="hdr-actions" id="hdr-actions">
-      <button class="btn-hr-login" id="btn-hr-login" onclick="openSignIn()">HR Login</button>
+      <button class="btn-hr-login" id="btn-hr-login" onclick="openSignIn()">Login</button>
       <button class="btn-add" onclick="openAdd()">Add my profile</button>
     </div>
   </div>
@@ -459,8 +459,8 @@ footer a:hover{color:white;}
       <button class="btn-ct-submit" onclick="submitContact()">Send message</button>
     </div>
     <div class="ct-alt">
-      <div class="ct-row-alt"><div class="ct-ico">✉️</div><div class="ct-info"><div class="ct-t">Email</div><div class="ct-s">meghna@tinymiracles.com</div></div></div>
-      <div class="ct-row-alt"><div class="ct-ico">💬</div><div class="ct-info"><div class="ct-t">WhatsApp</div><div class="ct-s" style="cursor:pointer" onclick="window.open('https://wa.me/919326691744','_blank')">+91 9326691744</div></div></div>
+      <div class="ct-row-alt"><div class="ct-ico">👩</div><div class="ct-info"><div class="ct-t">Meghna Pardeshi</div><div class="ct-s">meghna@tinymiracles.com &nbsp;·&nbsp; <span style="cursor:pointer" onclick="window.open('https://wa.me/919326691744','_blank')">+91 9326691744</span></div></div></div>
+      <div class="ct-row-alt"><div class="ct-ico">👨</div><div class="ct-info"><div class="ct-t">Rishikesh Jaiswar</div><div class="ct-s">rishikesh@tinymiracles.com &nbsp;·&nbsp; <span style="cursor:pointer" onclick="window.open('https://wa.me/919920445917','_blank')">+91 99204 45917</span></div></div></div>
       <div class="ct-row-alt"><div class="ct-ico">🌐</div><div class="ct-info"><div class="ct-t">Website</div><div class="ct-s"><a href="https://tinymiracles.com" target="_blank">tinymiracles.com</a></div></div></div>
     </div>
   </div>
@@ -648,52 +648,72 @@ footer a:hover{color:white;}
 <div class="ov" id="hl-ov">
   <div class="modal" style="max-width:480px">
     <div class="m-hdr">
-      <div class="m-name" style="padding-top:6px">HR / Employer</div>
+      <div class="m-name" style="padding-top:6px">Login</div>
       <button class="m-cl" onclick="closeHRLogin()">✕</button>
     </div>
     <div class="m-bdy" style="padding-top:0">
+      <!-- Role tabs -->
       <div class="login-tabs">
-        <div class="login-tab act" id="lt-in" onclick="switchLoginTab('in')">Sign In</div>
-        <div class="login-tab" id="lt-up" onclick="switchLoginTab('up')">Create Account</div>
+        <div class="login-tab act" id="lt-hr" onclick="switchLoginRole('hr')">HR / Employer</div>
+        <div class="login-tab" id="lt-yt" onclick="switchLoginRole('youth')">Youth</div>
       </div>
 
-      <!-- Sign In panel -->
-      <div class="login-panel act" id="lp-in">
-        <div class="lf">
-          <div><label>Work email *</label><input type="email" id="hr-si-email" placeholder="hr@company.com"/></div>
-          <div><label>Password *</label><input type="password" id="hr-si-pw" placeholder="Your password"/></div>
-          <button class="btn-lf-submit" onclick="hrSignIn()">Sign in</button>
-          <div class="lf-note">Don't have an account? <span style="color:var(--teal);cursor:pointer;font-weight:600" onclick="switchLoginTab('up')">Create one →</span></div>
-          <div class="lf-note" style="margin-top:0">Login with Firebase will be enabled soon.</div>
+      <!-- HR panel -->
+      <div class="login-panel act" id="lp-hr">
+        <div class="login-tabs" style="margin:0 -22px;border-top:1px solid var(--line);">
+          <div class="login-tab act" id="lt-in" onclick="switchLoginTab('in')">Sign In</div>
+          <div class="login-tab" id="lt-up" onclick="switchLoginTab('up')">Create Account</div>
+        </div>
+
+        <!-- Sign In panel -->
+        <div class="login-panel act" id="lp-in">
+          <div class="lf">
+            <div><label>Work email *</label><input type="email" id="hr-si-email" placeholder="hr@company.com"/></div>
+            <div><label>Password *</label><input type="password" id="hr-si-pw" placeholder="Your password"/></div>
+            <button class="btn-lf-submit" onclick="hrSignIn()">Sign in</button>
+            <div class="lf-note">Don't have an account? <span style="color:var(--teal);cursor:pointer;font-weight:600" onclick="switchLoginTab('up')">Create one →</span></div>
+            <div class="lf-note" style="margin-top:0">Login with Firebase will be enabled soon.</div>
+          </div>
+        </div>
+
+        <!-- Create Account panel -->
+        <div class="login-panel" id="lp-up">
+          <div class="lf">
+            <div class="lf-row-2">
+              <div><label>Your name *</label><input type="text" id="hr-nm" placeholder="e.g. Priya Shah"/></div>
+              <div><label>Phone *</label><input type="tel" id="hr-ph" placeholder="+91 98765 43210"/></div>
+            </div>
+            <div><label>Work email *</label><input type="email" id="hr-em" placeholder="hr@company.com"/></div>
+            <div><label>Company name *</label><input type="text" id="hr-co" placeholder="e.g. Reliance Retail"/></div>
+            <div class="lf-row-2">
+              <div><label>Industry *</label>
+                <select id="hr-ind">
+                  <option value="">Select...</option>
+                  <option>Retail & FMCG</option><option>Banking & Finance</option>
+                  <option>IT & Technology</option><option>Healthcare</option>
+                  <option>Hospitality & Food</option><option>Manufacturing</option>
+                  <option>Education & NGO</option><option>Media & Marketing</option>
+                  <option>Logistics & Supply Chain</option><option>Real Estate</option>
+                  <option>Other</option>
+                </select>
+              </div>
+              <div><label>City *</label><input type="text" id="hr-city" placeholder="e.g. Mumbai"/></div>
+            </div>
+            <div><label>Password *</label><input type="password" id="hr-up-pw" placeholder="Create a password"/></div>
+            <button class="btn-lf-submit" onclick="hrSignUp()">Create account</button>
+            <div class="lf-note">All fields are mandatory. Your data will be saved to our secure database once Firebase is connected.</div>
+          </div>
         </div>
       </div>
 
-      <!-- Create Account panel -->
-      <div class="login-panel" id="lp-up">
-        <div class="lf">
-          <div class="lf-row-2">
-            <div><label>Your name *</label><input type="text" id="hr-nm" placeholder="e.g. Priya Shah"/></div>
-            <div><label>Phone *</label><input type="tel" id="hr-ph" placeholder="+91 98765 43210"/></div>
-          </div>
-          <div><label>Work email *</label><input type="email" id="hr-em" placeholder="hr@company.com"/></div>
-          <div><label>Company name *</label><input type="text" id="hr-co" placeholder="e.g. Reliance Retail"/></div>
-          <div class="lf-row-2">
-            <div><label>Industry *</label>
-              <select id="hr-ind">
-                <option value="">Select...</option>
-                <option>Retail & FMCG</option><option>Banking & Finance</option>
-                <option>IT & Technology</option><option>Healthcare</option>
-                <option>Hospitality & Food</option><option>Manufacturing</option>
-                <option>Education & NGO</option><option>Media & Marketing</option>
-                <option>Logistics & Supply Chain</option><option>Real Estate</option>
-                <option>Other</option>
-              </select>
-            </div>
-            <div><label>City *</label><input type="text" id="hr-city" placeholder="e.g. Mumbai"/></div>
-          </div>
-          <div><label>Password *</label><input type="password" id="hr-up-pw" placeholder="Create a password"/></div>
-          <button class="btn-lf-submit" onclick="hrSignUp()">Create account</button>
-          <div class="lf-note">All fields are mandatory. Your data will be saved to our secure database once Firebase is connected.</div>
+      <!-- Youth panel -->
+      <div class="login-panel" id="lp-yt">
+        <div style="text-align:center;padding:28px 0 12px">
+          <div style="font-size:38px;margin-bottom:14px">👋</div>
+          <div style="font-family:var(--serif);font-size:19px;font-weight:700;color:var(--ink);margin-bottom:8px">Ready to find work?</div>
+          <div style="font-size:13px;color:var(--ink-3);line-height:1.65;margin-bottom:22px">Add your profile and let employers discover you through Pehli Kamai. It only takes a few minutes.</div>
+          <button class="btn-lf-submit" onclick="closeHRLogin();openAdd()">Add my profile →</button>
+          <div class="lf-note" style="margin-top:14px;margin-bottom:0">Youth login with OTP — coming soon.</div>
         </div>
       </div>
     </div>
@@ -790,7 +810,7 @@ footer a:hover{color:white;}
 
 <footer>
   <div>© 2026 <a href="https://tinymiracles.com" target="_blank">tiny miracles</a> · Pehli Kamai · Mumbai</div>
-  <div>meghna@tinymiracles.com &nbsp;·&nbsp; +91 9326691744</div>
+  <div>meghna@tinymiracles.com · +91 9326691744 &nbsp;|&nbsp; rishikesh@tinymiracles.com · +91 99204 45917</div>
 </footer>
 
 <div class="toast" id="toast"><span id="t-m"></span></div>
@@ -996,7 +1016,7 @@ function openR(id){
   document.getElementById('rm-nm').textContent=hrUser?d.name:'Candidate';
   document.getElementById('rm-rl').textContent=d.sector;
   const body=document.getElementById('rm-body');
-  const redact=`<div style="background:var(--teal-soft);border-bottom:1.5px solid var(--teal-mid);padding:11px 16px;display:flex;align-items:flex-start;gap:9px;font-size:11.5px;color:var(--teal-dark)"><span style="font-size:15px;flex-shrink:0">🔒</span><div><strong>Contact details are not shown to HR.</strong> To connect with this candidate, contact Pehli Kamai — <strong>meghna@tinymiracles.com</strong> · +91 9326691744.</div></div>`;
+  const redact=`<div style="background:var(--teal-soft);border-bottom:1.5px solid var(--teal-mid);padding:11px 16px;display:flex;align-items:flex-start;gap:9px;font-size:11.5px;color:var(--teal-dark)"><span style="font-size:15px;flex-shrink:0">🔒</span><div><strong>Contact details are not shown to HR.</strong> To connect with this candidate, contact Pehli Kamai — <strong>meghna@tinymiracles.com</strong> · +91 9326691744 &nbsp;or&nbsp; <strong>rishikesh@tinymiracles.com</strong> · +91 99204 45917.</div></div>`;
   if(d.resumeKey&&RESUMES[d.resumeKey]){
     const r=RESUMES[d.resumeKey];
     if(r.t==='pdf'){
@@ -1261,10 +1281,18 @@ function toast(m){const t=document.getElementById('toast');document.getElementBy
 // ── SIGN IN ──────────────────────────────────────
 let hrUser=JSON.parse(localStorage.getItem('typc_hr_user')||'null');
 
-function openSignIn(){document.getElementById('si-ov').classList.add('open');}
+function openSignIn(){document.getElementById('hl-ov').classList.add('open');switchLoginRole('hr');}
 function closeSI(){document.getElementById('si-ov').classList.remove('open');}
-function openHRLogin(){closeSI();document.getElementById('hl-ov').classList.add('open');switchLoginTab(hrUser?'in':'in');}
+function openHRLogin(){closeSI();document.getElementById('hl-ov').classList.add('open');switchLoginRole('hr');}
 function closeHRLogin(){document.getElementById('hl-ov').classList.remove('open');}
+
+function switchLoginRole(r){
+  ['hr','yt'].forEach(x=>{
+    document.getElementById('lt-'+x).classList.toggle('act',x===r);
+    document.getElementById('lp-'+x).classList.toggle('act',x===r);
+  });
+  if(r==='hr')switchLoginTab('in');
+}
 
 function switchLoginTab(t){
   ['in','up'].forEach(x=>{
@@ -1313,7 +1341,7 @@ function updateHRHeader(){
     btn.onclick=()=>{if(confirm('Sign out of HR account?')){hrUser=null;localStorage.removeItem('typc_hr_user');location.reload();}};
   } else {
     btn.className='btn-hr-login';
-    btn.textContent='HR Login';
+    btn.textContent='Login';
     btn.onclick=openSignIn;
   }
 }

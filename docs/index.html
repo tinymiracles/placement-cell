@@ -574,7 +574,7 @@ footer a:hover{color:white;}
 <div class="ov" id="a-ov">
   <div class="modal">
     <div class="m-hdr">
-      <div class="m-name" style="padding-top:6px">Add a youth profile</div>
+      <div class="m-name" id="a-modal-title" style="padding-top:6px">Add a youth profile</div>
       <button class="m-cl" onclick="closeA()">✕</button>
     </div>
     <div class="m-bdy">
@@ -605,7 +605,15 @@ footer a:hover{color:white;}
         <div><label>Languages</label><input id="a-lg" type="text" placeholder="e.g. Hindi, English, Marathi"/></div>
         <div><label>Work experience (if any)</label><input id="a-ex" type="text" placeholder="e.g. 6 months at D-Mart as cashier"/></div>
         <div><label>About (brief note)</label><textarea id="a-ab" placeholder="Brief description about the candidate…"></textarea></div>
-        <div><label>Phone number</label><input id="a-ph" type="tel" placeholder="+91 98765 43210"/></div>
+        <div><label>Phone number (private — not shared with HR)</label><input id="a-ph" type="tel" placeholder="+91 98765 43210"/></div>
+        <div style="border-top:1px solid var(--line);padding-top:14px;margin-top:4px">
+          <div style="font-size:11.5px;font-weight:600;color:var(--teal);text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px">Create your account</div>
+        </div>
+        <div><label>Email * <span class="req-note">(for login)</span></label><input id="a-em-yt" type="email" placeholder="your@email.com"/></div>
+        <div class="lf-row-2">
+          <div><label>Password *</label><input id="a-pw" type="password" placeholder="Create a password"/></div>
+          <div><label>Confirm password *</label><input id="a-pw2" type="password" placeholder="Re-enter password"/></div>
+        </div>
         <div>
           <label>Resume * <span class="req-note">(required — PDF or image)</span></label>
           <div class="resume-drop" id="resume-drop" onclick="document.getElementById('resume-file').click()" ondragover="event.preventDefault();this.style.borderColor='var(--teal)'" ondragleave="this.style.borderColor='var(--line-d)'" ondrop="handleDrop(event)">
@@ -616,6 +624,17 @@ footer a:hover{color:white;}
         <button class="btn-save" onclick="saveProfile()">Save profile</button>
       </div>
     </div>
+  </div>
+</div>
+
+<!-- YOUTH DASHBOARD MODAL -->
+<div class="ov" id="yt-ov">
+  <div class="modal" style="max-width:480px">
+    <div class="m-hdr">
+      <div class="m-name" style="padding-top:6px" id="yt-dash-title">My Profile</div>
+      <button class="m-cl" onclick="closeYtDash()">✕</button>
+    </div>
+    <div class="m-bdy" id="yt-dash-body"></div>
   </div>
 </div>
 
@@ -655,7 +674,7 @@ footer a:hover{color:white;}
       <!-- Role tabs -->
       <div class="login-tabs">
         <div class="login-tab act" id="lt-hr" onclick="switchLoginRole('hr')">HR / Employer</div>
-        <div class="login-tab" id="lt-yt" onclick="switchLoginRole('youth')">Youth</div>
+        <div class="login-tab" id="lt-yt" onclick="switchLoginRole('yt')">Youth</div>
       </div>
 
       <!-- HR panel -->
@@ -708,12 +727,11 @@ footer a:hover{color:white;}
 
       <!-- Youth panel -->
       <div class="login-panel" id="lp-yt">
-        <div style="text-align:center;padding:28px 0 12px">
-          <div style="font-size:38px;margin-bottom:14px">👋</div>
-          <div style="font-family:var(--serif);font-size:19px;font-weight:700;color:var(--ink);margin-bottom:8px">Ready to find work?</div>
-          <div style="font-size:13px;color:var(--ink-3);line-height:1.65;margin-bottom:22px">Add your profile and let employers discover you through Pehli Kamai. It only takes a few minutes.</div>
-          <button class="btn-lf-submit" onclick="closeHRLogin();openAdd()">Add my profile →</button>
-          <div class="lf-note" style="margin-top:14px;margin-bottom:0">Youth login with OTP — coming soon.</div>
+        <div class="lf" style="padding-top:8px">
+          <div><label>Email</label><input type="email" id="yt-email" placeholder="your@email.com"/></div>
+          <div><label>Password</label><input type="password" id="yt-pw" placeholder="Your password"/></div>
+          <button class="btn-lf-submit" onclick="youthLogin()">Login</button>
+          <div class="lf-note">First time? <span style="color:var(--teal);cursor:pointer;font-weight:600" onclick="closeHRLogin();openAdd()">Add my profile →</span></div>
         </div>
       </div>
     </div>
@@ -930,7 +948,7 @@ const DATA = allData.map(c=>{
   };
 });
 
-let sl=new Set(), curSec='all', curId=null, pendingResume=null;
+let sl=new Set(), curSec='all', curId=null, pendingResume=null, editingEmail=null;
 
 function ini(n){return n.split(' ').slice(0,2).map(w=>w[0]).join('').toUpperCase();}
 
@@ -1143,10 +1161,13 @@ function handleDrop(e){
 }
 
 function openAdd(){
-  pendingResume=null;atTrack='';
+  editingEmail=null;pendingResume=null;atTrack='';
+  const t=document.getElementById('a-modal-title');if(t)t.textContent='Add a youth profile';
   document.getElementById('rdrop-lbl').innerHTML='📄 Click to upload or drag & drop<br><span style="font-size:11px">PDF, JPG, PNG — max 5MB</span>';
   document.getElementById('resume-drop').style.borderColor='var(--line-d)';
-  ['a-nm','a-ag','a-rl','a-sk','a-ex','a-ab','a-ph','a-lg','a-loc'].forEach(i=>document.getElementById(i).value='');
+  ['a-nm','a-ag','a-rl','a-sk','a-ex','a-ab','a-ph','a-lg','a-loc','a-em-yt','a-pw','a-pw2'].forEach(i=>document.getElementById(i).value='');
+  const emf=document.getElementById('a-em-yt');emf.readOnly=false;emf.style.opacity='';
+  ['a-pw','a-pw2'].forEach(i=>{const el=document.getElementById(i);if(el)el.placeholder=i==='a-pw'?'Create a password':'Re-enter password';});
   document.getElementById('a-ed').value='';
   // Populate sector with all options across every track
   const sc=document.getElementById('a-sc');
@@ -1163,38 +1184,67 @@ function saveProfile(){
   const sc=document.getElementById('a-sc').value;
   const loc=document.getElementById('a-loc').value.trim()||'Mumbai';
   if(!nm||!ag||!ed||!sc){toast('Please fill required fields.');return;}
-  if(!pendingResume){toast('Please upload a resume — it is required.');return;}
+  if(!pendingResume&&!editingEmail){toast('Please upload a resume — it is required.');return;}
+
+  const sk=[sc,...document.getElementById('a-sk').value.split(',').map(s=>s.trim()).filter(Boolean)];
+  const lg=document.getElementById('a-lg').value.split(',').map(s=>s.trim()).filter(Boolean)||['Hindi','English'];
+  const rl=document.getElementById('a-rl').value.trim()||sc+' Associate';
+  const ab=document.getElementById('a-ab').value.trim()||'Youth from Mumbai looking for work.';
+  const ex=document.getElementById('a-ex').value.trim()?'experienced':'fresher';
+  const trk=atTrack||Object.entries(TRACK_SECTORS).find(([,ss])=>ss.includes(sc))?.[0]||'corporate';
+  const t=new Date().toLocaleString('en-IN',{timeZone:'Asia/Kolkata'});
+
+  // ── EDIT MODE ──
+  if(editingEmail){
+    const accts=JSON.parse(localStorage.getItem('pk_yt_accts')||'{}');
+    const old=accts[editingEmail];
+    if(!old){toast('Account not found. Please try again.');editingEmail=null;return;}
+    const updated={...old, name:nm, age:ag, edu:ed, sector:sc, location:loc, role:rl, skills:sk, langs:lg, about:ab, track:trk};
+    const npw=document.getElementById('a-pw').value;const npw2=document.getElementById('a-pw2').value;
+    if(npw){if(npw.length<6){toast('Password must be at least 6 characters.');return;}if(npw!==npw2){toast('Passwords do not match.');return;}updated.password=npw;}
+    if(pendingResume){const rk='new_'+Date.now();RESUMES[rk]=pendingResume;updated.resumeKey=rk;updated.resume=true;}
+    accts[editingEmail]=updated;
+    localStorage.setItem('pk_yt_accts',JSON.stringify(accts));
+    const idx=DATA.findIndex(x=>x.id===old.id);
+    if(idx>=0)DATA[idx]={...DATA[idx],name:nm,age:ag,edu:ed,sector:sc,location:loc,role:rl,skills:sk,langs:lg,about:ab,track:trk,...(pendingResume?{resume:true,resumeKey:updated.resumeKey}:{})};
+    const em=editingEmail;editingEmail=null;pendingResume=null;
+    buildChips();render();updateEnqBadge();closeA();
+    emailjs.send(EJ_SID,EJ_TID,{candidate_name:nm,candidate_sectors:sc,candidate_location:loc,candidate_note:'Youth updated profile via website.',viewed_at:t,message_type:'Profile Updated — '+nm,to_email:N_EMAIL}).catch(()=>{});
+    emailjs.send(EJ_SID,EJ_TID,{candidate_name:nm,candidate_sectors:sc,candidate_location:loc,candidate_note:'Youth updated profile via website.',viewed_at:t,message_type:'Profile Updated — '+nm,to_email:N_EMAIL2}).catch(()=>{});
+    openYtDash(accts[em]);
+    return;
+  }
+
+  // ── NEW PROFILE ──
+  const email=document.getElementById('a-em-yt').value.trim().toLowerCase();
+  const pw=document.getElementById('a-pw').value;
+  const pw2=document.getElementById('a-pw2').value;
+  if(!email){toast('Please enter your email to create an account.');return;}
+  if(!pw||pw.length<6){toast('Password must be at least 6 characters.');return;}
+  if(pw!==pw2){toast('Passwords do not match.');return;}
+  const accts=JSON.parse(localStorage.getItem('pk_yt_accts')||'{}');
+  if(accts[email]){toast('An account with this email already exists. Try logging in.');return;}
+
   const key='new_'+Date.now();
   RESUMES[key]=pendingResume;
-  const np={
-    id:DATA.length+1,key,name:nm,age:ag,edu:ed,sector:sc,location:loc,
-    role:document.getElementById('a-rl').value||sc+' Associate',
-    exp:document.getElementById('a-ex').value.trim()?'experienced':'fresher',
-    skills:[sc,...document.getElementById('a-sk').value.split(',').map(s=>s.trim()).filter(Boolean)],
-    langs:document.getElementById('a-lg').value.split(',').map(s=>s.trim()).filter(Boolean)||['Hindi','English'],
-    about:document.getElementById('a-ab').value||'Youth from Mumbai looking for work.',
-    exps:[],
-    contact:'📍 '+loc+', Mumbai',
-    resume:true,resumeKey:key,
-    track:atTrack||Object.entries(TRACK_SECTORS).find(([,ss])=>ss.includes(sc))?.[0]||'corporate',
-  };
+  const id=DATA.length+1;
+  const np={id,key,name:nm,age:ag,edu:ed,sector:sc,location:loc,role:rl,exp:ex,skills:sk,langs:lg,about:ab,exps:[],contact:'📍 '+loc+', Mumbai',resume:true,resumeKey:key,track:trk};
   DATA.push(np);
   document.getElementById('h-tot').textContent=DATA.length;
   document.getElementById('s-tot').textContent=DATA.length;
-  buildChips();render();updateEnqBadge();closeA();
-  pendingResume=null;
-  toast(`${nm} added!`);
-  // Notify Meghna + Rishikesh of new profile (phone kept private — not shown to HR)
+
+  // Save account
+  const acct={id,email,password:pw,name:nm,age:ag,edu:ed,sector:sc,location:loc,role:rl,skills:sk,langs:lg,about:ab,resumeKey:key,resume:true,track:trk};
+  accts[email]=acct;
+  localStorage.setItem('pk_yt_accts',JSON.stringify(accts));
+
+  buildChips();render();updateEnqBadge();closeA();pendingResume=null;
+
   const ph=document.getElementById('a-ph').value.trim();
-  const notifData={
-    candidate_name:nm,candidate_sectors:sc+' ('+((atTrack||'corporate')[0].toUpperCase()+(atTrack||'corporate').slice(1))+')',
-    candidate_location:loc,
-    candidate_note:'New youth profile added via the website.'+(ph?' Phone: '+ph+' (private — not shown to HR).':''),
-    viewed_at:new Date().toLocaleString('en-IN',{timeZone:'Asia/Kolkata'}),
-    message_type:'New Profile Added — '+nm
-  };
-  emailjs.send(EJ_SID,EJ_TID,{...notifData,to_email:N_EMAIL}).catch(()=>{});
-  emailjs.send(EJ_SID,EJ_TID,{...notifData,to_email:N_EMAIL2}).catch(()=>{});
+  emailjs.send(EJ_SID,EJ_TID,{candidate_name:nm,candidate_sectors:sc+' ('+trk+')',candidate_location:loc,candidate_note:'New profile. Email: '+email+(ph?' Phone: '+ph+' (private).':''),viewed_at:t,message_type:'New Profile — '+nm,to_email:N_EMAIL}).catch(()=>{});
+  emailjs.send(EJ_SID,EJ_TID,{candidate_name:nm,candidate_sectors:sc+' ('+trk+')',candidate_location:loc,candidate_note:'New profile. Email: '+email+(ph?' Phone: '+ph+' (private).':''),viewed_at:t,message_type:'New Profile — '+nm,to_email:N_EMAIL2}).catch(()=>{});
+
+  openYtDash(acct);
 }
 
 function closeA(){document.getElementById('a-ov').classList.remove('open');}
@@ -1292,6 +1342,80 @@ function switchLoginRole(r){
     document.getElementById('lp-'+x).classList.toggle('act',x===r);
   });
   if(r==='hr')switchLoginTab('in');
+  if(r==='yt'){
+    const e=document.getElementById('yt-email');const p=document.getElementById('yt-pw');
+    if(e)e.value='';if(p)p.value='';
+  }
+}
+
+// ── YOUTH AUTH ────────────────────────────────────
+function youthLogin(){
+  const email=document.getElementById('yt-email').value.trim().toLowerCase();
+  const pw=document.getElementById('yt-pw').value;
+  if(!email||!pw){toast('Enter your email and password.');return;}
+  const accts=JSON.parse(localStorage.getItem('pk_yt_accts')||'{}');
+  const acct=accts[email];
+  if(!acct||acct.password!==pw){toast('Email or password incorrect.');return;}
+  closeHRLogin();
+  openYtDash(acct);
+}
+
+function openYtDash(acct){
+  const enqs=JSON.parse(localStorage.getItem('typc_enquiries')||'[]');
+  const n=enqs.filter(e=>e.candidateName===acct.name).length;
+  document.getElementById('yt-dash-title').textContent='My Profile';
+  document.getElementById('yt-dash-body').innerHTML=`
+    <div style="display:flex;align-items:center;gap:14px;padding-bottom:16px;border-bottom:1px solid var(--line);margin-bottom:16px">
+      <div style="width:50px;height:50px;border-radius:50%;background:var(--teal);flex-shrink:0;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:18px">${ini(acct.name)}</div>
+      <div>
+        <div style="font-family:var(--serif);font-size:17px;font-weight:700;color:var(--ink)">${acct.name}</div>
+        <div style="font-size:12px;color:var(--ink-3);margin-top:2px">${acct.sector} &nbsp;·&nbsp; 📍 ${acct.location}, Mumbai</div>
+        <div style="font-size:11px;color:var(--ink-4);margin-top:2px">${acct.email}</div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px">
+      <div style="background:${n>0?'#e8f5e9':'var(--bg)'};border:1.5px solid ${n>0?'#a5d6a7':'var(--line-d)'};border-radius:10px;padding:14px;text-align:center">
+        <div style="font-size:26px;font-weight:800;color:${n>0?'#2e7d32':'var(--ink-4)'}">${n}</div>
+        <div style="font-size:10.5px;color:${n>0?'#388e3c':'var(--ink-4)'};font-weight:600;margin-top:3px">HR${n===1?' has':' have'} expressed interest</div>
+      </div>
+      <div style="background:var(--teal-soft);border:1.5px solid var(--teal-mid);border-radius:10px;padding:14px;text-align:center">
+        <div style="font-size:26px">✅</div>
+        <div style="font-size:10.5px;color:var(--teal-dark);font-weight:600;margin-top:3px">Profile is live</div>
+      </div>
+    </div>
+    <div style="font-size:11.5px;color:var(--ink-3);line-height:1.6;margin-bottom:18px;padding:10px 12px;background:var(--bg);border-radius:8px">
+      Pehli Kamai will personally call you when an HR is interested.<br>Questions? <strong>+91 9326691744</strong> or <strong>+91 99204 45917</strong>
+    </div>
+    <button class="btn-lf-submit" onclick="closeYtDash();youthEditProfile('${acct.email}')" style="margin-bottom:10px">Edit my profile</button>
+    <button onclick="closeYtDash()" style="width:100%;padding:10px;background:transparent;border:1.5px solid var(--line-d);border-radius:8px;font-family:var(--sans);font-size:13px;color:var(--ink-3);cursor:pointer">Close</button>
+  `;
+  document.getElementById('yt-ov').classList.add('open');
+}
+
+function closeYtDash(){document.getElementById('yt-ov').classList.remove('open');}
+
+function youthEditProfile(email){
+  const accts=JSON.parse(localStorage.getItem('pk_yt_accts')||'{}');
+  const acct=accts[email];
+  if(!acct)return;
+  openAdd();
+  editingEmail=email;
+  const t=document.getElementById('a-modal-title');if(t)t.textContent='Update my profile';
+  setTimeout(()=>{
+    document.getElementById('a-nm').value=acct.name||'';
+    document.getElementById('a-ag').value=acct.age||'';
+    document.getElementById('a-ed').value=acct.edu||'';
+    const sc=document.getElementById('a-sc');
+    for(let i=0;i<sc.options.length;i++){if(sc.options[i].value===acct.sector){sc.selectedIndex=i;break;}}
+    document.getElementById('a-loc').value=acct.location||'';
+    document.getElementById('a-rl').value=acct.role||'';
+    document.getElementById('a-sk').value=(acct.skills||[]).slice(1).join(', ')||'';
+    document.getElementById('a-lg').value=(acct.langs||[]).join(', ')||'';
+    document.getElementById('a-ab').value=acct.about||'';
+    const emf=document.getElementById('a-em-yt');emf.value=email;emf.readOnly=true;emf.style.opacity='.65';
+    const pw=document.getElementById('a-pw');const pw2=document.getElementById('a-pw2');
+    if(pw){pw.value='';pw.placeholder='Leave blank to keep current';}if(pw2){pw2.value='';pw2.placeholder='Leave blank to keep current';}
+  },60);
 }
 
 function switchLoginTab(t){

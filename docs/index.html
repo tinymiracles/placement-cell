@@ -981,7 +981,7 @@ function render(){
     const row=f.filter((_,j)=>j%ROWS===i);
     if(!row.length)return'';
     const dir=i%2===0?'left':'right';
-    const spd=30+i*7;
+    const spd=70+i*12;
     const cards=row.map(card).join('');
     return`<div class="track-row"><div class="track-inner ${dir}" style="--spd:${spd}s">${cards}${cards}</div></div>`;
   }).join('');

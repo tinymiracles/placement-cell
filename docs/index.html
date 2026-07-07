@@ -87,15 +87,35 @@ body{font-family:var(--sans);background:var(--bg);color:var(--ink);min-height:10
 .btn-send:hover{opacity:0.88;}
 
 /* ━━ HERO ━━ */
-.hero{background:linear-gradient(135deg,var(--white) 55%,rgba(0,131,138,.06) 100%);border-bottom:1px solid var(--line);padding:64px 40px 52px;position:relative;overflow:hidden;}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;}
+.wm-logo{width:28px;height:28px;flex-shrink:0;}
+.hero{background:linear-gradient(135deg,var(--white) 55%,rgba(0,131,138,.06) 100%);border-bottom:1px solid var(--line);padding:72px 40px 60px;position:relative;overflow:hidden;}
 .hero::before{content:'';position:absolute;right:-60px;top:-80px;width:380px;height:380px;border-radius:50%;background:radial-gradient(circle,rgba(0,131,138,.07) 0%,transparent 70%);pointer-events:none;}
 .hero::after{content:'';position:absolute;right:160px;bottom:-60px;width:180px;height:180px;border-radius:50%;background:radial-gradient(circle,rgba(227,237,85,.18) 0%,transparent 70%);pointer-events:none;}
-.hero-in{max-width:1240px;margin:0 auto;position:relative;z-index:1;}
-.hero-h1{font-family:var(--serif);font-size:clamp(42px,5vw,68px);font-weight:700;line-height:1.0;color:var(--ink);letter-spacing:-1px;margin-bottom:12px;animation:heroIn .6s ease both;}
+.hero-in{max-width:800px;margin:0 auto;position:relative;z-index:1;}
+.hero-brand{display:flex;align-items:center;gap:22px;margin-bottom:4px;animation:heroIn .6s ease both;}
+.hero-logo-big{width:80px;height:80px;flex-shrink:0;}
+.hero-h1{font-family:var(--serif);font-size:clamp(48px,6vw,78px);font-weight:700;line-height:1.0;color:var(--ink);letter-spacing:-2px;}
 .hero-h1 em{font-style:italic;color:var(--teal);}
-.hero-bar{width:52px;height:5px;background:linear-gradient(90deg,var(--lime),var(--teal-mid));border-radius:3px;margin-bottom:18px;animation:heroIn .6s .12s ease both;opacity:0;animation-fill-mode:both;}
-.hero-p{font-size:15px;color:var(--ink-3);max-width:540px;line-height:1.8;animation:heroIn .6s .22s ease both;opacity:0;animation-fill-mode:both;}
-.hero-stats{display:flex;gap:40px;margin-top:36px;animation:heroIn .6s .32s ease both;opacity:0;animation-fill-mode:both;}
+.hero-by{font-size:12px;font-weight:400;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink-4);margin-top:6px;}
+.hero-tagline{font-size:clamp(15px,1.8vw,19px);font-weight:600;color:var(--teal);margin:20px 0 4px;letter-spacing:-.2px;animation:heroIn .5s .1s ease both;opacity:0;animation-fill-mode:both;}
+.hero-bar{width:52px;height:4px;background:linear-gradient(90deg,var(--lime),var(--teal-mid));border-radius:3px;margin:18px 0;animation:heroIn .6s .15s ease both;opacity:0;animation-fill-mode:both;}
+.hero-p{font-size:15px;color:var(--ink-3);max-width:680px;line-height:1.85;animation:heroIn .6s .22s ease both;opacity:0;animation-fill-mode:both;}
+.hero-mission{font-size:14px;color:var(--ink-3);max-width:680px;line-height:1.85;margin-top:14px;animation:heroIn .6s .28s ease both;opacity:0;animation-fill-mode:both;}
+.hero-stats{display:flex;gap:28px;margin-top:36px;flex-wrap:wrap;animation:heroIn .6s .32s ease both;opacity:0;animation-fill-mode:both;}
+.why-pk{background:var(--white);border-top:1px solid var(--line);padding:80px 40px 90px;}
+.why-in{max-width:720px;margin:0 auto;}
+.why-pk h2{font-family:var(--serif);font-size:clamp(32px,4vw,52px);font-weight:700;color:var(--ink);margin-bottom:6px;letter-spacing:-.5px;}
+.why-pk .why-sub{font-size:13px;color:var(--ink-4);letter-spacing:.5px;text-transform:uppercase;margin-bottom:28px;}
+.why-quote{font-size:clamp(16px,1.8vw,20px);font-style:italic;color:var(--ink-2);line-height:1.55;margin:0 0 40px;padding:20px 24px;border-left:4px solid var(--teal);background:var(--teal-soft);border-radius:0 10px 10px 0;}
+.why-pk h3{font-family:var(--serif);font-size:clamp(20px,2vw,26px);font-weight:700;color:var(--ink);margin:44px 0 14px;}
+.why-pk p{font-size:14.5px;color:var(--ink-3);line-height:1.95;margin-bottom:14px;}
+.why-cta{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:52px;padding-top:40px;border-top:1px solid var(--line-d);}
+.why-cta-card{background:var(--bg);border:1.5px solid var(--line-d);border-radius:14px;padding:26px 24px;}
+.why-cta-card.teal{background:var(--teal-soft);border-color:var(--teal-mid);}
+.why-cta-card h4{font-family:var(--serif);font-size:16px;font-weight:700;color:var(--ink);margin-bottom:8px;}
+.why-cta-card p{font-size:13px;line-height:1.65;margin-bottom:0;}
+@media(max-width:640px){.hero{padding:40px 20px 44px;}.hero-brand{gap:14px;}.hero-logo-big{width:52px;height:52px;}.why-pk{padding:52px 20px 60px;}.why-cta{grid-template-columns:1fr;}}
 .h-stat{background:var(--white);border:1px solid var(--line-d);border-radius:10px;padding:14px 20px;box-shadow:0 2px 12px rgba(13,36,38,.05);}
 .h-stat .n{font-family:var(--serif);font-size:32px;font-style:italic;color:var(--teal);line-height:1;}
 .h-stat .l{font-size:10px;color:var(--ink-4);letter-spacing:0.8px;text-transform:uppercase;margin-top:4px;}
@@ -369,6 +389,23 @@ footer a:hover{color:white;}
 <header class="hdr">
   <div class="hdr-in">
     <a class="brand" onclick="showPage('home')">
+      <svg class="wm-logo" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <g fill="var(--teal)" transform="translate(50,50)">
+          <circle r="18"/>
+          <polygon points="0,-47 -4,-18 4,-18"/>
+          <polygon points="0,-47 -4,-18 4,-18" transform="rotate(30)"/>
+          <polygon points="0,-47 -4,-18 4,-18" transform="rotate(60)"/>
+          <polygon points="0,-47 -4,-18 4,-18" transform="rotate(90)"/>
+          <polygon points="0,-47 -4,-18 4,-18" transform="rotate(120)"/>
+          <polygon points="0,-47 -4,-18 4,-18" transform="rotate(150)"/>
+          <polygon points="0,-47 -4,-18 4,-18" transform="rotate(180)"/>
+          <polygon points="0,-47 -4,-18 4,-18" transform="rotate(210)"/>
+          <polygon points="0,-47 -4,-18 4,-18" transform="rotate(240)"/>
+          <polygon points="0,-47 -4,-18 4,-18" transform="rotate(270)"/>
+          <polygon points="0,-47 -4,-18 4,-18" transform="rotate(300)"/>
+          <polygon points="0,-47 -4,-18 4,-18" transform="rotate(330)"/>
+        </g>
+      </svg>
       <div>
         <div class="wm-name">Pehli <span>Kamai</span></div>
         <span class="wm-sub">tiny miracles</span>
@@ -395,13 +432,39 @@ footer a:hover{color:white;}
 
   <section class="hero">
     <div class="hero-in">
-      <h1 class="hero-h1">Connecting youth<br>to <em>opportunities.</em></h1>
+      <div class="hero-brand">
+        <svg class="hero-logo-big" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <g fill="var(--teal)" transform="translate(50,50)">
+            <circle r="18"/>
+            <polygon points="0,-47 -4,-18 4,-18"/>
+            <polygon points="0,-47 -4,-18 4,-18" transform="rotate(30)"/>
+            <polygon points="0,-47 -4,-18 4,-18" transform="rotate(60)"/>
+            <polygon points="0,-47 -4,-18 4,-18" transform="rotate(90)"/>
+            <polygon points="0,-47 -4,-18 4,-18" transform="rotate(120)"/>
+            <polygon points="0,-47 -4,-18 4,-18" transform="rotate(150)"/>
+            <polygon points="0,-47 -4,-18 4,-18" transform="rotate(180)"/>
+            <polygon points="0,-47 -4,-18 4,-18" transform="rotate(210)"/>
+            <polygon points="0,-47 -4,-18 4,-18" transform="rotate(240)"/>
+            <polygon points="0,-47 -4,-18 4,-18" transform="rotate(270)"/>
+            <polygon points="0,-47 -4,-18 4,-18" transform="rotate(300)"/>
+            <polygon points="0,-47 -4,-18 4,-18" transform="rotate(330)"/>
+          </g>
+        </svg>
+        <div>
+          <h1 class="hero-h1">Pehli <em>Kamai</em></h1>
+          <div class="hero-by">by tiny miracles</div>
+        </div>
+      </div>
+      <div class="hero-tagline">India's first fresher job portal for GenZs by GenZs</div>
       <div class="hero-bar"></div>
-      <p class="hero-p">Discover motivated candidates from different backgrounds across Mumbai, ready to begin or grow their careers. Browse profiles of young people who are eager to work and build their future.</p>
+      <p class="hero-p">Need college students to conduct a short-term survey? A hospitality hire ready to learn on the job? An AI engineer? This is the portal for you. Our candidates span accounting, data entry, hospitality, sales, creative media, and more — all ready to work, eager to learn, and looking for their first, or next, step.</p>
       <div class="hero-stats">
         <div class="h-stat"><div class="n" id="s-tot">43</div><div class="l">Candidates</div></div>
-        
+        <div class="h-stat"><div class="n">10+</div><div class="l">Sectors</div></div>
+        <div class="h-stat"><div class="n">Mumbai</div><div class="l">Based</div></div>
       </div>
+      <p class="hero-mission">Pehli Kamai is an initiative by Tiny Miracles — a B-Corp certified social enterprise based in Mumbai and Amsterdam — connecting marginalised young people across the city, who often lack access rather than ability, with real employment opportunities.</p>
+      <p class="hero-mission">For employers, the promise is simple: pre-screened, motivated candidates, ready to show up and grow. You browse. You connect. We make the introduction.</p>
     </div>
   </section>
 
@@ -853,6 +916,38 @@ footer a:hover{color:white;}
 
   </div>
 </div>
+
+<section class="why-pk" id="why-pk">
+  <div class="why-in">
+    <h2>Why Pehli Kamai</h2>
+    <div class="why-sub">The real gap — and why this hire is still the smarter one</div>
+    <div class="why-quote">GenZs are not entitled. GenZs are not unprofessional. They just choose to not pretend anymore.</div>
+
+    <h3>The Real Gap</h3>
+    <p>There are companies in this city that need freshers. There are thousands of young, capable people in this city who need jobs. On paper, that should be a simple match.</p>
+    <p>However, it isn't.</p>
+    <p>When we asked HR teams why, we kept hearing versions of these phrases about GenZs: Lazy. Not wanting to work hard. Not loyal. Not serious about their work. Unprofessional.</p>
+    <p>And then we spoke to young people — here's where it got truly complex and uncomfortable. Young people say that the fact that they are from a 'slum' gets registered before anything else (researchers have a name for this — it's called geographical bias. These are assumptions we make about people from certain areas). They're not cool enough, people assume they don't have the skills or exposure that people from more privileged backgrounds have and therefore don't get the same opportunities; and no matter how intelligent or skilled, the fact that they can't speak English fluently, or that they dress differently, or are from a different school-medium and board — they feel they get quietly marked down. Never, they say, have they been allowed to be themselves in a workplace.</p>
+    <p>We believe that where you're from is not a qualification or a warning sign; <em>'we did him a favour by hiring him even though he's from their community'</em> is not a philosophy; gestures, clothes, which school, which board, which accent — none of that is a skill. And these small things are not small at all.</p>
+
+    <h3>Why this is still the smarter hire</h3>
+    <p>Strip the bias out, and what's left is a workforce that has already solved real problems under real constraints, understands India's actual mass-market customer better than most campus hires ever will, and is fluent on a phone because survival required it — not because a company paid for the training. None of that shows up on a résumé built for someone else's life. It shows up on the job.</p>
+    <p>We're not going to pretend there's no skills gap — there sometimes is, and it's exactly why every profile on this platform has already been through structured training before it reaches you. But the other gap, the one about attitude, isn't a skills gap at all.</p>
+
+    <div class="why-cta">
+      <div class="why-cta-card teal">
+        <h4>For youth</h4>
+        <p>If you're a GenZ person looking for a job, upload your profile — be bold, be yourself.</p>
+        <button class="btn-lf-submit" style="margin-top:14px;width:auto;padding:10px 22px;font-size:13px" onclick="openAdd()">Add my profile →</button>
+      </div>
+      <div class="why-cta-card">
+        <h4>For employers</h4>
+        <p>If you're looking to hire some of the best, real talent that has learnt from life experiences, scroll through the profiles and give them a call.</p>
+        <button class="btn-lf-submit" style="margin-top:14px;width:auto;padding:10px 22px;font-size:13px;background:var(--ink);border-color:var(--ink)" onclick="showPage('home');window.scrollTo({top:0,behavior:'smooth'})">Browse candidates →</button>
+      </div>
+    </div>
+  </div>
+</section>
 
 <footer>
   <div>© 2026 <a href="https://tinymiracles.com" target="_blank">tiny miracles</a> · Pehli Kamai · Mumbai</div>

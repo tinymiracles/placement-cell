@@ -112,39 +112,51 @@ body{font-family:var(--sans);background:var(--bg);color:var(--ink);min-height:10
 .loc-sel{height:30px;padding:0 12px;border-radius:8px;background:var(--white);border:1.5px solid var(--line-d);font-family:var(--sans);font-size:11px;color:var(--ink-2);outline:none;cursor:pointer;transition:border-color .15s;}
 .loc-sel:focus{border-color:var(--teal);}
 
-/* ━━ GRID ━━ */
-.grid-wrap{max-width:1240px;margin:0 auto;padding:24px 40px 60px;}
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
-@media(max-width:960px){.grid{grid-template-columns:repeat(2,1fr);}}
-@media(max-width:560px){.grid{grid-template-columns:1fr;}}
+/* ━━ TRACK ━━ */
+.track-section{padding:28px 0 60px;}
+.track-hdr{display:flex;align-items:center;justify-content:space-between;padding:0 40px 18px;}
+.track-hdr-l{display:flex;align-items:center;gap:12px;}
+.track-ttl{font-family:var(--serif);font-size:18px;font-weight:700;color:var(--ink);}
+.track-nav{display:flex;gap:8px;}
+.track-btn{width:36px;height:36px;border-radius:50%;background:var(--white);border:1.5px solid var(--line-d);cursor:pointer;font-size:18px;color:var(--ink-3);display:flex;align-items:center;justify-content:center;transition:all .16s;}
+.track-btn:hover{border-color:var(--teal);color:var(--teal);}
+.track-outer{position:relative;}
+.track-outer::before,.track-outer::after{content:'';position:absolute;top:0;bottom:24px;width:44px;z-index:2;pointer-events:none;}
+.track-outer::before{left:0;background:linear-gradient(90deg,var(--bg),transparent);}
+.track-outer::after{right:0;background:linear-gradient(-90deg,var(--bg),transparent);}
+.profiles-track{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;padding:8px 40px 24px;scrollbar-width:none;-webkit-overflow-scrolling:touch;}
+.profiles-track::-webkit-scrollbar{display:none;}
 
-/* ━━ CARD ━━ */
-.card{background:var(--white);border:1px solid var(--line);border-bottom:3px solid transparent;border-radius:14px;padding:22px;display:flex;flex-direction:column;gap:12px;cursor:pointer;opacity:0;transform:translateY(28px);transition:opacity .5s ease,transform .5s ease,box-shadow .25s,border-color .25s;}
-.card.visible{opacity:1;transform:translateY(0);}
-.card:hover{box-shadow:0 12px 40px rgba(13,36,38,.13);border-color:var(--teal-mid);border-bottom-color:var(--teal);transform:translateY(-4px);}
-.card-top{display:flex;align-items:center;gap:12px;}
-.avi{width:40px;height:40px;border-radius:50%;background:var(--teal);color:var(--white);font-family:var(--serif);font-size:15px;font-weight:700;display:flex;align-items:center;justify-content:center;}
-.c-fn{font-size:9px;font-weight:600;color:var(--ink-3);text-transform:uppercase;letter-spacing:0.8px;text-align:center;}
-.card-right{flex:1;display:flex;flex-direction:column;gap:6px;overflow:hidden;}
-.cr-name{font-family:var(--serif);font-size:16px;font-weight:700;color:var(--ink);cursor:pointer;}
-.cr-name:hover{color:var(--teal);}
-.cr-role{font-size:12px;color:var(--ink-3);}
+/* ━━ PROFILE CARD ━━ */
+.pcard{scroll-snap-align:start;min-width:262px;max-width:262px;background:var(--white);border:1px solid var(--line);border-radius:18px;padding:20px 18px;display:flex;flex-direction:column;gap:12px;cursor:pointer;opacity:0;transform:translateX(28px);transition:opacity .45s ease,transform .45s ease,box-shadow .22s,border-color .22s;position:relative;overflow:hidden;}
+.pcard.visible{opacity:1;transform:translateX(0);}
+.pcard:hover{box-shadow:0 10px 36px rgba(13,36,38,.13);border-color:var(--teal-mid);}
+.pcard::after{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--teal),var(--lime));opacity:0;transition:opacity .22s;}
+.pcard:hover::after{opacity:1;}
+.pc-ngo{display:inline-flex;align-items:center;gap:5px;font-size:10px;font-weight:600;color:var(--teal-dark);background:var(--teal-soft);border-radius:20px;padding:3px 10px;letter-spacing:.3px;width:fit-content;}
+.pc-top{display:flex;align-items:center;gap:10px;}
+.pc-avi{width:44px;height:44px;border-radius:13px;background:var(--teal);color:var(--white);font-family:var(--serif);font-size:15px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.pc-area{font-size:12px;color:var(--ink-3);}
+.pc-skills{display:flex;flex-wrap:wrap;gap:5px;}
+.pc-skill{font-size:10.5px;padding:3px 9px;background:var(--bg);border:1px solid var(--line-d);border-radius:20px;color:var(--ink-3);}
+.pc-skill-more{font-size:10.5px;padding:3px 9px;background:var(--teal-soft);border:1px solid var(--teal-mid);border-radius:20px;color:var(--teal);font-weight:600;}
+.pc-avail{display:flex;align-items:center;gap:7px;font-size:11.5px;color:#2e7d32;font-weight:600;}
+@keyframes pulse-dot{0%,100%{box-shadow:0 0 0 0 rgba(67,160,71,.4);}70%{box-shadow:0 0 0 6px rgba(67,160,71,0);}}
+.avail-dot{width:7px;height:7px;border-radius:50%;background:#43a047;flex-shrink:0;animation:pulse-dot 2s ease-in-out infinite;}
+.pc-locked{border-top:1px dashed var(--line-d);padding-top:12px;display:flex;align-items:center;justify-content:space-between;gap:8px;}
+.pc-locked-lbl{font-size:11px;color:var(--ink-4);}
+.pc-btn{height:30px;padding:0 14px;background:var(--teal);border:none;border-radius:7px;color:white;font-family:var(--sans);font-size:11px;font-weight:600;cursor:pointer;transition:opacity .14s,transform .14s;white-space:nowrap;flex-shrink:0;}
+.pc-btn:hover{opacity:.88;transform:translateY(-1px);}
+
+/* ━━ SHARED ━━ */
 .tags{display:flex;flex-wrap:wrap;gap:4px;}
 .tag{font-size:10px;font-weight:500;padding:2px 8px;border-radius:20px;}
 .t-edu{background:var(--teal-soft);color:var(--teal-dark);}
 .t-sec{background:var(--lime-soft);color:#5a6200;border:1px solid rgba(200,210,64,.3);}
 .t-loc{background:#f0f0f0;color:var(--ink-3);}
 .t-res{background:#e8f5e9;color:#2e7d32;}
-.c-about{font-size:12px;color:var(--ink-3);line-height:1.55;}
 .c-skills{display:flex;flex-wrap:wrap;gap:4px;}
 .sk{font-size:10px;padding:2px 8px;border-radius:4px;background:var(--bg);border:1px solid var(--line-d);color:var(--ink-3);}
-.c-foot{display:flex;align-items:center;justify-content:space-between;margin-top:2px;}
-.c-loc{font-size:11px;color:var(--ink-4);}
-.c-btns{display:flex;gap:6px;}
-.btn-cv{height:26px;padding:0 12px;background:var(--lime);border:none;border-radius:5px;font-family:var(--sans);font-size:11px;font-weight:600;color:var(--ink);cursor:pointer;transition:opacity .12s;}
-.btn-cv:hover{opacity:.8;}
-.btn-prf{height:26px;padding:0 12px;background:var(--white);border:1.5px solid var(--line-d);border-radius:5px;font-family:var(--sans);font-size:11px;font-weight:500;color:var(--ink-2);cursor:pointer;transition:all .12s;}
-.btn-prf:hover{border-color:var(--teal);color:var(--teal);}
 
 /* EMPTY */
 .empty{text-align:center;padding:64px 24px;}
@@ -282,7 +294,7 @@ footer a:hover{color:white;}
 @media(max-width:700px){
   .hdr-in{padding:0 20px;}
   .hero{padding:32px 20px 28px;}
-  .grid-wrap{padding:16px 20px 80px;}
+  .track-hdr{padding:0 20px 14px;}.profiles-track{padding:8px 20px 24px;}.track-outer::before,.track-outer::after{display:none;}
   .about-wrap,.contact-wrap{padding:40px 20px;}
   .hdr-mid{display:none;}
   footer{padding:20px;flex-direction:column;align-items:flex-start;}
@@ -415,8 +427,19 @@ footer a:hover{color:white;}
     </div>
   </div>
 
-  <div class="grid-wrap">
-    <div class="grid" id="grid"></div>
+  <div class="track-section">
+    <div class="track-hdr">
+      <div class="track-hdr-l">
+        <div class="track-ttl">Our Candidates</div>
+      </div>
+      <div class="track-nav">
+        <button class="track-btn" onclick="scrollTrack(-1)" title="Previous">&#8592;</button>
+        <button class="track-btn" onclick="scrollTrack(1)" title="Next">&#8594;</button>
+      </div>
+    </div>
+    <div class="track-outer">
+      <div class="profiles-track" id="grid"></div>
+    </div>
   </div>
 
 </div><!-- /home -->
@@ -531,7 +554,7 @@ footer a:hover{color:white;}
       <button class="btn-interested" style="width:100%;height:40px;margin-top:18px;border-radius:8px;font-size:13px;letter-spacing:.3px;" onclick="openHI()">I'm Interested in this Candidate</button>
 
       <div class="m-act">
-        <button class="btn-pm-cl" onclick="toRes()">View Resume</button>
+        <button class="btn-pm-cl" id="pm-res-btn" onclick="toRes()">View Resume</button>
         <button class="btn-pm-cl" onclick="closeP()">Close</button>
       </div>
     </div>
@@ -970,30 +993,33 @@ function render(){
   });
   document.getElementById('rc').textContent=f.length;
   const g=document.getElementById('grid');
-  if(!f.length){g.innerHTML=`<div class="empty"><div style="font-size:28px;color:var(--teal-mid)">✦</div><div class="empty-h">No candidates found.</div></div>`;return;}
+  if(!f.length){g.innerHTML=`<div class="empty" style="min-width:260px;padding:60px 24px"><div style="font-size:28px;color:var(--teal-mid)">✦</div><div class="empty-h">No candidates found.</div></div>`;return;}
   g.innerHTML=f.map((d,i)=>`
-  <div class="card" id="c${d.id}" onclick="openP(${d.id})" style="transition-delay:${i*55}ms">
-    <div class="card-top">
-      <div class="avi">${ini(d.name)}</div>
-      <div class="card-right">
-        <div class="cr-name">${d.name}</div>
-        <div class="cr-role">${d.about.slice(0,55)}…</div>
-      </div>
+  <div class="pcard" id="c${d.id}" onclick="openP(${d.id})">
+    <div class="pc-ngo">🌱 Tiny Miracles</div>
+    <div class="pc-top">
+      <div class="pc-avi">${ini(d.name)}</div>
+      <div class="pc-area">📍 ${d.location}${d.location.toLowerCase().includes('mumbai')?'':`, Mumbai`}</div>
     </div>
-    <div class="tags">
-      <span class="tag t-edu">${d.edu}</span>
-      <span class="tag t-sec">${d.sector}</span>
-      ${d.resume?'<span class="tag t-res">Resume</span>':''}
-      ${d.track&&d.track!=='corporate'?`<span class="tag t-trk-${d.track}">${{social:'Social',freelance:'Freelance',services:'Services'}[d.track]||d.track}</span>`:''}
+    <div class="pc-skills">
+      ${d.skills.slice(0,3).map(s=>`<span class="pc-skill">${s}</span>`).join('')}
+      ${d.skills.length>3?`<span class="pc-skill-more">+${d.skills.length-3}</span>`:''}
     </div>
-    <div class="c-foot">
-      <span class="c-loc">📍 ${d.location}${d.location.toLowerCase().includes('mumbai')?'':`, Mumbai`}</span>
+    <div class="pc-avail"><span class="avail-dot"></span>Available</div>
+    <div class="pc-locked">
+      <div class="pc-locked-lbl">🔒 Name hidden</div>
+      <button class="pc-btn" onclick="event.stopPropagation();openP(${d.id})">View →</button>
     </div>
   </div>`).join('');
-  // Slide in one by one
-  document.querySelectorAll('.card').forEach((c,i)=>{
-    setTimeout(()=>c.classList.add('visible'), 60 + i*90);
+  // Slide in one by one from the right
+  document.querySelectorAll('.pcard').forEach((c,i)=>{
+    setTimeout(()=>c.classList.add('visible'), 50 + i*75);
   });
+}
+
+function scrollTrack(dir){
+  const t=document.getElementById('grid');
+  t.scrollBy({left:dir*296,behavior:'smooth'});
 }
 
 
@@ -1021,15 +1047,22 @@ function toPf(){closeR();openP(curId);}
 
 function openP(id){
   const d=DATA.find(x=>x.id===id);if(!d)return;curId=id;
-  document.getElementById('pm-av').textContent=ini(d.name);
-  document.getElementById('pm-nm').textContent=d.name;
+  const lk=!hrUser;
+  const av=document.getElementById('pm-av');
+  av.textContent=lk?'?':ini(d.name);
+  av.style.background=lk?'var(--ink-5)':'var(--teal)';
+  const nm=document.getElementById('pm-nm');
+  if(lk){nm.innerHTML='<span style="font-size:13px;font-style:italic;color:var(--ink-4)">🔒 HR login to view name</span>';}
+  else{nm.textContent=d.name;nm.style.fontSize='';}
   document.getElementById('pm-rl').textContent=d.sector;
   document.getElementById('pm-ab').textContent=d.about;
   document.getElementById('pm-tgs').innerHTML=`<span class="tag t-edu">${d.edu}</span><span class="tag t-sec">${d.sector}</span><span class="tag t-loc">📍 ${d.location}</span>${d.resume?'<span class="tag t-res">Resume</span>':''}`;
   document.getElementById('pm-exs').style.display='none';
   document.getElementById('pm-sk').innerHTML=d.skills.map(s=>`<span class="sk">${s}</span>`).join('');
   document.getElementById('pm-lg').innerHTML=d.langs.map(l=>`<span class="sk">${l}</span>`).join('');
-  document.getElementById('pm-ct').textContent='📍 '+d.location+(d.location.toLowerCase().includes('mumbai')?'':`, Mumbai`);
+  const ct=document.getElementById('pm-ct');
+  ct.innerHTML=lk?'<span style="font-size:12px;color:var(--ink-4)">🔒 Contact details visible after HR login</span>':'📍 '+d.location+(d.location.toLowerCase().includes('mumbai')?'':`, Mumbai`);
+  document.getElementById('pm-res-btn').style.display=lk?'none':'';
   document.getElementById('p-ov').classList.add('open');
 }
 function closeP(){document.getElementById('p-ov').classList.remove('open');}

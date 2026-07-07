@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pheli Kamai — tiny miracles</title>
+<title>Pehli Kamai — tiny miracles</title>
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -362,7 +362,7 @@ footer a:hover{color:white;}
   <div class="hdr-in">
     <a class="brand" onclick="showPage('home')">
       <div>
-        <div class="wm-name">Pheli <span>Kamai</span></div>
+        <div class="wm-name">Pehli <span>Kamai</span></div>
         <span class="wm-sub">tiny miracles</span>
       </div>
     </a>
@@ -423,14 +423,14 @@ footer a:hover{color:white;}
 <!-- ━━ ABOUT PAGE ━━ -->
 <div class="page" id="page-about">
   <div class="about-wrap">
-    <h2>About <em>Pheli</em><br>Kamai</h2>
+    <h2>About <em>Pehli</em><br>Kamai</h2>
     <div class="ab-bar"></div>
     <div class="ab-stats">
       <div class="ab-stat"><div class="n">43</div><div class="l">Candidates</div></div>
       <div class="ab-stat"><div class="n">33</div><div class="l">Resumes Ready</div></div>
       <div class="ab-stat"><div class="n">10+</div><div class="l">Sectors</div></div>
     </div>
-    <p class="ab-body"><strong>Pheli Kamai</strong> is an initiative by <strong>tiny miracles</strong> — a B-Corp certified social enterprise based in Mumbai — to connect motivated young people from across the city with real employment opportunities.</p>
+    <p class="ab-body"><strong>Pehli Kamai</strong> is an initiative by <strong>tiny miracles</strong> — a B-Corp certified social enterprise based in Mumbai — to connect motivated young people from across the city with real employment opportunities.</p>
     <p class="ab-body">We work with youth from diverse backgrounds who are ready to work, eager to learn, and looking for their first — or next — step in their careers. Our candidates span a wide range of skills: from accounting and data entry to hospitality, sales, creative media, and more.</p>
     <p class="ab-body">For employers, we offer a simple promise: pre-screened, motivated candidates who are ready to show up and grow. You browse, you connect, we make the introduction.</p>
     <button class="btn-teal" onclick="showPage('contact')">Get in touch →</button>
@@ -789,7 +789,7 @@ footer a:hover{color:white;}
 </div>
 
 <footer>
-  <div>© 2026 <a href="https://tinymiracles.com" target="_blank">tiny miracles</a> · Pheli Kamai · Mumbai</div>
+  <div>© 2026 <a href="https://tinymiracles.com" target="_blank">tiny miracles</a> · Pehli Kamai · Mumbai</div>
   <div>meghna@tinymiracles.com &nbsp;·&nbsp; +91 9326691744</div>
 </footer>
 
@@ -996,7 +996,7 @@ function openR(id){
   document.getElementById('rm-nm').textContent=hrUser?d.name:'Candidate';
   document.getElementById('rm-rl').textContent=d.sector;
   const body=document.getElementById('rm-body');
-  const redact=`<div style="background:var(--teal-soft);border-bottom:1.5px solid var(--teal-mid);padding:11px 16px;display:flex;align-items:flex-start;gap:9px;font-size:11.5px;color:var(--teal-dark)"><span style="font-size:15px;flex-shrink:0">🔒</span><div><strong>Contact details are not shown to HR.</strong> To connect with this candidate, contact Pheli Kamai — <strong>meghna@tinymiracles.com</strong> · +91 9326691744.</div></div>`;
+  const redact=`<div style="background:var(--teal-soft);border-bottom:1.5px solid var(--teal-mid);padding:11px 16px;display:flex;align-items:flex-start;gap:9px;font-size:11.5px;color:var(--teal-dark)"><span style="font-size:15px;flex-shrink:0">🔒</span><div><strong>Contact details are not shown to HR.</strong> To connect with this candidate, contact Pehli Kamai — <strong>meghna@tinymiracles.com</strong> · +91 9326691744.</div></div>`;
   if(d.resumeKey&&RESUMES[d.resumeKey]){
     const r=RESUMES[d.resumeKey];
     if(r.t==='pdf'){
@@ -1059,7 +1059,7 @@ function showContactForm(){ openHI(); }
 
 function notifyWA(){
   const d=DATA.find(x=>x.id===curId);if(!d)return;
-  const msg=encodeURIComponent(`Hi Meghna! I'm interested in *${d.name}* from Pheli Kamai (tiny miracles).\n\nSectors: ${d.skills.join(', ')}\nLocation: ${d.location}, Mumbai\n\nPlease share more details!`);
+  const msg=encodeURIComponent(`Hi Meghna! I'm interested in *${d.name}* from Pehli Kamai (tiny miracles).\n\nSectors: ${d.skills.join(', ')}\nLocation: ${d.location}, Mumbai\n\nPlease share more details!`);
   window.open(`https://wa.me/${N_WA}?text=${msg}`,'_blank');
 }
 
@@ -1249,7 +1249,7 @@ function renderEnquiries(){
         <div class="enq-sector">Sectors: ${e.candidateSectors} · ${e.candidateLocation}</div>
         <div class="enq-card-actions">
           <button class="btn-enq-wa" onclick="window.open('https://wa.me/91'+${JSON.stringify(e.hrPhone)}.replace(/\D/g,''),'_blank')">💬 WhatsApp HR</button>
-          <button class="btn-enq-mail" onclick="window.open('mailto:${e.hrEmail}?subject=Re: ${encodeURIComponent(e.candidateName)} — Pheli Kamai','_blank')">✉️ Email HR</button>
+          <button class="btn-enq-mail" onclick="window.open('mailto:${e.hrEmail}?subject=Re: ${encodeURIComponent(e.candidateName)} — Pehli Kamai','_blank')">✉️ Email HR</button>
         </div>
       </div>
     </div>`).join('')}</div>`;

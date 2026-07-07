@@ -377,7 +377,7 @@ footer a:hover{color:white;}
     </div>
     <div class="hdr-actions" id="hdr-actions">
       <button class="btn-hr-login" id="btn-hr-login" onclick="openSignIn()">HR Login</button>
-      <button class="btn-add" onclick="openAssessment()">Add my profile</button>
+      <button class="btn-add" onclick="openAdd()">Add my profile</button>
     </div>
   </div>
 </header>
@@ -634,7 +634,7 @@ footer a:hover{color:white;}
           <div class="lwc-title">HR / Employer</div>
           <div class="lwc-desc">Browse candidates and post your company details</div>
         </div>
-        <div class="login-who-card" id="lwc-youth" onclick="closeSI();openAssessment()">
+        <div class="login-who-card" id="lwc-youth" onclick="closeSI();openAdd()">
           <div style="font-size:28px;margin-bottom:8px">👤</div>
           <div class="lwc-title">Youth</div>
           <div class="lwc-desc">Add or manage your profile and resume</div>
@@ -1123,11 +1123,16 @@ function handleDrop(e){
 }
 
 function openAdd(){
-  pendingResume=null;
+  pendingResume=null;atTrack='';
   document.getElementById('rdrop-lbl').innerHTML='📄 Click to upload or drag & drop<br><span style="font-size:11px">PDF, JPG, PNG — max 5MB</span>';
   document.getElementById('resume-drop').style.borderColor='var(--line-d)';
   ['a-nm','a-ag','a-rl','a-sk','a-ex','a-ab','a-ph','a-lg','a-loc'].forEach(i=>document.getElementById(i).value='');
-  document.getElementById('a-ed').value='';document.getElementById('a-sc').value='';
+  document.getElementById('a-ed').value='';
+  // Populate sector with all options across every track
+  const sc=document.getElementById('a-sc');
+  while(sc.options.length)sc.remove(0);
+  sc.add(new Option('Select sector...',''));
+  [...new Set(Object.values(TRACK_SECTORS).flat())].sort().forEach(o=>sc.add(new Option(o,o)));
   document.getElementById('a-ov').classList.add('open');
 }
 
@@ -1151,7 +1156,7 @@ function saveProfile(){
     exps:[],
     contact:'📍 '+loc+', Mumbai',
     resume:true,resumeKey:key,
-    track:atTrack||'corporate',
+    track:atTrack||Object.entries(TRACK_SECTORS).find(([,ss])=>ss.includes(sc))?.[0]||'corporate',
   };
   DATA.push(np);
   document.getElementById('h-tot').textContent=DATA.length;

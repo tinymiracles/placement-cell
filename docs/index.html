@@ -417,6 +417,7 @@ footer a:hover{color:white;}
       <button class="nav-link active" id="nl-home" onclick="showPage('home')">Home</button>
       <button class="nav-link" id="nl-about" onclick="showPage('about')">About</button>
       <button class="nav-link" id="nl-contact" onclick="showPage('contact')">Contact Us</button>
+      <button class="nav-link" onclick="showPage('home');setTimeout(()=>document.querySelector('.ss').scrollIntoView({behavior:'smooth'}),100)">Candidates</button>
     </nav>
     <div class="hdr-mid">
       <div class="hs"><span class="hs-n" id="h-tot">43</span><span class="hs-l">candidates</span></div>

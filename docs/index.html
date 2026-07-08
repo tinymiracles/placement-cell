@@ -505,7 +505,7 @@ footer a:hover{color:white;}
     <h2>About <em>Pehli</em><br>Kamai</h2>
     <div class="ab-bar"></div>
     <div class="ab-stats">
-      <div class="ab-stat"><div class="n">43</div><div class="l">Candidates</div></div>
+      <div class="ab-stat"><div class="n" id="ab-tot">43</div><div class="l">Candidates</div></div>
       <div class="ab-stat"><div class="n">33</div><div class="l">Resumes Ready</div></div>
       <div class="ab-stat"><div class="n">10+</div><div class="l">Sectors</div></div>
     </div>
@@ -1860,6 +1860,46 @@ document.querySelectorAll('.ov').forEach(o=>{
   o.addEventListener('click',e=>{if(e.target===o)o.classList.remove('open');});
 });
 buildChips();render();updateEnqBadge();
+
+// Fetch new candidates added via the form and merge into DATA
+db.collection('candidates').orderBy('createdAt','asc').get().then(snap=>{
+  if(snap.empty) return;
+  let added=0;
+  snap.forEach(doc=>{
+    const c=doc.data();
+    if(!c.name) return;
+    // Skip if already in hardcoded list (name match, case-insensitive)
+    if(DATA.some(d=>d.name.trim().toLowerCase()===c.name.trim().toLowerCase())) return;
+    const nc={
+      id:DATA.length+1,
+      key:c.key||'fs_'+doc.id,
+      name:c.name,
+      age:c.age||21,
+      edu:c.edu||'Graduate',
+      sector:c.sector||'Other',
+      location:c.location||'Mumbai',
+      role:c.role||(c.sector?c.sector+' — Looking for work':'Looking for work'),
+      exp:c.exp||'fresher',
+      skills:Array.isArray(c.skills)?c.skills:[c.sector||'Other'],
+      langs:c.langs||['Hindi','English'],
+      about:c.about||'',
+      exps:[],
+      resume:false,
+      resumeKey:null,
+      track:c.track||inferTrack([c.sector||'']),
+    };
+    DATA.push(nc);
+    added++;
+  });
+  if(added>0){
+    buildChips();render();
+    document.getElementById('h-tot').textContent=DATA.length;
+    document.getElementById('s-tot').textContent=DATA.length;
+    const abTot=document.getElementById('ab-tot');
+    if(abTot) abTot.textContent=DATA.length;
+  }
+}).catch(()=>{});
+
 // Init nav pill on load
 requestAnimationFrame(()=>moveNavPill(document.getElementById('nl-home')));
 </script>

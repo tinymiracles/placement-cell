@@ -705,7 +705,7 @@ footer a:hover{color:white;}
           <div><label>Confirm password *</label><input id="a-pw2" type="password" placeholder="Re-enter password"/></div>
         </div>
         <div>
-          <label>Resume <span class="req-note">(optional — you can upload after saving)</span></label>
+          <label>Resume * <span class="req-note">(required — PDF or image)</span></label>
           <div class="resume-drop" id="resume-drop" onclick="document.getElementById('resume-file').click()" ondragover="event.preventDefault();this.style.borderColor='var(--teal)'" ondragleave="this.style.borderColor='var(--line-d)'" ondrop="handleDrop(event)">
             <div class="resume-drop-lbl" id="rdrop-lbl">📄 Click to upload or drag & drop<br><span style="font-size:11px">PDF, JPG, PNG</span></div>
           </div>
@@ -1353,7 +1353,7 @@ function saveProfile(){
   const sc=document.getElementById('a-sc').value;
   const loc=document.getElementById('a-loc').value.trim()||'Mumbai';
   if(!nm||!ag||!ed||!sc){toast('Please fill required fields.');return;}
-  // Resume is optional — candidates can upload via the Drive link after saving
+  if(!pendingResume&&!editingEmail){toast('Please upload your resume to complete your profile.');return;}
 
   const sk=[sc,...document.getElementById('a-sk').value.split(',').map(s=>s.trim()).filter(Boolean)];
   const lg=document.getElementById('a-lg').value.split(',').map(s=>s.trim()).filter(Boolean)||['Hindi','English'];
@@ -1659,16 +1659,29 @@ function hrSignIn(){
   const email=document.getElementById('hr-si-email').value.trim();
   const pw=document.getElementById('hr-si-pw').value;
   if(!email||!pw){toast('Please fill all fields.');return;}
-  const saved=JSON.parse(localStorage.getItem('typc_hr_user')||'null');
-  if(saved&&saved.email===email){
-    hrUser=saved;
-    localStorage.setItem('typc_hr_user',JSON.stringify(hrUser));
-    closeHRLogin();updateHRHeader();
-    toast('Welcome back, '+hrUser.name+'!');
-  } else {
-    toast('Account not found — please create one first.');
-    switchLoginTab('up');
-  }
+  auth.signInWithEmailAndPassword(email,pw)
+    .then(cred=>{
+      if(!cred.user.emailVerified){
+        cred.user.sendEmailVerification().catch(()=>{});
+        toast('Please verify your email first — check your inbox.');
+        return;
+      }
+      return db.collection('hr_accounts').doc(cred.user.uid).get().then(snap=>{
+        const data=snap.exists?snap.data():JSON.parse(localStorage.getItem('typc_hr_user')||'null');
+        if(data){
+          hrUser={name:data.name,phone:data.phone,email:data.email,company:data.company,industry:data.industry,city:data.city};
+          localStorage.setItem('typc_hr_user',JSON.stringify(hrUser));
+          closeHRLogin();updateHRHeader();
+          toast('Welcome back, '+hrUser.name+'!');
+        } else {toast('Account not found. Please create one.');switchLoginTab('up');}
+      });
+    })
+    .catch(()=>{
+      // Fallback for old localStorage-only accounts
+      const saved=JSON.parse(localStorage.getItem('typc_hr_user')||'null');
+      if(saved&&saved.email===email){hrUser=saved;localStorage.setItem('typc_hr_user',JSON.stringify(hrUser));closeHRLogin();updateHRHeader();toast('Welcome back, '+hrUser.name+'!');}
+      else{toast('Email or password incorrect.');}
+    });
 }
 
 function hrSignUp(){
@@ -1680,10 +1693,21 @@ function hrSignUp(){
   const city=document.getElementById('hr-city').value.trim();
   const pw=document.getElementById('hr-up-pw').value;
   if(!nm||!ph||!em||!co||!ind||!city||!pw){toast('Please fill all required fields.');return;}
-  hrUser={name:nm,phone:ph,email:em,company:co,industry:ind,city:city};
-  localStorage.setItem('typc_hr_user',JSON.stringify(hrUser));
-  closeHRLogin();updateHRHeader();
-  toast('Account created! Welcome, '+nm+'.');
+  if(pw.length<6){toast('Password must be at least 6 characters.');return;}
+  auth.createUserWithEmailAndPassword(em,pw)
+    .then(cred=>{
+      cred.user.sendEmailVerification();
+      const hrData={uid:cred.user.uid,name:nm,phone:ph,email:em,company:co,industry:ind,city:city,role:'hr',createdAt:new Date().toISOString()};
+      db.collection('hr_accounts').doc(cred.user.uid).set(hrData).catch(()=>{});
+      hrUser={name:nm,phone:ph,email:em,company:co,industry:ind,city:city};
+      localStorage.setItem('typc_hr_user',JSON.stringify(hrUser));
+      closeHRLogin();updateHRHeader();
+      toast('Account created! Check your email ('+em+') to verify before signing in.');
+    })
+    .catch(e=>{
+      if(e.code==='auth/email-already-in-use'){toast('Email already registered — please sign in.');switchLoginTab('in');}
+      else{toast('Error: '+e.message);}
+    });
 }
 
 function updateHRHeader(){

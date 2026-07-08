@@ -705,9 +705,9 @@ footer a:hover{color:white;}
           <div><label>Confirm password *</label><input id="a-pw2" type="password" placeholder="Re-enter password"/></div>
         </div>
         <div>
-          <label>Resume * <span class="req-note">(required — PDF or image)</span></label>
+          <label>Resume <span class="req-note">(optional — you can upload after saving)</span></label>
           <div class="resume-drop" id="resume-drop" onclick="document.getElementById('resume-file').click()" ondragover="event.preventDefault();this.style.borderColor='var(--teal)'" ondragleave="this.style.borderColor='var(--line-d)'" ondrop="handleDrop(event)">
-            <div class="resume-drop-lbl" id="rdrop-lbl">📄 Click to upload or drag & drop<br><span style="font-size:11px">PDF, JPG, PNG — max 5MB</span></div>
+            <div class="resume-drop-lbl" id="rdrop-lbl">📄 Click to upload or drag & drop<br><span style="font-size:11px">PDF, JPG, PNG</span></div>
           </div>
           <input type="file" id="resume-file" accept=".pdf,.jpg,.jpeg,.png" style="display:none" onchange="handleFile(this)"/>
         </div>
@@ -1332,7 +1332,7 @@ function handleDrop(e){
 function openAdd(){
   editingEmail=null;pendingResume=null;atTrack='';
   const t=document.getElementById('a-modal-title');if(t)t.textContent='Add a youth profile';
-  document.getElementById('rdrop-lbl').innerHTML='📄 Click to upload or drag & drop<br><span style="font-size:11px">PDF, JPG, PNG — max 5MB</span>';
+  document.getElementById('rdrop-lbl').innerHTML='📄 Click to upload or drag & drop<br><span style="font-size:11px">PDF, JPG, PNG</span>';
   document.getElementById('resume-drop').style.borderColor='var(--line-d)';
   ['a-nm','a-ag','a-rl','a-sk','a-ex','a-ab','a-ph','a-lg','a-loc','a-em-yt','a-pw','a-pw2'].forEach(i=>document.getElementById(i).value='');
   const emf=document.getElementById('a-em-yt');emf.readOnly=false;emf.style.opacity='';
@@ -1353,7 +1353,7 @@ function saveProfile(){
   const sc=document.getElementById('a-sc').value;
   const loc=document.getElementById('a-loc').value.trim()||'Mumbai';
   if(!nm||!ag||!ed||!sc){toast('Please fill required fields.');return;}
-  if(!pendingResume&&!editingEmail){toast('Please upload a resume — it is required.');return;}
+  // Resume is optional — candidates can upload via the Drive link after saving
 
   const sk=[sc,...document.getElementById('a-sk').value.split(',').map(s=>s.trim()).filter(Boolean)];
   const lg=document.getElementById('a-lg').value.split(',').map(s=>s.trim()).filter(Boolean)||['Hindi','English'];
@@ -1434,8 +1434,9 @@ function saveProfile(){
       }
     });
 
-  emailjs.send(EJ_SID,EJ_TID,{candidate_name:nm,candidate_sectors:sc+' ('+trk+')',candidate_location:loc,candidate_note:'New profile. Email: '+email+(ph?' Phone: '+ph+' (private).':''),viewed_at:t,message_type:'New Profile — '+nm,to_email:N_EMAIL}).catch(()=>{});
-  emailjs.send(EJ_SID,EJ_TID,{candidate_name:nm,candidate_sectors:sc+' ('+trk+')',candidate_location:loc,candidate_note:'New profile. Email: '+email+(ph?' Phone: '+ph+' (private).':''),viewed_at:t,message_type:'New Profile — '+nm,to_email:N_EMAIL2}).catch(()=>{});
+  const noteMsg='New profile. Email: '+email+(ph?' | Phone: '+ph:'')+' | Resume folder: https://drive.google.com/drive/folders/1Eyp_USesa7Od-YHGq_qw7NBhTlG_H54I';
+  emailjs.send(EJ_SID,EJ_TID,{candidate_name:nm,candidate_sectors:sc+' ('+trk+')',candidate_location:loc,candidate_note:noteMsg,viewed_at:t,message_type:'New Profile — '+nm,to_email:N_EMAIL}).catch(()=>{});
+  emailjs.send(EJ_SID,EJ_TID,{candidate_name:nm,candidate_sectors:sc+' ('+trk+')',candidate_location:loc,candidate_note:noteMsg,viewed_at:t,message_type:'New Profile — '+nm,to_email:N_EMAIL2}).catch(()=>{});
 }
 
 function closeA(){document.getElementById('a-ov').classList.remove('open');}
@@ -1611,9 +1612,10 @@ function openYtDash(acct){
         <div style="font-size:10.5px;color:var(--teal-dark);font-weight:600;margin-top:3px">Profile is live</div>
       </div>
     </div>
-    <div style="font-size:11.5px;color:var(--ink-3);line-height:1.6;margin-bottom:18px;padding:10px 12px;background:var(--bg);border-radius:8px">
+    <div style="font-size:11.5px;color:var(--ink-3);line-height:1.6;margin-bottom:14px;padding:10px 12px;background:var(--bg);border-radius:8px">
       Pehli Kamai will personally call you when an HR is interested.<br>Questions? <strong>+91 9326691744</strong> or <strong>+91 99204 45917</strong>
     </div>
+    <a href="https://drive.google.com/drive/folders/1Eyp_USesa7Od-YHGq_qw7NBhTlG_H54I" target="_blank" style="display:block;width:100%;padding:11px;background:var(--ink);color:white;text-align:center;border-radius:8px;font-size:13px;font-weight:600;text-decoration:none;margin-bottom:10px;box-sizing:border-box">📎 Upload your resume</a>
     <button class="btn-lf-submit" onclick="closeYtDash();youthEditProfile('${acct.email}')" style="margin-bottom:10px">Edit my profile</button>
     <button onclick="closeYtDash()" style="width:100%;padding:10px;background:transparent;border:1.5px solid var(--line-d);border-radius:8px;font-family:var(--sans);font-size:13px;color:var(--ink-3);cursor:pointer">Close</button>
   `;

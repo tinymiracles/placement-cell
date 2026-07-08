@@ -44,6 +44,8 @@ body{font-family:var(--sans);background:var(--bg);color:var(--ink);min-height:10
 .nav-link{background:none;border:none;font-family:var(--sans);font-size:13px;font-weight:500;color:var(--ink-3);padding:6px 14px;border-radius:6px;cursor:pointer;transition:color .15s;position:relative;z-index:1;}
 .nav-link:hover{color:var(--ink);}
 .nav-link.active{color:var(--teal);font-weight:600;}
+.nav-cand{background:none;border:none;border-left:1px solid var(--line-d);margin-left:8px;padding-left:20px;font-family:var(--sans);font-size:13px;font-weight:600;color:var(--teal);cursor:pointer;transition:opacity .15s;letter-spacing:.2px;}
+.nav-cand:hover{opacity:.7;}
 .hdr-mid{margin-left:24px;display:flex;gap:18px;}
 .hs{display:flex;align-items:baseline;gap:4px;}
 .hs-n{font-family:var(--serif);font-size:18px;font-style:italic;color:var(--teal);line-height:1;}
@@ -417,8 +419,8 @@ footer a:hover{color:white;}
       <button class="nav-link active" id="nl-home" onclick="showPage('home')">Home</button>
       <button class="nav-link" id="nl-about" onclick="showPage('about')">About</button>
       <button class="nav-link" id="nl-contact" onclick="showPage('contact')">Contact Us</button>
-      <button class="nav-link" onclick="showPage('home');setTimeout(()=>document.querySelector('.ss').scrollIntoView({behavior:'smooth'}),100)">Candidates</button>
     </nav>
+    <button class="nav-cand" onclick="showPage('home');setTimeout(()=>document.querySelector('.ss').scrollIntoView({behavior:'smooth'}),100)">Candidates</button>
     <div class="hdr-mid">
       <div class="hs"><span class="hs-n" id="h-tot">43</span><span class="hs-l">candidates</span></div>
     </div>

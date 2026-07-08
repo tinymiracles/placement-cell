@@ -6,6 +6,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Pehli Kamai — tiny miracles</title>
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
@@ -988,6 +991,18 @@ footer a:hover{color:white;}
 <div class="toast" id="toast"><span id="t-m"></span></div>
 
 <script>
+// ── FIREBASE ─────────────────────────────────────
+firebase.initializeApp({
+  apiKey:"AIzaSyD4hBZPFrbB_JRskYLHda-htoyY2EYUSzA",
+  authDomain:"pehli-kamai.firebaseapp.com",
+  projectId:"pehli-kamai",
+  storageBucket:"pehli-kamai.firebasestorage.app",
+  messagingSenderId:"461944204483",
+  appId:"1:461944204483:web:6c677fc8534f81f6764676"
+});
+const db=firebase.firestore();
+const auth=firebase.auth();
+
 const allData = [
   {id:1,key:'alisha',name:'Alisha Shaikh Aslam',location:'Mumbai',sectors:['Admin & Data Entry'],note:'Looking in Admin and Data Entry',urgent:false,resume:false},
   {id:2,key:'bhavesh',name:'Bhavesh Pardeshi',location:'Mumbai',sectors:['Sales','Admin & Data Entry'],note:'Looking in Sales and Data Entry',urgent:false,resume:false},
@@ -1359,6 +1374,9 @@ function saveProfile(){
     if(pendingResume){const rk='new_'+Date.now();RESUMES[rk]=pendingResume;updated.resumeKey=rk;updated.resume=true;}
     accts[editingEmail]=updated;
     localStorage.setItem('pk_yt_accts',JSON.stringify(accts));
+    // Sync to Firestore if user is signed in
+    const fbUser=auth.currentUser;
+    if(fbUser){db.collection('youth_accounts').doc(fbUser.uid).update({name:nm,age:ag,edu:ed,sector:sc,location:loc,role:rl,skills:sk,langs:lg,about:ab,track:trk}).catch(()=>{});}
     const idx=DATA.findIndex(x=>x.id===old.id);
     if(idx>=0)DATA[idx]={...DATA[idx],name:nm,age:ag,edu:ed,sector:sc,location:loc,role:rl,skills:sk,langs:lg,about:ab,track:trk,...(pendingResume?{resume:true,resumeKey:updated.resumeKey}:{})};
     const em=editingEmail;editingEmail=null;pendingResume=null;
@@ -1376,8 +1394,6 @@ function saveProfile(){
   if(!email){toast('Please enter your email to create an account.');return;}
   if(!pw||pw.length<6){toast('Password must be at least 6 characters.');return;}
   if(pw!==pw2){toast('Passwords do not match.');return;}
-  const accts=JSON.parse(localStorage.getItem('pk_yt_accts')||'{}');
-  if(accts[email]){toast('An account with this email already exists. Try logging in.');return;}
 
   const key='new_'+Date.now();
   RESUMES[key]=pendingResume;
@@ -1387,18 +1403,39 @@ function saveProfile(){
   document.getElementById('h-tot').textContent=DATA.length;
   document.getElementById('s-tot').textContent=DATA.length;
 
-  // Save account
-  const acct={id,email,password:pw,name:nm,age:ag,edu:ed,sector:sc,location:loc,role:rl,skills:sk,langs:lg,about:ab,resumeKey:key,resume:true,track:trk};
-  accts[email]=acct;
-  localStorage.setItem('pk_yt_accts',JSON.stringify(accts));
-
+  const ph=document.getElementById('a-ph').value.trim();
   buildChips();render();updateEnqBadge();closeA();pendingResume=null;
 
-  const ph=document.getElementById('a-ph').value.trim();
+  // Create Firebase Auth account + Firestore profile
+  auth.createUserWithEmailAndPassword(email,pw)
+    .then(cred=>{
+      const uid=cred.user.uid;
+      const acct={uid,id,email,name:nm,age:ag,edu:ed,sector:sc,location:loc,role:rl,skills:sk,langs:lg,about:ab,resumeKey:key,resume:true,track:trk,phone:ph,createdAt:new Date().toISOString()};
+      // Save to Firestore
+      db.collection('youth_accounts').doc(uid).set(acct).catch(()=>{});
+      // Also save to Firestore candidates collection
+      db.collection('candidates').add({...np, email, phone:ph, createdAt:new Date().toISOString()}).catch(()=>{});
+      // localStorage backup
+      const accts=JSON.parse(localStorage.getItem('pk_yt_accts')||'{}');
+      accts[email]={...acct,password:pw};
+      localStorage.setItem('pk_yt_accts',JSON.stringify(accts));
+      openYtDash(acct);
+    })
+    .catch(e=>{
+      if(e.code==='auth/email-already-in-use'){
+        toast('Account already exists. Try logging in.');
+      } else {
+        // Firebase failed — save to localStorage only as fallback
+        const acct={id,email,password:pw,name:nm,age:ag,edu:ed,sector:sc,location:loc,role:rl,skills:sk,langs:lg,about:ab,resumeKey:key,resume:true,track:trk};
+        const accts=JSON.parse(localStorage.getItem('pk_yt_accts')||'{}');
+        accts[email]=acct;
+        localStorage.setItem('pk_yt_accts',JSON.stringify(accts));
+        openYtDash(acct);
+      }
+    });
+
   emailjs.send(EJ_SID,EJ_TID,{candidate_name:nm,candidate_sectors:sc+' ('+trk+')',candidate_location:loc,candidate_note:'New profile. Email: '+email+(ph?' Phone: '+ph+' (private).':''),viewed_at:t,message_type:'New Profile — '+nm,to_email:N_EMAIL}).catch(()=>{});
   emailjs.send(EJ_SID,EJ_TID,{candidate_name:nm,candidate_sectors:sc+' ('+trk+')',candidate_location:loc,candidate_note:'New profile. Email: '+email+(ph?' Phone: '+ph+' (private).':''),viewed_at:t,message_type:'New Profile — '+nm,to_email:N_EMAIL2}).catch(()=>{});
-
-  openYtDash(acct);
 }
 
 function closeA(){document.getElementById('a-ov').classList.remove('open');}
@@ -1425,9 +1462,13 @@ function submitContact(){
 
 // ── ENQUIRIES ────────────────────────────────────
 function saveEnquiry(enq){
-  let list = JSON.parse(localStorage.getItem('typc_enquiries')||'[]');
-  list.unshift({...enq, id: Date.now()});
-  localStorage.setItem('typc_enquiries', JSON.stringify(list));
+  const doc={...enq, id:Date.now(), savedAt:new Date().toISOString()};
+  // Write to Firestore
+  db.collection('hr_enquiries').add(doc).catch(e=>console.warn('Firestore enquiry write failed:',e));
+  // Keep localStorage as backup
+  let list=JSON.parse(localStorage.getItem('typc_enquiries')||'[]');
+  list.unshift(doc);
+  localStorage.setItem('typc_enquiries',JSON.stringify(list));
   updateEnqBadge();
 }
 
@@ -1435,8 +1476,25 @@ function loadEnquiries(){
   return JSON.parse(localStorage.getItem('typc_enquiries')||'[]');
 }
 
+function loadEnquiriesFromFirestore(callback){
+  db.collection('hr_enquiries').orderBy('savedAt','desc').get()
+    .then(snap=>{
+      const list=snap.docs.map(d=>d.data());
+      // Sync to localStorage
+      localStorage.setItem('typc_enquiries',JSON.stringify(list));
+      callback(list);
+    })
+    .catch(()=>callback(loadEnquiries()));
+}
+
 function clearEnquiries(){
   if(!confirm('Clear all enquiries? This cannot be undone.')) return;
+  // Clear Firestore
+  db.collection('hr_enquiries').get().then(snap=>{
+    const batch=db.batch();
+    snap.docs.forEach(d=>batch.delete(d.ref));
+    return batch.commit();
+  }).catch(()=>{});
   localStorage.removeItem('typc_enquiries');
   updateEnqBadge();
   renderEnquiries();
@@ -1504,11 +1562,30 @@ function youthLogin(){
   const email=document.getElementById('yt-email').value.trim().toLowerCase();
   const pw=document.getElementById('yt-pw').value;
   if(!email||!pw){toast('Enter your email and password.');return;}
-  const accts=JSON.parse(localStorage.getItem('pk_yt_accts')||'{}');
-  const acct=accts[email];
-  if(!acct||acct.password!==pw){toast('Email or password incorrect.');return;}
-  closeHRLogin();
-  openYtDash(acct);
+  // Try Firebase Auth first
+  auth.signInWithEmailAndPassword(email,pw)
+    .then(cred=>{
+      return db.collection('youth_accounts').doc(cred.user.uid).get();
+    })
+    .then(snap=>{
+      if(snap.exists){
+        closeHRLogin();
+        openYtDash(snap.data());
+      } else {
+        // Profile in Firestore missing — try localStorage
+        const accts=JSON.parse(localStorage.getItem('pk_yt_accts')||'{}');
+        const acct=accts[email];
+        if(acct){closeHRLogin();openYtDash(acct);}
+        else{toast('Profile not found. Please sign up again.');}
+      }
+    })
+    .catch(e=>{
+      // Fall back to localStorage for old accounts
+      const accts=JSON.parse(localStorage.getItem('pk_yt_accts')||'{}');
+      const acct=accts[email];
+      if(acct&&acct.password===pw){closeHRLogin();openYtDash(acct);}
+      else{toast('Email or password incorrect.');}
+    });
 }
 
 function openYtDash(acct){

@@ -282,23 +282,24 @@ body{font-family:var(--sans);background:var(--bg);color:var(--ink);min-height:10
 .btn-teal{height:38px;padding:0 22px;background:var(--teal);border:none;border-radius:7px;color:white;font-family:var(--sans);font-size:13px;font-weight:600;cursor:pointer;}
 
 /* ━━ CONTACT PAGE ━━ */
-.contact-wrap{max-width:600px;margin:0 auto;padding:64px 40px;}
-.contact-wrap h2{font-family:var(--serif);font-size:40px;font-weight:700;color:var(--ink);margin-bottom:8px;}
+.contact-wrap{max-width:560px;margin:0 auto;padding:72px 40px;}
+.contact-wrap h2{font-family:var(--serif);font-size:42px;font-weight:700;color:var(--ink);margin-bottom:6px;}
 .contact-wrap h2 em{font-style:italic;color:var(--teal);}
-.ct-bar{width:44px;height:4px;background:var(--lime);border-radius:2px;margin-bottom:20px;}
-.ct-sub{font-size:15px;color:var(--ink-3);margin-bottom:36px;line-height:1.7;}
-.ct-form{display:flex;flex-direction:column;gap:14px;}
-.ct-row label{font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--ink-4);display:block;margin-bottom:5px;}
-.ct-row input,.ct-row textarea,.ct-row select{width:100%;border:1.5px solid var(--line-d);border-radius:8px;padding:10px 14px;font-family:var(--sans);font-size:14px;color:var(--ink);outline:none;background:var(--bg);transition:border .14s;}
-.ct-row input:focus,.ct-row textarea:focus{border-color:var(--teal);background:var(--white);}
-.ct-row textarea{min-height:110px;resize:vertical;}
-.btn-ct-submit{width:100%;height:42px;background:var(--teal);border:none;border-radius:8px;color:white;font-family:var(--sans);font-size:14px;font-weight:600;cursor:pointer;margin-top:4px;transition:opacity .14s;}
+.ct-bar{width:36px;height:3px;background:var(--teal);border-radius:2px;margin-bottom:24px;}
+.ct-sub{font-size:14.5px;color:var(--ink-3);margin-bottom:40px;line-height:1.75;}
+.ct-form{display:flex;flex-direction:column;gap:24px;}
+.ct-row label{font-size:9.5px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--ink-4);display:block;margin-bottom:6px;}
+.ct-row input,.ct-row textarea,.ct-row select{width:100%;border:none;border-bottom:1.5px solid var(--line-d);padding:8px 0;font-family:var(--sans);font-size:14px;color:var(--ink);outline:none;background:transparent;transition:border .14s;border-radius:0;}
+.ct-row input:focus,.ct-row textarea:focus,.ct-row select:focus{border-bottom-color:var(--teal);}
+.ct-row textarea{min-height:100px;resize:none;}
+.btn-ct-submit{width:100%;height:46px;background:var(--teal);border:none;color:white;font-family:var(--sans);font-size:13px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;cursor:pointer;margin-top:8px;transition:opacity .14s;}
 .btn-ct-submit:hover{opacity:.85;}
-.ct-alt{margin-top:40px;padding-top:32px;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:14px;}
-.ct-row-alt{display:flex;align-items:center;gap:14px;}
-.ct-ico{width:38px;height:38px;border-radius:8px;background:var(--lime-soft);border:1px solid rgba(200,210,64,.4);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
-.ct-info .ct-t{font-size:14px;font-weight:600;color:var(--ink);}
-.ct-info .ct-s{font-size:12px;color:var(--ink-4);font-family:var(--sans);}
+.ct-alt{margin-top:52px;padding-top:36px;border-top:1px solid var(--line-d);display:flex;flex-direction:column;gap:20px;}
+.ct-person{display:flex;flex-direction:column;gap:3px;}
+.ct-person-name{font-size:14px;font-weight:600;color:var(--ink);}
+.ct-person-detail{font-size:13px;color:var(--ink-4);}
+.ct-person-detail a{color:var(--ink-4);text-decoration:none;}
+.ct-person-detail a:hover{color:var(--teal);}
 
 /* ━━ FOOTER ━━ */
 footer{background:var(--ink);color:rgba(255,255,255,.45);padding:28px 40px;display:flex;align-items:center;justify-content:space-between;font-size:12px;flex-wrap:wrap;gap:12px;}
@@ -536,9 +537,18 @@ footer a:hover{color:white;}
       <button class="btn-ct-submit" onclick="submitContact()">Send message</button>
     </div>
     <div class="ct-alt">
-      <div class="ct-row-alt"><div class="ct-ico">👩</div><div class="ct-info"><div class="ct-t">Meghna Pardeshi</div><div class="ct-s">meghna@tinymiracles.com &nbsp;·&nbsp; <span style="cursor:pointer" onclick="window.open('https://wa.me/919326691744','_blank')">+91 9326691744</span></div></div></div>
-      <div class="ct-row-alt"><div class="ct-ico">👨</div><div class="ct-info"><div class="ct-t">Rishikesh Jaiswar</div><div class="ct-s">rishikesh@tinymiracles.com &nbsp;·&nbsp; <span style="cursor:pointer" onclick="window.open('https://wa.me/919920445917','_blank')">+91 99204 45917</span></div></div></div>
-      <div class="ct-row-alt"><div class="ct-ico">🌐</div><div class="ct-info"><div class="ct-t">Website</div><div class="ct-s"><a href="https://tinymiracles.com" target="_blank">tinymiracles.com</a></div></div></div>
+      <div class="ct-person">
+        <div class="ct-person-name">Meghna Pardeshi</div>
+        <div class="ct-person-detail"><a href="mailto:meghna@tinymiracles.com">meghna@tinymiracles.com</a> &nbsp;·&nbsp; <a href="https://wa.me/919326691744" target="_blank">+91 9326691744</a></div>
+      </div>
+      <div class="ct-person">
+        <div class="ct-person-name">Rishikesh Jaiswar</div>
+        <div class="ct-person-detail"><a href="mailto:rishikesh@tinymiracles.com">rishikesh@tinymiracles.com</a> &nbsp;·&nbsp; <a href="https://wa.me/919920445917" target="_blank">+91 99204 45917</a></div>
+      </div>
+      <div class="ct-person">
+        <div class="ct-person-name">Tiny Miracles</div>
+        <div class="ct-person-detail"><a href="https://tinymiracles.com" target="_blank">tinymiracles.com</a></div>
+      </div>
     </div>
   </div>
 </div>

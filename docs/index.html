@@ -1279,7 +1279,7 @@ function openP(id){
   ct.innerHTML=hrUser
     ?'📍 '+d.location+(d.location.toLowerCase().includes('mumbai')?'':`, Mumbai`)
     :'<span style="font-size:12px;color:var(--ink-4)">Express interest below to receive their contact details</span>';
-  document.getElementById('pm-res-btn').style.display='';
+  document.getElementById('pm-res-btn').style.display=hrUser?'':'none';
   document.getElementById('p-ov').classList.add('open');
 }
 function closeP(){document.getElementById('p-ov').classList.remove('open');}

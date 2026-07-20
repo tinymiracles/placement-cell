@@ -320,7 +320,7 @@ body{font-family:var(--sans);background:var(--bg);color:var(--ink);min-height:10
 
 /* ━━ FOOTER ━━ */
 footer{background:var(--ink);color:rgba(255,255,255,.45);padding:0;border-top:2px solid var(--teal);}
-.ft-inner{max-width:1240px;margin:0 auto;padding:56px 40px 40px;display:grid;grid-template-columns:2fr 1fr;gap:48px;}
+.ft-inner{max-width:1240px;margin:0 auto;padding:56px 40px 40px;display:grid;grid-template-columns:2fr 1fr 1fr;gap:48px;}
 .ft-brand-name{font-family:var(--serif);font-size:22px;font-weight:700;font-style:italic;color:#ffffff;margin-bottom:4px;}
 .ft-brand-name span{color:var(--teal);}
 .ft-brand-sub{font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:rgba(255,255,255,.28);margin-bottom:14px;}
@@ -489,7 +489,7 @@ footer{background:var(--ink);color:rgba(255,255,255,.45);padding:0;border-top:2p
       <div class="nav-pill" id="nav-pill"></div>
       <button class="nav-link active" id="nl-home" onclick="showPage('home')">Home</button>
       <button class="nav-link" id="nl-about" onclick="showPage('about')">About</button>
-      <button class="nav-link" id="nl-contact" onclick="showPage('contact')">Contact Us</button>
+      <button class="nav-link" id="nl-contact" onclick="document.querySelector('footer').scrollIntoView({behavior:'smooth'})">Contact Us</button>
     </nav>
     <button class="nav-cand" onclick="showPage('home');setTimeout(()=>document.querySelector('.ss').scrollIntoView({behavior:'smooth'}),100)">Candidates</button>
     <div class="hdr-mid">
@@ -579,7 +579,7 @@ footer{background:var(--ink);color:rgba(255,255,255,.45);padding:0;border-top:2p
     <p class="ab-body"><strong>Pehli Kamai</strong> is an initiative by <strong>tiny miracles</strong> — a B-Corp certified social enterprise based in Mumbai — to connect motivated young people from across the city with real employment opportunities.</p>
     <p class="ab-body">We work with youth from diverse backgrounds who are ready to work, eager to learn, and looking for their first — or next — step in their careers. Our candidates span a wide range of skills: from accounting and data entry to hospitality, sales, creative media, and more.</p>
     <p class="ab-body">For employers, we offer a simple promise: pre-screened, motivated candidates who are ready to show up and grow. You browse, you connect, we make the introduction.</p>
-    <button class="btn-teal" onclick="showPage('contact')">Get in touch →</button>
+    <button class="btn-teal" onclick="document.querySelector('footer').scrollIntoView({behavior:'smooth'})">Get in touch →</button>
   </div>
 
   <section class="why-pk" id="why-pk">
@@ -615,43 +615,6 @@ footer{background:var(--ink);color:rgba(255,255,255,.45);padding:0;border-top:2p
 </section>
 </div>
 
-<!-- ━━ CONTACT PAGE ━━ -->
-<div class="page" id="page-contact">
-  <div class="contact-wrap">
-    <h2>Let's <em>talk.</em></h2>
-    <div class="ct-bar"></div>
-    <p class="ct-sub">Whether you're an employer looking to hire, an NGO wanting to collaborate, or a youth looking to register — we'd love to hear from you.</p>
-    <div class="ct-form">
-      <div class="ct-row"><label>Your name *</label><input type="text" id="cf-name" placeholder="e.g. Priya Shah"/></div>
-      <div class="ct-row"><label>Organisation</label><input type="text" id="cf-org" placeholder="e.g. Zomato, SBI, Self"/></div>
-      <div class="ct-row"><label>Email *</label><input type="email" id="cf-email" placeholder="your@email.com"/></div>
-      <div class="ct-row"><label>I am a...</label>
-        <select id="cf-type">
-          <option>Employer / HR</option>
-          <option>NGO / Partner</option>
-          <option>Youth looking for work</option>
-          <option>Other</option>
-        </select>
-      </div>
-      <div class="ct-row"><label>Message *</label><textarea id="cf-msg" placeholder="Tell us how we can help…"></textarea></div>
-      <button class="btn-ct-submit" onclick="submitContact()">Send message</button>
-    </div>
-    <div class="ct-alt">
-      <div class="ct-person">
-        <div class="ct-person-name">Meghna Pardeshi</div>
-        <div class="ct-person-detail"><a href="mailto:meghna@tinymiracles.com">meghna@tinymiracles.com</a> &nbsp;·&nbsp; <a href="https://wa.me/919326691744" target="_blank">+91 9326691744</a></div>
-      </div>
-      <div class="ct-person">
-        <div class="ct-person-name">Rishikesh Jaiswar</div>
-        <div class="ct-person-detail"><a href="mailto:rishikesh@tinymiracles.com">rishikesh@tinymiracles.com</a> &nbsp;·&nbsp; <a href="https://wa.me/919920445917" target="_blank">+91 99204 45917</a></div>
-      </div>
-      <div class="ct-person">
-        <div class="ct-person-name">Tiny Miracles</div>
-        <div class="ct-person-detail"><a href="https://tinymiracles.com" target="_blank">tinymiracles.com</a></div>
-      </div>
-    </div>
-  </div>
-</div>
 
 
 <!-- ━━ ENQUIRIES PAGE ━━ -->
@@ -1071,8 +1034,17 @@ footer{background:var(--ink);color:rgba(255,255,255,.45);padding:0;border-top:2p
       <a onclick="showPage('home')">Home</a>
       <a onclick="showPage('home');setTimeout(()=>document.querySelector('.ss').scrollIntoView({behavior:'smooth'}),100)">Candidates</a>
       <a onclick="showPage('about')">About Us</a>
-      <a onclick="showPage('contact')">Contact</a>
       <a onclick="openSignIn()">HR Login</a>
+    </div>
+    <div class="ft-col">
+      <div class="ft-col-label">Contact Us</div>
+      <span style="font-weight:600;color:rgba(255,255,255,.7);font-size:12px">Meghna Pardeshi</span>
+      <a href="mailto:meghna@tinymiracles.com">meghna@tinymiracles.com</a>
+      <a href="https://wa.me/919326691744" target="_blank">+91 9326691744</a>
+      <span style="font-weight:600;color:rgba(255,255,255,.7);font-size:12px;margin-top:8px">Rishikesh Jaiswar</span>
+      <a href="mailto:rishikesh@tinymiracles.com">rishikesh@tinymiracles.com</a>
+      <a href="https://wa.me/919920445917" target="_blank">+91 99204 45917</a>
+      <a href="https://tinymiracles.com" target="_blank" style="margin-top:8px">tinymiracles.com</a>
     </div>
   </div>
   <div class="ft-bottom">

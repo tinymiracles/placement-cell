@@ -320,7 +320,7 @@ body{font-family:var(--sans);background:var(--bg);color:var(--ink);min-height:10
 
 /* ━━ FOOTER ━━ */
 footer{background:var(--ink);color:rgba(255,255,255,.45);padding:0;border-top:2px solid var(--teal);}
-.ft-inner{max-width:1240px;margin:0 auto;padding:56px 40px 40px;display:grid;grid-template-columns:2fr 1fr 1fr;gap:48px;}
+.ft-inner{max-width:1240px;margin:0 auto;padding:56px 40px 40px;display:grid;grid-template-columns:2fr 1fr;gap:48px;}
 .ft-brand-name{font-family:var(--serif);font-size:22px;font-weight:700;font-style:italic;color:#ffffff;margin-bottom:4px;}
 .ft-brand-name span{color:var(--teal);}
 .ft-brand-sub{font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:rgba(255,255,255,.28);margin-bottom:14px;}
@@ -331,7 +331,7 @@ footer{background:var(--ink);color:rgba(255,255,255,.45);padding:0;border-top:2p
 .ft-col a:hover{color:#ffffff;}
 .ft-col span{color:rgba(255,255,255,.45);font-size:13px;line-height:1.5;}
 .ft-bottom{border-top:1px solid rgba(255,255,255,.08);padding:18px 40px;max-width:1240px;margin:0 auto;font-size:11px;color:rgba(255,255,255,.28);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;}
-@media(max-width:700px){.ft-inner{grid-template-columns:1fr;gap:32px;padding:40px 20px 28px;}.ft-bottom{padding:16px 20px;}}
+@media(max-width:600px){.ft-inner{grid-template-columns:1fr;gap:32px;padding:40px 20px 28px;}.ft-bottom{padding:16px 20px;}}
 
 /* ━━ TOAST ━━ */
 .toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(70px);background:var(--ink);color:white;padding:11px 20px;border-radius:8px;font-size:13px;z-index:999;opacity:0;transition:all .28s cubic-bezier(.34,1.56,.64,1);pointer-events:none;white-space:nowrap;}
@@ -1073,14 +1073,6 @@ footer{background:var(--ink);color:rgba(255,255,255,.45);padding:0;border-top:2p
       <a onclick="showPage('about')">About Us</a>
       <a onclick="showPage('contact')">Contact</a>
       <a onclick="openSignIn()">HR Login</a>
-    </div>
-    <div class="ft-col">
-      <div class="ft-col-label">Contact Us</div>
-      <span>meghna@tinymiracles.com</span>
-      <span>+91 9326691744</span>
-      <span style="margin-top:6px">rishikesh@tinymiracles.com</span>
-      <span>+91 99204 45917</span>
-      <a href="https://tinymiracles.com" target="_blank" style="margin-top:8px">tinymiracles.com</a>
     </div>
   </div>
   <div class="ft-bottom">

@@ -318,6 +318,17 @@ body{font-family:var(--sans);background:var(--bg);color:var(--ink);min-height:10
 .ct-person-detail a{color:var(--ink-4);text-decoration:none;}
 .ct-person-detail a:hover{color:var(--teal);}
 
+/* ━━ HOW IT WORKS ━━ */
+.hiw{background:var(--teal-soft);border-top:1px solid var(--teal-mid);border-bottom:1px solid var(--teal-mid);padding:64px 40px 72px;}
+.hiw-in{max-width:760px;margin:0 auto;text-align:center;}
+.hiw-p{font-size:clamp(17px,2vw,22px);color:var(--ink-2);line-height:1.7;font-style:italic;font-family:var(--serif);margin-bottom:48px;}
+.hiw-ctas{display:grid;grid-template-columns:1fr 1fr;gap:24px;}
+.hiw-card{background:var(--white);border:1.5px solid var(--line-d);border-radius:16px;padding:28px 28px 24px;text-align:left;box-shadow:0 4px 20px rgba(13,36,38,.07);}
+.hiw-card-label{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--teal);margin-bottom:10px;}
+.hiw-card p{font-size:14px;color:var(--ink-3);line-height:1.7;margin-bottom:18px;}
+.hiw-card-hindi{font-family:var(--serif);font-size:17px;font-style:italic;color:var(--ink);margin-bottom:6px;font-weight:700;}
+@media(max-width:640px){.hiw{padding:48px 20px;}.hiw-ctas{grid-template-columns:1fr;}}
+
 /* ━━ FOOTER ━━ */
 footer{background:var(--ink);color:rgba(255,255,255,.45);padding:0;border-top:2px solid var(--teal);}
 .ft-inner{max-width:1240px;margin:0 auto;padding:56px 40px 40px;display:grid;grid-template-columns:2fr 1fr 1fr;gap:48px;}
@@ -530,9 +541,9 @@ footer{background:var(--ink);color:rgba(255,255,255,.45);padding:0;border-top:2p
           <div class="hero-by">by tiny miracles</div>
         </div>
       </div>
-      <div class="hero-tagline">India's first fresher job portal for GenZs by GenZs</div>
+      <div class="hero-tagline">Welcome to Mumbai's first portal for hiring freshers</div>
       <div class="hero-bar"></div>
-      <p class="hero-p">Need college students to conduct a short-term survey? A hospitality hire ready to learn on the job? An AI engineer? This is the portal for you. Our candidates span accounting, data entry, hospitality, sales, creative media, and more — all ready to work, eager to learn, and looking for their first or next step.</p>
+      <p class="hero-p">Need college students for a short-term survey? A hospitality hire that's a quick learner? A data entry operator who'll actually show up? Our candidates span accounting, data entry, hospitality, sales, creative media, and more — freshers across Mumbai, ekdum eager to work and looking for their first step.</p>
       <div class="hero-stats">
         <div class="h-stat"><div class="n" id="s-tot">43</div><div class="l">Candidates</div></div>
         <div class="h-stat"><div class="n">10+</div><div class="l">Sectors</div></div>
@@ -564,50 +575,66 @@ footer{background:var(--ink);color:rgba(255,255,255,.45);padding:0;border-top:2p
     <div class="track-rows" id="grid"></div>
   </div>
 
+  <section class="hiw">
+    <div class="hiw-in">
+      <p class="hiw-p">"How it works is simple. You browse profiles. You shortlist. We make the introduction — and we stay in the loop until the candidate's first day, and after."</p>
+      <div class="hiw-ctas">
+        <div class="hiw-card">
+          <div class="hiw-card-label">Looking to hire?</div>
+          <p>Scroll through the profiles and give the candidates a call.</p>
+          <button class="btn-add" onclick="window.scrollTo({top:0,behavior:'smooth'})">Browse candidates →</button>
+        </div>
+        <div class="hiw-card">
+          <div class="hiw-card-hindi">Naukri dhoond rahe ho?</div>
+          <p>Upload your profile. Bindaas bano — khud bano.</p>
+          <button class="btn-add" style="background:var(--ink)" onclick="openAdd()">Add my profile →</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
 </div><!-- /home -->
 
 <!-- ━━ ABOUT PAGE ━━ -->
 <div class="page" id="page-about">
   <div class="about-wrap">
-    <h2>About <em>Pehli</em><br>Kamai</h2>
+    <h2>Our <em>story</em></h2>
     <div class="ab-bar"></div>
     <div class="ab-stats">
       <div class="ab-stat"><div class="n" id="ab-tot">43</div><div class="l">Candidates</div></div>
       <div class="ab-stat"><div class="n">33</div><div class="l">Resumes Ready</div></div>
       <div class="ab-stat"><div class="n">10+</div><div class="l">Sectors</div></div>
     </div>
-    <p class="ab-body"><strong>Pehli Kamai</strong> is an initiative by <strong>tiny miracles</strong> — a B-Corp certified social enterprise based in Mumbai — to connect motivated young people from across the city with real employment opportunities.</p>
-    <p class="ab-body">We work with youth from diverse backgrounds who are ready to work, eager to learn, and looking for their first — or next — step in their careers. Our candidates span a wide range of skills: from accounting and data entry to hospitality, sales, creative media, and more.</p>
-    <p class="ab-body">For employers, we offer a simple promise: pre-screened, motivated candidates who are ready to show up and grow. You browse, you connect, we make the introduction.</p>
+    <p class="ab-body"><strong>Pehli Kamai</strong> is an initiative by <strong>Tiny Miracles</strong>, a B-Corp certified social enterprise based in Mumbai and Amsterdam. For over a decade, Tiny Miracles has worked alongside communities across the city — on health, on education, on savings, on livelihoods — with one belief holding it all together: people don't lack ability, they lack access.</p>
+    <p class="ab-body">Somewhere along the way, a pattern became impossible to ignore. The children we'd watched learn to read had become young adults. They'd finished their 10th, their 12th, some their graduation — often as first-generation learners, often while working part-time, often without a single person at home who could explain what a resume was or what "HR round" meant, but always with hopes, dreams, and ambition. They'd taught themselves computers on borrowed phones. They'd signed up for Tally courses, animation courses, spoken English classes — on their own, with their own saved money.</p>
+    <p class="ab-body">And then they hit a wall that no course could fix: nobody would give them a job.</p>
     <button class="btn-teal" onclick="openCF()">Get in touch →</button>
   </div>
 
   <section class="why-pk" id="why-pk">
   <div class="why-in">
-    <h2>Why Pehli Kamai</h2>
-    <div class="why-sub">The real gap — and why this hire is still the smarter one</div>
-    <div class="why-quote">GenZs are not entitled. GenZs are not unprofessional. They just choose not to pretend anymore.</div>
+    <h2>So we built<br>the bridge ourselves</h2>
+    <div class="why-sub">Why this hire makes sense</div>
 
-    <h3>The Real Gap</h3>
-    <p>There are companies in this city that need freshers. There are thousands of young, capable people in this city who need jobs. On paper, that should be a simple match.</p>
-    <p>But it isn't.</p>
-    <p>When we asked HR teams why, we kept hearing versions of the same phrases about GenZs: Lazy. Not wanting to work hard. Not loyal. Not serious. Unprofessional.</p>
-    <p>And then we spoke to young people — and that's where it got complex. Young people say that the fact that they are from a certain neighbourhood gets registered before anything else (researchers call this geographical bias — assumptions made about people based on where they live). They're not considered cool enough; people assume they lack the skills or exposure that come with a more privileged background, and so they don't get the same opportunities. No matter how intelligent or skilled, if they can't speak English fluently, or dress differently, or are from a different school medium or board — they feel they get quietly marked down. They say they have never been allowed to simply be themselves in a workplace.</p>
-    <p>We believe that where you're from is not a qualification or a warning sign. <em>'We did them a favour by hiring someone from that community'</em> is not a philosophy. Gestures, clothes, which school, which board, which accent — none of that is a skill. And these small things are not small at all.</p>
+    <p>What we have understood is that companies in this city need freshers. Thousands of capable young people need jobs. On paper, that's a simple match. In practice, it isn't — and it's nobody's fault in particular. Hiring is rushed, resumes all look the same, and shortcuts creep in without anyone choosing them.</p>
+    <p>A candidate's English, location they are from, clothes, or board of education quietly gets read before their ability does. We've caught ourselves doing it too, and are now unlearning.</p>
+    <p>We learnt that where you're from is not a qualification and not a warning sign. An accent is not a skill. A pin code is not a work ethic. Talent was never the shortage in this city — introductions were.</p>
 
-    <h3>Why this is still the smarter hire</h3>
-    <p>Strip the bias out, and what's left is a workforce that has already solved real problems under real constraints, understands India's actual mass-market customer better than most campus hires ever will, and is fluent on a phone because survival required it — not because a company paid for the training. None of that shows up on a résumé built for someone else's life. It shows up on the job.</p>
-    <p>We're not going to pretend there's never a skills gap — there sometimes is, and it's exactly why every profile on this platform has already been through structured training before it reaches you. But the other gap — the one about attitude — isn't a skills gap at all.</p>
+    <h3>Why this is a smarter hire for you</h3>
+    <div class="why-quote">When you set all that bias aside, here's what's left: young people who have solved real problems under real constraints, who understand India's actual mass-market customer better than most campus hires ever will, who are more resourceful and eager to get the job done.</div>
+    <p>None of that fits on a résumé. It shows up on the job.</p>
+    <p>Is there sometimes a skills gap? Yes — and that's exactly what our training closes. Candidates on this portal go through career-readiness preparation: reading a job description, building an honest resume, interviewing, and knowing what day one at a workplace actually looks like.</p>
+    <p>That's what Pehli Kamai is: the introduction. Meet the candidates, and then finish the sentence <em>"freshers these days—"</em> however you like. We think you'll be surprised.</p>
 
     <div class="why-cta">
       <div class="why-cta-card teal">
         <h4>For youth</h4>
-        <p>If you're a young person looking for a job, upload your profile — be bold, be yourself.</p>
+        <p>Upload your profile. Bindaas bano — khud bano.</p>
         <button class="btn-lf-submit" style="margin-top:14px;width:auto;padding:10px 22px;font-size:13px" onclick="openAdd()">Add my profile →</button>
       </div>
       <div class="why-cta-card">
         <h4>For employers</h4>
-        <p>If you're looking to hire motivated, real talent that has learnt from lived experience, scroll through the profiles and give them a call.</p>
+        <p>Scroll through the profiles and give the candidates a call.</p>
         <button class="btn-lf-submit" style="margin-top:14px;width:auto;padding:10px 22px;font-size:13px;background:var(--ink);border-color:var(--ink)" onclick="showPage('home');window.scrollTo({top:0,behavior:'smooth'})">Browse candidates →</button>
       </div>
     </div>

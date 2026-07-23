@@ -489,7 +489,7 @@ footer{background:var(--ink);color:rgba(255,255,255,.45);padding:0;border-top:2p
       <div class="nav-pill" id="nav-pill"></div>
       <button class="nav-link active" id="nl-home" onclick="showPage('home')">Home</button>
       <button class="nav-link" id="nl-about" onclick="showPage('about')">About</button>
-      <button class="nav-link" id="nl-contact" onclick="document.querySelector('footer').scrollIntoView({behavior:'smooth'})">Contact Us</button>
+      <button class="nav-link" id="nl-contact" onclick="openCF()">Contact Us</button>
     </nav>
     <button class="nav-cand" onclick="showPage('home');setTimeout(()=>document.querySelector('.ss').scrollIntoView({behavior:'smooth'}),100)">Candidates</button>
     <div class="hdr-mid">
@@ -579,7 +579,7 @@ footer{background:var(--ink);color:rgba(255,255,255,.45);padding:0;border-top:2p
     <p class="ab-body"><strong>Pehli Kamai</strong> is an initiative by <strong>tiny miracles</strong> — a B-Corp certified social enterprise based in Mumbai — to connect motivated young people from across the city with real employment opportunities.</p>
     <p class="ab-body">We work with youth from diverse backgrounds who are ready to work, eager to learn, and looking for their first — or next — step in their careers. Our candidates span a wide range of skills: from accounting and data entry to hospitality, sales, creative media, and more.</p>
     <p class="ab-body">For employers, we offer a simple promise: pre-screened, motivated candidates who are ready to show up and grow. You browse, you connect, we make the introduction.</p>
-    <button class="btn-teal" onclick="document.querySelector('footer').scrollIntoView({behavior:'smooth'})">Get in touch →</button>
+    <button class="btn-teal" onclick="openCF()">Get in touch →</button>
   </div>
 
   <section class="why-pk" id="why-pk">
@@ -616,6 +616,38 @@ footer{background:var(--ink);color:rgba(255,255,255,.45);padding:0;border-top:2p
 </div>
 
 
+
+<!-- ━━ CONTACT MODAL ━━ -->
+<div class="ov" id="cf-ov" onclick="if(event.target===this)closeCF()">
+  <div class="modal" style="max-width:480px;padding:32px 28px;">
+    <button class="modal-x" onclick="closeCF()">✕</button>
+    <h2 style="font-family:var(--serif);font-size:28px;font-weight:700;color:var(--ink);margin-bottom:4px">Let's <em style="font-style:italic;color:var(--teal)">talk.</em></h2>
+    <div class="ct-bar" style="margin-bottom:20px"></div>
+    <div id="cf-form-body">
+    <p style="font-size:13.5px;color:var(--ink-3);margin-bottom:28px;line-height:1.7">Whether you're an employer, NGO, or just curious — drop us a message.</p>
+    <div class="ct-form">
+      <div class="ct-row"><label>Your name *</label><input type="text" id="cf-name" placeholder="e.g. Priya Shah"/></div>
+      <div class="ct-row"><label>Organisation</label><input type="text" id="cf-org" placeholder="e.g. Zomato, SBI, Self"/></div>
+      <div class="ct-row"><label>Email *</label><input type="email" id="cf-email" placeholder="your@email.com"/></div>
+      <div class="ct-row"><label>I am a...</label>
+        <select id="cf-type">
+          <option>Employer / HR</option>
+          <option>NGO / Partner</option>
+          <option>Youth looking for work</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="ct-row"><label>Message *</label><textarea id="cf-msg" placeholder="Tell us how we can help…"></textarea></div>
+      <button class="btn-ct-submit" onclick="submitContact()">Send message</button>
+    </div>
+    </div>
+    <div id="cf-thanks" style="display:none;text-align:center;padding:32px 0">
+      <div style="font-size:32px;margin-bottom:12px">✅</div>
+      <div style="font-family:var(--serif);font-size:20px;font-weight:700;color:var(--ink)">Message sent!</div>
+      <div style="font-size:13px;color:var(--ink-3);margin-top:8px">We'll get back to you soon.</div>
+    </div>
+  </div>
+</div>
 
 <!-- ━━ ENQUIRIES PAGE ━━ -->
 <div class="page" id="page-enquiries">
@@ -1045,6 +1077,7 @@ footer{background:var(--ink);color:rgba(255,255,255,.45);padding:0;border-top:2p
       <a href="mailto:rishikesh@tinymiracles.com">rishikesh@tinymiracles.com</a>
       <a href="https://wa.me/919920445917" target="_blank">+91 99204 45917</a>
       <a href="https://tinymiracles.com" target="_blank" style="margin-top:8px">tinymiracles.com</a>
+      <button onclick="openCF()" style="margin-top:16px;padding:9px 18px;background:var(--teal);border:none;color:white;border-radius:20px;font-family:var(--sans);font-size:12px;font-weight:700;cursor:pointer;text-align:left">Send us a message →</button>
     </div>
   </div>
   <div class="ft-bottom">
@@ -1541,6 +1574,14 @@ function closeA(){document.getElementById('a-ov').classList.remove('open');}
 // ── EXPORT ──────────────────────────────────────
 
 // ── CONTACT FORM ─────────────────────────────────
+function openCF(){
+  document.getElementById('cf-ov').classList.add('open');
+  document.getElementById('cf-thanks').style.display='none';
+  document.getElementById('cf-form-body').style.display='block';
+  ['cf-name','cf-org','cf-email','cf-msg'].forEach(i=>{const el=document.getElementById(i);if(el)el.value='';});
+}
+function closeCF(){document.getElementById('cf-ov').classList.remove('open');}
+
 function submitContact(){
   const name=document.getElementById('cf-name').value.trim();
   const email=document.getElementById('cf-email').value.trim();
@@ -1553,8 +1594,10 @@ function submitContact(){
     candidate_sectors:type,candidate_location:org||'Not specified',
     candidate_note:msg,viewed_at:new Date().toLocaleString('en-IN',{timeZone:'Asia/Kolkata'}),
     message_type:'📩 Contact Form — '+type
-  }).then(()=>{toast('Message sent ✓');['cf-name','cf-org','cf-email','cf-msg'].forEach(i=>document.getElementById(i).value='');})
-    .catch(()=>{window.open(`mailto:${N_EMAIL}?subject=${encodeURIComponent('Enquiry from '+name)}&body=${encodeURIComponent(msg)}`);toast('Opening email…');});
+  }).then(()=>{
+    document.getElementById('cf-form-body').style.display='none';
+    document.getElementById('cf-thanks').style.display='block';
+  }).catch(()=>{window.open(`mailto:${N_EMAIL}?subject=${encodeURIComponent('Enquiry from '+name)}&body=${encodeURIComponent(msg)}`);toast('Opening email…');});
 }
 
 
